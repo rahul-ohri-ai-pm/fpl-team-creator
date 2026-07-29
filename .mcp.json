@@ -2,7 +2,7 @@
   "mcpServers": {
     "fpl": {
       "command": "uvx",
-      "args": ["fpl-mcp-server"],
+      "args": ["--with", "mcp<2.0.0", "fpl-mcp-server"],
       "type": "stdio"
     }
   }
