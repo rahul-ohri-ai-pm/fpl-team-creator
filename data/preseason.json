@@ -1,0 +1,94 @@
+{
+  "_README": [
+    "Pre-season signal that the official FPL API does not carry. FPL only ingests competitive",
+    "Premier League matches: its /fixtures/ endpoint returns exactly 380 league games with the",
+    "earliest kickoff on the GW1 date, every player's `form` is 0.0 until GW1 is played, and no",
+    "element field references friendlies. So none of this can be fetched by engine/fetch.py -",
+    "it is entered by hand and consumed by engine/preseason.py.",
+    "",
+    "Team-level friendly RESULTS are published free (premierleague.com). Player-level MINUTES -",
+    "the signal that actually matters for FPL - are paywalled (Fantasy Football Scout's tracker",
+    "is Chief Scout members only), so `players[].minutes` is left null unless someone fills it",
+    "in from a source they have access to. Never invent these numbers; a null is honest and is",
+    "handled, a guess silently corrupts every downstream score.",
+    "",
+    "players[] fields, all optional:",
+    "  minutes / possible_minutes -> pre-season minutes share, blended into the reliability term.",
+    "                                Use for 'is this player nailed on', which is the main thing",
+    "                                pre-season is good for.",
+    "  availability  0.0-1.0       -> multiplier for a fitness/rotation risk FPL has not yet",
+    "                                flagged. Ignored once FPL sets chance_of_playing_next_round,",
+    "                                which is a harder source and wins.",
+    "  note / source               -> provenance. Required for anything that moves a number.",
+    "",
+    "Friendly goals and assists are deliberately NOT scored. Pre-season output is a famously weak",
+    "predictor - weak opposition, trialists, experimental XIs - while minutes are informative."
+  ],
+
+  "updated": "2026-07-29",
+  "season": "2026/27",
+  "gw1_deadline": "2026-08-21T17:30:00Z",
+
+  "sources": [
+    "https://www.premierleague.com/en/news/4606700/premier-league-clubs-summer-2026-friendlies-and-tours",
+    "https://www.fantasyfootballhub.co.uk/how-the-world-cup-could-affect-the-opening-fpl-gameweeks-26-27-article",
+    "https://www.fantasyfootballscout.co.uk/fpl-2026-27-pre-season-minutes-goals-assists-tracker"
+  ],
+
+  "context": [
+    "The 2026 World Cup finished ~33 days before GW1. Players who went deep are expected to get",
+    "roughly three weeks off, putting some back in club training only around 10-12 August - under",
+    "two weeks before the 21 August deadline. Eight clubs also changed manager this summer, so",
+    "last season's minutes are a weaker guide to this season's XI than usual."
+  ],
+
+  "friendlies": [
+    {"date": "2026-07-15", "home": "Brentford", "away": "AFC Wimbledon", "score": "3-2"},
+    {"date": "2026-07-18", "home": "Brighton", "away": "Wycombe Wanderers", "score": "4-1"},
+    {"date": "2026-07-18", "home": "Dundee", "away": "Everton", "score": "0-4"},
+    {"date": "2026-07-18", "home": "Newcastle", "away": "Darlington", "score": "3-0"},
+    {"date": "2026-07-18", "home": "Notts County", "away": "Nottingham Forest", "score": "0-2"},
+    {"date": "2026-07-18", "home": "Man Utd", "away": "Wrexham", "score": "0-1"},
+    {"date": "2026-07-21", "home": "Walsall", "away": "Aston Villa", "score": "0-5"},
+    {"date": "2026-07-22", "home": "Nottingham Forest", "away": "Blackburn", "score": "3-0"},
+    {"date": "2026-07-24", "home": "St Pauli", "away": "Bournemouth", "score": "1-4"},
+    {"date": "2026-07-25", "home": "Arsenal", "away": "MK Dons", "score": "3-0"},
+    {"date": "2026-07-25", "home": "Porto", "away": "Aston Villa", "score": "2-1"},
+    {"date": "2026-07-25", "home": "Rosenborg", "away": "Man Utd", "score": "0-5"},
+    {"date": "2026-07-25", "home": "Leeds", "away": "Wrexham", "score": "2-3"},
+    {"date": "2026-07-25", "home": "Liverpool", "away": "Sunderland", "score": "4-2"},
+    {"date": "2026-07-25", "home": "Konyaspor", "away": "Hull", "score": "0-3"},
+    {"date": "2026-07-25", "home": "Fulham", "away": "Norwich", "score": "0-2"},
+    {"date": "2026-07-25", "home": "Crystal Palace", "away": "Swindon", "score": "5-1"},
+    {"date": "2026-07-25", "home": "Gateshead", "away": "Newcastle", "score": "1-1"},
+    {"date": "2026-07-25", "home": "Bromley", "away": "Crystal Palace", "score": "3-0"},
+    {"date": "2026-07-26", "home": "Vitoria", "away": "Nottingham Forest", "score": "1-1"},
+    {"date": "2026-07-28", "home": "Aston Villa", "away": "Real Sociedad", "score": "2-4"},
+    {"date": "2026-07-28", "home": "Western Sydney Wanderers", "away": "Chelsea", "score": "4-6"},
+    {"date": "2026-07-28", "home": "Stoke", "away": "Everton", "score": "1-0"},
+    {"date": "2026-07-28", "home": "Al-Ahli", "away": "Fulham", "score": "1-1"},
+    {"date": "2026-07-28", "home": "Caykur Rizespor", "away": "Hull", "score": "1-2"},
+    {"date": "2026-07-28", "home": "Famalicao", "away": "Crystal Palace", "score": "0-0"},
+    {"date": "2026-07-28", "home": "Lens", "away": "Crystal Palace", "score": "3-0"},
+    {"date": "2026-07-29", "home": "Spurs", "away": "Sydney FC", "score": "1-1"}
+  ],
+
+  "players": [
+    {
+      "web_name": "Saka",
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.75,
+      "note": "Deep World Cup run; reported as possibly needing an extended break, so a GW1 start is not assured. Editorial risk flag, not a confirmed absence - drop this entry once FPL sets a real chance_of_playing.",
+      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis"
+    },
+    {
+      "web_name": "Rice",
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.75,
+      "note": "Same deep World Cup involvement as Saka; same caveat.",
+      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis"
+    }
+  ]
+}

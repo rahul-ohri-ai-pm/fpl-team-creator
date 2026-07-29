@@ -1,0 +1,174 @@
+"""Pre-season layer (engine.preseason) and its effect on scoring.
+
+No network: synthetic bootstrap payloads throughout.
+"""
+import json
+
+import pytest
+
+from engine import preseason as ps
+from engine.score import score_players
+
+
+def element(pid=1, name="Player", ppg="5.0", minutes=3000, cost=70, etype=3,
+            form="0.0", chance=None, own="10.0", team=1):
+    return {
+        "id": pid, "web_name": name, "first_name": "A", "second_name": name,
+        "points_per_game": ppg, "minutes": minutes, "now_cost": cost,
+        "element_type": etype, "form": form, "chance_of_playing_next_round": chance,
+        "selected_by_percent": own, "team": team,
+    }
+
+
+def bootstrap(elements, finished=0):
+    return {
+        "elements": elements,
+        "events": [{"id": i, "finished": i <= finished} for i in range(1, 39)],
+        "teams": [{"id": 1}, {"id": 2}],
+    }
+
+
+NO_FIXTURES: list = []
+
+
+def score_one(elements, preseason=None, pid=1):
+    b = bootstrap(elements)
+    return score_players(b, NO_FIXTURES, 1, "safe",
+                         preseason=preseason or ps.Preseason())[pid]["score"]
+
+
+# --- loading --------------------------------------------------------------
+
+def test_missing_file_is_not_fatal(tmp_path):
+    loaded = ps.load(str(tmp_path / "nope.json"))
+    assert len(loaded) == 0
+    assert loaded.minutes_share("Anyone") is None
+
+
+def test_malformed_file_is_not_fatal(tmp_path):
+    bad = tmp_path / "bad.json"
+    bad.write_text("{not json")
+    assert len(ps.load(str(bad))) == 0
+
+
+def test_the_checked_in_file_parses_and_matches_its_schema():
+    loaded = ps.load()
+    assert loaded.updated
+    assert loaded.friendlies
+    for entry in loaded.friendlies:
+        assert {"date", "home", "away", "score"} <= set(entry)
+
+
+def test_minutes_share_needs_both_halves():
+    p = ps.Preseason({"players": [
+        {"web_name": "Full", "minutes": 180, "possible_minutes": 360},
+        {"web_name": "NoTotal", "minutes": 180},
+        {"web_name": "NoMinutes", "possible_minutes": 360},
+    ]})
+    assert p.minutes_share("Full") == pytest.approx(0.5)
+    assert p.minutes_share("NoTotal") is None
+    assert p.minutes_share("NoMinutes") is None
+    assert p.minutes_share("Absent") is None
+
+
+def test_shares_and_availability_are_clamped():
+    p = ps.Preseason({"players": [
+        {"web_name": "Over", "minutes": 500, "possible_minutes": 360, "availability": 1.4},
+        {"web_name": "Under", "minutes": -10, "possible_minutes": 360, "availability": -1},
+    ]})
+    assert p.minutes_share("Over") == 1.0
+    assert p.availability("Over") == 1.0
+    assert p.minutes_share("Under") == 0.0
+    assert p.availability("Under") == 0.0
+
+
+# --- price baseline -------------------------------------------------------
+
+def make_priced_pool():
+    """A pool where ppg is exactly 0.5 * price, so the fit is recoverable."""
+    els = []
+    for i in range(20):
+        cost = 40 + i * 5
+        els.append(element(pid=i + 1, name=f"P{i}", ppg=str(cost / 10 * 0.5),
+                           minutes=3000, cost=cost, etype=3))
+    return els
+
+
+def test_price_baseline_recovers_a_linear_relationship():
+    models = ps.price_baselines(bootstrap(make_priced_pool()))
+    assert ps.baseline_ppg(models, 3, 100) == pytest.approx(5.0, abs=0.01)
+
+
+def test_price_baseline_ignores_players_without_a_real_sample():
+    pool = make_priced_pool()
+    # Cameo appearances at silly prices must not drag the fit.
+    pool.append(element(pid=99, name="Cameo", ppg="12.0", minutes=90, cost=40, etype=3))
+    models = ps.price_baselines(bootstrap(pool))
+    assert ps.baseline_ppg(models, 3, 100) == pytest.approx(5.0, abs=0.01)
+
+
+def test_baseline_is_zero_for_an_unfittable_position():
+    assert ps.baseline_ppg({}, 3, 100) == 0.0
+
+
+def test_baseline_never_goes_negative():
+    models = ps.price_baselines(bootstrap(make_priced_pool()))
+    assert ps.baseline_ppg(models, 3, 1) >= 0.0
+
+
+def test_player_with_no_history_is_scored_from_price_not_zero():
+    pool = make_priced_pool()
+    newcomer = element(pid=99, name="Newcomer", ppg="0.0", minutes=0, cost=90, etype=3)
+    pool.append(newcomer)
+    scores = score_players(bootstrap(pool), NO_FIXTURES, 1, "safe", preseason=ps.Preseason())
+    assert scores[99]["score"] > 0
+
+
+# --- pre-season minutes ---------------------------------------------------
+
+def test_pre_season_minutes_raise_reliability_for_an_unproven_player():
+    els = [element(pid=1, name="Rookie", ppg="5.0", minutes=0)]
+    without = score_one(els)
+    nailed = score_one(els, ps.Preseason({"players": [
+        {"web_name": "Rookie", "minutes": 360, "possible_minutes": 360}]}))
+    assert nailed > without
+
+
+def test_pre_season_benching_lowers_a_proven_players_score():
+    els = [element(pid=1, name="Star", ppg="6.0", minutes=3400)]
+    without = score_one(els)
+    benched = score_one(els, ps.Preseason({"players": [
+        {"web_name": "Star", "minutes": 0, "possible_minutes": 360}]}))
+    assert benched < without
+
+
+def test_pre_season_minutes_only_partly_outweigh_last_season():
+    """A blend, not a replacement - one benched friendly run shouldn't erase a season."""
+    els = [element(pid=1, name="Star", ppg="6.0", minutes=3400)]
+    benched = score_one(els, ps.Preseason({"players": [
+        {"web_name": "Star", "minutes": 0, "possible_minutes": 360}]}))
+    assert benched > 0
+    assert benched == pytest.approx(score_one(els) * (1 - ps.PRESEASON_MINUTES_WEIGHT), rel=0.05)
+
+
+# --- availability ---------------------------------------------------------
+
+def test_pre_season_availability_discounts_an_unflagged_player():
+    els = [element(pid=1, name="Doubt", chance=None)]
+    full = score_one(els)
+    doubted = score_one(els, ps.Preseason({"players": [
+        {"web_name": "Doubt", "availability": 0.5}]}))
+    assert doubted == pytest.approx(full * 0.5, rel=0.05)
+
+
+def test_fpl_chance_of_playing_beats_the_pre_season_file():
+    """FPL flagging a player is the harder source; our editorial guess must yield."""
+    els = [element(pid=1, name="Flagged", chance=100)]
+    with_file = score_one(els, ps.Preseason({"players": [
+        {"web_name": "Flagged", "availability": 0.25}]}))
+    assert with_file == pytest.approx(score_one(els))
+
+
+def test_scoring_runs_unchanged_with_an_empty_preseason():
+    els = [element(pid=1, name="Solo")]
+    assert score_one(els, ps.Preseason()) == score_one(els, ps.Preseason({}))

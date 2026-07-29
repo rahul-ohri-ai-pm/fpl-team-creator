@@ -13,7 +13,10 @@ gameweek deadline.
    supplements this with qualitative tools/prompts during a Claude session.
 2. **Scoring:** `engine/score.py` turns raw stats (form, fixture difficulty, minutes reliability,
    injury doubt, ownership) into a predicted-points estimate per player, weighted by the risk
-   profile in `config/settings.md`.
+   profile in `config/settings.md`. Before GW1 none of those inputs are live, so
+   `engine/preseason.py` fills the gap: a price-implied baseline for players with no Premier
+   League record, plus the hand-maintained `data/preseason.json` for friendly minutes and fitness
+   doubts the API never carries.
 3. **Optimization:** `engine/optimize.py` runs a MILP (via `pulp`) to find the best full squad or
    the best 0-2 transfers from the current squad, respecting budget/position/club-limit rules and
    weighing the -4pt hit cost.
@@ -24,7 +27,9 @@ gameweek deadline.
 
 ```
 config/settings.md          your team ID, risk profile, hit tolerance
+data/preseason.json         hand-maintained pre-season signal (friendlies, minutes, fitness)
 engine/fetch.py              pulls FPL API data
+engine/preseason.py           pre-season layer + price-implied baseline for unknown players
 engine/score.py               predicted-points heuristic
 engine/optimize.py            MILP squad/transfer optimizer
 records/team_history.md       squad snapshots over time

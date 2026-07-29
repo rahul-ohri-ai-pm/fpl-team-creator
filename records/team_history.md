@@ -42,3 +42,17 @@ Template for each new entry:
 - **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
 - All 15 flagged `status=a` (available) with no news at time of writing; 24 injured / 19 doubtful /
   3 suspended elsewhere in the pool, so the flags are live data, not missing data.
+
+## Pre-season (unchanged, pre-season data layer applied) — 2026-07-29
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **No change** to the 15 in the entry above; re-confirmed after adding the pre-season layer
+  (`data/preseason.json`, `engine/preseason.py`). Recorded here so the snapshot history stays
+  continuous rather than implying the squad went unreviewed.
+- **Starting XI (4-5-1):** Raya; Gabriel, Guéhi, Mukiele, Muñoz; Fernandes, Semenyo, Szoboszlai,
+  Guimarães, Wilson; João Pedro
+- **Bench (auto-sub order):** Calvert-Lewin, Mitchell, Richarlison, Dúbravka
+- **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
+- 0 of the 15 have zero Premier League minutes, i.e. no unproven players entered the squad once
+  the price baseline made 164 of them selectable.

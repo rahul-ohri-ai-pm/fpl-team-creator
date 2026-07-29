@@ -19,6 +19,14 @@ Read `config/settings.md` for the linked team ID, risk profile, and hit toleranc
 analysis. Don't hardcode these values elsewhere — if the user's risk profile changes, only that
 file and `engine/score.py`'s weighting table should need touching.
 
+## Working agreements
+
+- **Work directly on `master`.** Don't develop on a feature branch and don't open a PR unless
+  asked — commit and push straight to `master` so nothing needs merging afterwards. Some sessions
+  start with a generated `claude/*` branch configured; ignore it and use `master`.
+- **Always present the final 15 as a table**, never as prose. One row per player, split into
+  starting XI and bench, with position, club, price and predicted score. Captain and vice marked.
+
 ## Data sources
 
 - `engine/fetch.py` — direct calls to the official public FPL API (`fantasy.premierleague.com/api`,
@@ -27,6 +35,17 @@ file and `engine/score.py`'s weighting table should need touching.
 - `fpl` MCP server (`.mcp.json`, `uvx fpl-mcp-server`) — used interactively for qualitative context
   the raw API doesn't shape well: strategy prompts, rival/manager comparison, richer fixture-run
   views. A stale or broken MCP should never block the core fetch → score → optimize pipeline.
+- `data/preseason.json` — pre-season signal, which the FPL API does **not** carry at all. FPL
+  ingests only competitive league matches: `/fixtures/` returns exactly 380 games starting at the
+  GW1 date, `form` is `0.0` for every player until GW1 is played, and no element field references
+  friendlies. So this file is maintained by hand, loaded by `engine/preseason.py`, and consumed by
+  `engine/score.py`. Refresh it during a pre-season weekly run.
+  - Team-level friendly results are published free (premierleague.com). Player-level **minutes** —
+    the part that actually predicts anything — sit behind Fantasy Football Scout's Chief Scout
+    paywall. Leave `minutes` null rather than guessing: null is handled, an invented number
+    silently corrupts every score downstream.
+  - Score friendly **minutes**, not friendly goals. Pre-season output is a weak predictor (weak
+    opposition, trialists, experimental XIs); minutes reveal who the manager intends to start.
 
 ## Weekly workflow
 
