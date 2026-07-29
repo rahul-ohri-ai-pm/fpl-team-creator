@@ -62,15 +62,19 @@ def main():
 
     if args.team:
         entry = get_entry(args.team)
-        picks = get_entry_picks(args.team, gw)
-        out["entry"] = {
+        entry_out = {
             "team_name": entry.get("name"),
             "bank": entry.get("last_deadline_bank"),
             "value": entry.get("last_deadline_value"),
-            "free_transfers": picks.get("entry_history", {}).get("event_transfers_cost"),
-            "picks": [p["element"] for p in picks.get("picks", [])],
-            "active_chip": picks.get("active_chip"),
         }
+        if gw >= 1:
+            picks = get_entry_picks(args.team, gw)
+            entry_out["free_transfers"] = picks.get("entry_history", {}).get("event_transfers_cost")
+            entry_out["picks"] = [p["element"] for p in picks.get("picks", [])]
+            entry_out["active_chip"] = picks.get("active_chip")
+        else:
+            entry_out["note"] = "Pre-season: no gameweek picks yet."
+        out["entry"] = entry_out
 
     json.dump(out, sys.stdout, indent=2)
 

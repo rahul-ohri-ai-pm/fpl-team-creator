@@ -7,7 +7,10 @@
       "Bash(mkdir -p \"/c/Users/RAHUL/Desktop/FPL Team Creator/.claude/skills/fpl-weekly-review\")",
       "Edit(/.claude/skills/fpl-weekly-review/**)",
       "Bash(python engine/fetch.py)",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(gh repo *)",
+      "Bash(claude mcp *)",
+      "Bash(python engine/fetch.py --team 1669770)"
     ],
     "additionalDirectories": [
       "C:\\Users\\RAHUL\\Desktop\\FPL Team Creator\\.claude\\skills"
