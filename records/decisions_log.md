@@ -159,3 +159,37 @@ Template for each new entry:
   holds three players with `web_name` "Wilson" and it matched Callum Wilson (BRE, 0 minutes).
   Harry Wilson (LEE, id 260) is the squad player. The squad selection itself was never affected;
   only that diagnostic line was wrong.
+
+## Pre-season (position-aware opponent matchup) — 2026-07-29
+
+- **Decision:** No squad change. The 15 in the entry above stand; predicted total still 65.08.
+- **Hit taken:** n/a — pre-season.
+- **What was added and why:** FDR compresses an opponent into a single integer that is identical
+  for a goalkeeper and a striker. That is wrong in an obvious direction — a clean sheet depends on
+  how well the opponent *attacks*, an attacking return on how badly they *defend* — and it was the
+  model's crudest remaining assumption. `engine/score.py` now derives a position-aware matchup from
+  FPL's own `strength_attack_*` / `strength_defence_*` fields, weighted per position
+  (GK 1.0/0.0, DEF 0.7/0.3, MID 0.3/0.7, FWD 0.0/1.0 on opponent attack/defence), decayed across
+  the fixture run exactly like FDR, and blended at `MATCHUP_WEIGHT = 0.5` so FDR still anchors the
+  estimate and continues to carry venue.
+  - Opponent venue is read as the mirror of ours: facing a side away from home uses their *away*
+    attack and defence, since teams attack and defend differently by venue.
+  - Strengths are min-max normalised within the league, so the code is indifferent to whether FPL
+    publishes a 1-5 or a 1000-1400 scale.
+- **Currently dormant, deliberately.** `strength_attack_*` and `strength_defence_*` are 0 for every
+  club pre-season and `strength` is null, so `_normalized_strengths` returns None and scoring falls
+  back to FDR alone. That is why the squad and the 65.08 are unchanged. The layer starts
+  contributing once FPL populates the fields after real matches are played. Verified against a
+  simulated in-season dataset: Leeds' four positions then draw four different multipliers
+  (GK 0.997, DEF 0.983, MID 0.963, FWD 0.949) off the same fixture run — the separation FDR cannot
+  express. 13 new tests cover it, including the flat-field fallback.
+- **Head-to-head history was considered and rejected.** The request that prompted this was whether
+  past meetings between two clubs are accounted for. They are not, and shouldn't be:
+  - The FPL API carries no history at all — `/fixtures/` is current-season only, 0 fixtures with
+    scores. It would need an external source and a scraper to maintain.
+  - Predictive value is weak and this season is a bad case for it: both Chelsea and Man City
+    changed manager (Maresca left one for the other), Leeds have moved between divisions, and
+    squads have turned over. Five meetings spread across years is mostly noise.
+  - FDR is already an opponent-strength rating, so H2H would largely re-express it while adding
+    variance. The position-aware matchup above targets the same instinct — "the opponent should
+    matter more specifically" — using first-party data and without the double-count.

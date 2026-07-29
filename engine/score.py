@@ -55,6 +55,80 @@ def fixture_ease(team_id: int, fixtures: list, next_event: int, n: int = 4,
     return max(0.0, min(1.0, (5 - avg_fdr) / 4))
 
 
+# How much of a player's fixture adjustment comes from the position-aware opponent
+# matchup rather than FDR. FDR compresses an opponent into one integer that is
+# identical for a goalkeeper and a striker, which is wrong in an obvious way: a
+# clean sheet depends on how well the opponent attacks, an attacking return on how
+# badly they defend. Held at half so FDR - which also carries venue and FPL's own
+# composite judgement - still anchors the estimate.
+MATCHUP_WEIGHT = 0.5
+
+# Weight on (opponent's attack, opponent's defence) by position. Defenders and
+# keepers live off clean sheets, so a dangerous opponent attack hurts them most;
+# forwards only care how leaky the opponent is. Defenders and midfielders get a
+# share of both because both score attacking returns too.
+POSITION_MATCHUP = {
+    "GK": (1.0, 0.0),
+    "DEF": (0.7, 0.3),
+    "MID": (0.3, 0.7),
+    "FWD": (0.0, 1.0),
+}
+
+
+def _normalized_strengths(teams: list) -> dict | None:
+    """Team attack/defence strength rescaled to 0 (weakest) .. 1 (strongest).
+
+    Min-max normalised within the league so this works whatever absolute scale FPL
+    uses. Returns None when the fields are flat or absent - they sit at 0 for every
+    club pre-season, and a constant carries no information, so callers fall back to
+    FDR rather than pretending a signal exists.
+    """
+    fields = ("strength_attack_home", "strength_attack_away",
+              "strength_defence_home", "strength_defence_away")
+    out: dict = {}
+    for field in fields:
+        values = {t["id"]: (t.get(field) or 0) for t in teams}
+        lo, hi = min(values.values()), max(values.values())
+        if hi <= lo:
+            return None
+        out[field] = {tid: (v - lo) / (hi - lo) for tid, v in values.items()}
+    return out
+
+
+def opponent_matchup_ease(pos: str, team_id: int, fixtures: list, next_event: int,
+                          strengths: dict | None, n: int = 4,
+                          decay: float = FIXTURE_DECAY) -> float | None:
+    """0 (brutal matchups) .. 1 (kind matchups) for this position specifically.
+
+    None when strength data isn't usable, so the caller keeps FDR alone.
+    """
+    if not strengths:
+        return None
+    w_att, w_def = POSITION_MATCHUP.get(pos, (0.5, 0.5))
+
+    upcoming = [f for f in fixtures if f["event"] and f["event"] >= next_event
+                and (f["team_h"] == team_id or f["team_a"] == team_id)]
+    upcoming.sort(key=lambda f: f["event"])
+    upcoming = upcoming[:n]
+    if not upcoming:
+        return None
+
+    hardness, weights = [], []
+    for i, f in enumerate(upcoming):
+        at_home = f["team_h"] == team_id
+        opponent = f["team_a"] if at_home else f["team_h"]
+        # The opponent's own venue is the mirror of ours, and a side attacks and
+        # defends differently home and away.
+        suffix = "away" if at_home else "home"
+        att = strengths[f"strength_attack_{suffix}"].get(opponent, 0.5)
+        dfn = strengths[f"strength_defence_{suffix}"].get(opponent, 0.5)
+        hardness.append(w_att * att + w_def * dfn)
+        weights.append(decay ** i)
+
+    weighted = sum(h * w for h, w in zip(hardness, weights)) / sum(weights)
+    return max(0.0, min(1.0, 1.0 - weighted))
+
+
 def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "safe",
                   preseason=None) -> dict:
     """Returns {player_id: {"score": float, "pos": str, "team": int, "cost": int, "name": str}}
@@ -64,6 +138,17 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
     """
     finished = _finished_events(bootstrap)
     team_ease = {t["id"]: fixture_ease(t["id"], fixtures, next_event) for t in bootstrap["teams"]}
+
+    # Position-aware opponent matchup, blended over FDR where the data supports it.
+    # Cached per (team, position) rather than per player - it's the same fixture run
+    # for every defender at a club.
+    strengths = _normalized_strengths(bootstrap["teams"])
+    matchup_ease: dict = {}
+    for t in bootstrap["teams"]:
+        for pos in POSITION_MATCHUP:
+            m = opponent_matchup_ease(pos, t["id"], fixtures, next_event, strengths)
+            if m is not None:
+                matchup_ease[(t["id"], pos)] = m
 
     # Direction and strength of the ownership preference, as a *tiebreak* only.
     # Positive = prefer template/high-ownership cover, negative = prefer differentials.
@@ -130,7 +215,11 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
         if club_avail is not None:
             injury_mult *= club_avail
 
+        pos = POSITION_BY_TYPE[p["element_type"]]
         ease = team_ease.get(p["team"], 0.5)
+        m = matchup_ease.get((p["team"], pos))
+        if m is not None:
+            ease = (1 - MATCHUP_WEIGHT) * ease + MATCHUP_WEIGHT * m
         ease_mult = 0.8 + ease * 0.4  # 0.8 .. 1.2
         ownership = float(p["selected_by_percent"] or 0)
 
@@ -142,7 +231,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             "score": round(predicted, 3),
             # Signed -1..1 ownership preference, applied only as a tiebreak.
             "tiebreak": round((ownership / 100) * ownership_weight, 4),
-            "pos": POSITION_BY_TYPE[p["element_type"]],
+            "pos": pos,
             "team": p["team"],
             "cost": p["now_cost"],
             "name": f"{p['first_name']} {p['second_name']}",
