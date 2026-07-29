@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "fpl": {
+      "command": "uvx",
+      "args": ["fpl-mcp-server"],
+      "type": "stdio"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fpl-team-creator"
+version = "0.1.0"
+description = "FPL squad/transfer advisor: stats-driven optimizer + weekly Claude review"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+    "pulp>=2.8",
+]
+
+[tool.setuptools]
+packages = ["engine"]

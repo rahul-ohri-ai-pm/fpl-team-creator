@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(uvx --version)",
+      "Bash(where uvx *)",
+      "Bash(mkdir -p \"/c/Users/RAHUL/Desktop/FPL Team Creator/.claude/skills/fpl-weekly-review\")",
+      "Edit(/.claude/skills/fpl-weekly-review/**)",
+      "Bash(python engine/fetch.py)",
+      "Bash(python -c ' *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\RAHUL\\Desktop\\FPL Team Creator\\.claude\\skills"
+    ]
+  }
+}
