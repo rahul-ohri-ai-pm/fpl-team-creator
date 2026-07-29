@@ -71,3 +71,20 @@ Template for each new entry:
 - **Bench (auto-sub order):** Calvert-Lewin, Richarlison, Mitchell, Verbruggen
 - **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
 - Recorded to `records/predictions.jsonl` as the GW1 prediction for measurement after the gameweek.
+
+## Pre-season (fixture weighting + Man City managerial change) — 2026-07-29
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW total:** 65.08 (XI 57.89 + captain 7.19)
+- **Squad (£100.0m):** GK: David Raya, Martin Dúbravka · DEF: Gabriel Magalhães, Nordi Mukiele,
+  Marcos Senesi, Daniel Ballard, Tyrick Mitchell · MID: Bruno Fernandes, Morgan Gibbs-White,
+  Bruno Guimarães, Kiernan Dewsbury-Hall, Anton Stach · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-5-2):** Raya; Gabriel, Mukiele, Senesi; Fernandes, Gibbs-White, Guimarães,
+  Dewsbury-Hall, Stach; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Ballard, Calvert-Lewin, Mitchell, Dúbravka
+- **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
+- No Man City players remain after the managerial-change flag; club spread is now
+  ARS 2, LEE 2, SUN 2, TOT 2, BRE/CHE/CRY/EVE/MUN/NEW/NFO 1 each.
+- Recorded to `records/predictions.jsonl` (supersedes the earlier GW1 line from the same day).

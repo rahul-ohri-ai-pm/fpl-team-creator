@@ -222,3 +222,46 @@ def test_hit_cost_is_charged_only_beyond_the_free_transfers_available():
     rec = recommend_transfers(players, squad, bank=0, free_transfers=1)
     assert rec["transfers"] == 2
     assert rec["hit_cost"] == 4  # 2 transfers, 1 free -> a single -4
+
+
+# --- fixture weighting ----------------------------------------------------
+
+def fx(diffs):
+    return [{"event": i + 1, "team_h": 1, "team_a": 2,
+             "team_h_difficulty": d, "team_a_difficulty": 3}
+            for i, d in enumerate(diffs)]
+
+
+def test_when_the_hard_game_falls_changes_the_ease():
+    """Same four fixtures, reordered. A flat mean can't tell these apart; the
+    decay must, because only one of them is a hard game *this* week."""
+    from engine.score import fixture_ease
+
+    hard_now = fixture_ease(1, fx([5, 3, 3, 1]), 1)
+    hard_later = fixture_ease(1, fx([1, 3, 3, 5]), 1)
+    assert hard_later > hard_now
+
+    flat_now = fixture_ease(1, fx([5, 3, 3, 1]), 1, decay=1.0)
+    flat_later = fixture_ease(1, fx([1, 3, 3, 5]), 1, decay=1.0)
+    assert flat_now == pytest.approx(flat_later), "the old flat mean was blind to this"
+
+
+def test_next_fixture_outweighs_the_remaining_three_combined():
+    from engine.score import fixture_ease
+    # One easy game now against three hard ones later should still read as easier
+    # than the reverse, or "next gameweek's points" isn't what's being scored.
+    assert fixture_ease(1, fx([1, 5, 5, 5]), 1) > fixture_ease(1, fx([5, 1, 1, 1]), 1)
+
+
+def test_a_hard_opener_scores_worse_than_the_flat_mean_would_suggest():
+    from engine.score import fixture_ease
+    diffs = [5, 1, 1, 1]
+    assert fixture_ease(1, fx(diffs), 1) < fixture_ease(1, fx(diffs), 1, decay=1.0)
+
+
+def test_fixture_ease_still_bounded_and_defaults_when_no_fixtures():
+    from engine.score import fixture_ease
+    assert fixture_ease(1, [], 1) == 0.5
+    fx = [{"event": 1, "team_h": 1, "team_a": 2,
+           "team_h_difficulty": 5, "team_a_difficulty": 1}]
+    assert 0.0 <= fixture_ease(1, fx, 1) <= 1.0

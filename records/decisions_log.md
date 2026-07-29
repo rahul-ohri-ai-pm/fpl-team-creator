@@ -119,3 +119,43 @@ Template for each new entry:
   against yet since no gameweek has been played.
 - **Test note:** a test caught my own arithmetic error rather than a code bug (XI total with a
   captain double). 57 tests now pass, covering the optimizer, pre-season layer and evaluation.
+
+## Pre-season (fixture weighting + managerial change) — 2026-07-29
+
+- **Decision:** Five changes. **out** Semenyo, Guéhi, Harry Wilson, Richarlison, Verbruggen →
+  **in** Gibbs-White, Igor Thiago, Dewsbury-Hall, Ballard, Dúbravka. Captain/vice unchanged
+  (Fernandes / Gabriel). Formation moves 4-5-1 → 3-5-2.
+- **Hit taken:** n/a — pre-season, unlimited changes until the GW1 deadline.
+- **Prompted by:** a direct question about whether the Leeds/Chelsea away openers and Man City's
+  new manager were being accounted for. Answer was: venue partially, managerial change not at all.
+- **Fix 1 — fixture weighting.** `fixture_ease` took a *flat* mean of the next four fixtures, so
+  the imminent game carried only 25% of the weight. Leeds' away opener at Forest was being
+  out-voted by their easier GW2-4 run, leaving them on a 1.025 multiplier — a net *boost* going
+  into an away trip. Now decayed at 0.5 (weights ~53/27/13/7), so next gameweek dominates while
+  keeping some lookahead, which matters because only ~1 free transfer a week is available.
+  Effect: LEE 1.025 → 1.007, NFO 0.975 → 1.020, SUN 1.025 → 1.073.
+  - Note for future runs: home/away needs no separate term. FPL's FDR already rates the two sides
+    of a fixture differently (Leeds away at Forest is 3, Forest at home is 2), so venue was always
+    present — it just wasn't being *weighted* onto the right gameweek. Adding an explicit
+    home/away multiplier on top would double-count.
+- **Fix 2 — club-level uncertainty.** Nothing in the model represented a managerial change. Enzo
+  Maresca replaced Pep Guardiola at Man City on a three-year deal, ending a decade under one
+  manager, so last season's minutes are a weak guide to this season's XI. Added a `clubs` section
+  to `data/preseason.json` applying a club-wide availability multiplier, compounding with any
+  per-player flag and applying even to players FPL rates fully fit — a fitness rating says nothing
+  about whether a new manager picks someone. MCI set to 0.90.
+  - **This 0.90 is a judgment call, not a measurement.** It is sized to break a tie against an
+    equivalent player at a settled club without excluding a genuinely better one. It was enough to
+    drop both City players: Semenyo 5.54 → 4.98, Guéhi 5.13 → 4.62.
+  - **Incomplete by design:** eight clubs changed manager in summer 2026 and only Man City is
+    flagged, being the one asked about. The others should be added as their pre-season XIs become
+    readable, or the flag quietly advantages them.
+- **Predicted GW total:** 65.08 (XI 57.89 + captain 7.19). Higher than the 64.80 "ceiling" quoted
+  in the previous entry, and not a contradiction: that ceiling was computed on raw points-per-game
+  with no fixture adjustment at all, whereas `ease_mult` can exceed 1.0 for a favourable run.
+  The two numbers measure different things.
+- **Correction to a working note made during this run:** an interim table reported Harry Wilson as
+  a Brentford player scoring 1.58. That was a name-collision in throwaway analysis code — the pool
+  holds three players with `web_name` "Wilson" and it matched Callum Wilson (BRE, 0 minutes).
+  Harry Wilson (LEE, id 260) is the squad player. The squad selection itself was never affected;
+  only that diagnostic line was wrong.

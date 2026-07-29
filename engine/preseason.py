@@ -42,9 +42,25 @@ class Preseason:
         self.context = data.get("context") or []
         self._players = {p["web_name"]: p for p in (data.get("players") or [])
                          if p.get("web_name")}
+        self._clubs = {c["short_name"]: c for c in (data.get("clubs") or [])
+                       if c.get("short_name")}
 
     def __len__(self):
         return len(self._players)
+
+    def club_availability(self, short_name: str | None) -> float | None:
+        """0..1 multiplier applying to every player at a club - a new manager, a
+        tactical overhaul, anything that makes last season's minutes a weaker guide
+        to this season's XI. None if the club isn't flagged."""
+        c = self._clubs.get(short_name or "")
+        if not c:
+            return None
+        a = c.get("availability")
+        return None if a is None else max(0.0, min(1.0, float(a)))
+
+    def club_note(self, short_name: str | None) -> str | None:
+        c = self._clubs.get(short_name or "")
+        return c.get("note") if c else None
 
     def minutes_share(self, web_name: str) -> float | None:
         """0..1 share of available pre-season minutes, or None if not recorded."""

@@ -172,3 +172,59 @@ def test_fpl_chance_of_playing_beats_the_pre_season_file():
 def test_scoring_runs_unchanged_with_an_empty_preseason():
     els = [element(pid=1, name="Solo")]
     assert score_one(els, ps.Preseason()) == score_one(els, ps.Preseason({}))
+
+
+# --- club-level flags -----------------------------------------------------
+
+def test_unflagged_club_returns_none():
+    assert ps.Preseason({}).club_availability("MCI") is None
+    assert ps.Preseason({}).club_availability(None) is None
+
+
+def test_club_availability_is_clamped():
+    p = ps.Preseason({"clubs": [{"short_name": "A", "availability": 3},
+                                {"short_name": "B", "availability": -2}]})
+    assert p.club_availability("A") == 1.0
+    assert p.club_availability("B") == 0.0
+
+
+def test_club_flag_discounts_every_player_at_that_club():
+    els = [element(pid=1, name="CityPlayer", team=1),
+           element(pid=2, name="OtherPlayer", team=2)]
+    b = bootstrap(els)
+    b["teams"] = [{"id": 1, "short_name": "MCI"}, {"id": 2, "short_name": "ARS"}]
+    plain = score_players(b, NO_FIXTURES, 1, "safe", preseason=ps.Preseason())
+    flagged = score_players(b, NO_FIXTURES, 1, "safe",
+                            preseason=ps.Preseason({"clubs": [
+                                {"short_name": "MCI", "availability": 0.9}]}))
+    assert flagged[1]["score"] == pytest.approx(plain[1]["score"] * 0.9, rel=0.02)
+    assert flagged[2]["score"] == pytest.approx(plain[2]["score"])
+
+
+def test_club_flag_applies_even_when_fpl_says_the_player_is_fit():
+    """A settled fitness rating says nothing about whether a new manager picks them."""
+    els = [element(pid=1, name="Fit", team=1, chance=100)]
+    b = bootstrap(els)
+    b["teams"] = [{"id": 1, "short_name": "MCI"}]
+    plain = score_players(b, NO_FIXTURES, 1, "safe", preseason=ps.Preseason())
+    flagged = score_players(b, NO_FIXTURES, 1, "safe",
+                            preseason=ps.Preseason({"clubs": [
+                                {"short_name": "MCI", "availability": 0.5}]}))
+    assert flagged[1]["score"] == pytest.approx(plain[1]["score"] * 0.5, rel=0.02)
+
+
+def test_club_and_player_flags_compound():
+    els = [element(pid=1, name="Both", team=1)]
+    b = bootstrap(els)
+    b["teams"] = [{"id": 1, "short_name": "MCI"}]
+    plain = score_players(b, NO_FIXTURES, 1, "safe", preseason=ps.Preseason())
+    both = score_players(b, NO_FIXTURES, 1, "safe", preseason=ps.Preseason({
+        "clubs": [{"short_name": "MCI", "availability": 0.5}],
+        "players": [{"web_name": "Both", "availability": 0.5}]}))
+    assert both[1]["score"] == pytest.approx(plain[1]["score"] * 0.25, rel=0.02)
+
+
+def test_checked_in_file_club_entries_are_well_formed():
+    loaded = ps.load()
+    assert loaded.club_availability("MCI") is not None
+    assert loaded.club_note("MCI")

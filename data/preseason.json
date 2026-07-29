@@ -73,6 +73,29 @@
     {"date": "2026-07-29", "home": "Spurs", "away": "Sydney FC", "score": "1-1"}
   ],
 
+  "_clubs_README": [
+    "Club-level uncertainty, applied to every player at the club and compounded with",
+    "any per-player flag. A new manager is the main case: last season's minutes stop",
+    "being a reliable guide to this season's XI, and nothing in the FPL API expresses",
+    "that. Eight clubs changed manager in summer 2026, so this list is not complete -",
+    "add the rest as their pre-season XIs become readable.",
+    "",
+    "`availability` here is a judgment call, not a measurement. 0.90 is a deliberately",
+    "modest 10% haircut on minutes certainty: enough to break a tie against an",
+    "equivalent player at a settled club, not enough to exclude a genuinely better one.",
+    "Tighten it towards 0.80 if pre-season line-ups look heavily rotated, and remove",
+    "the entry once the new XI is established and FPL's own data reflects it."
+  ],
+
+  "clubs": [
+    {
+      "short_name": "MCI",
+      "availability": 0.90,
+      "note": "Enzo Maresca replaced Pep Guardiola on a three-year deal, ending a decade under one manager. Squad roles, set-piece duties and rotation patterns are all unproven, and last season's minutes were earned under a different system.",
+      "source": "Sky Sports / Al Jazeera, June 2026 - Maresca appointed Man City manager"
+    }
+  ],
+
   "players": [
     {
       "web_name": "Saka",

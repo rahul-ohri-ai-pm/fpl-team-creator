@@ -22,8 +22,26 @@ def _finished_events(bootstrap) -> int:
     return sum(1 for e in bootstrap["events"] if e["finished"])
 
 
-def fixture_ease(team_id: int, fixtures: list, next_event: int, n: int = 4) -> float:
-    """0 (very hard run) .. 1 (very easy run) over the next n fixtures."""
+# How fast a fixture's influence decays with each gameweek further out. `score` is
+# next gameweek's predicted points, so the imminent fixture has to dominate - a flat
+# average over four gave it only 25% of the weight and let an easy run three weeks
+# out cancel a hard opener. Some lookahead is still right, because a squad can only
+# absorb about one free transfer a week. At 0.5 over four fixtures the weights come
+# out at roughly 53% / 27% / 13% / 7%, so the next fixture outweighs the rest combined
+# without the later ones dropping out of sight.
+FIXTURE_DECAY = 0.5
+
+
+def fixture_ease(team_id: int, fixtures: list, next_event: int, n: int = 4,
+                 decay: float = FIXTURE_DECAY) -> float:
+    """0 (very hard run) .. 1 (very easy run) over the next n fixtures, weighted
+    towards the imminent one.
+
+    Home/away is already carried by FDR: FPL rates the two sides of a fixture
+    separately (an away trip to a mid-table side scores harder than hosting them),
+    so venue needs no separate term here - it needs the imminent fixture to actually
+    count, which is what the decay fixes.
+    """
     upcoming = [f for f in fixtures if f["event"] and f["event"] >= next_event
                 and (f["team_h"] == team_id or f["team_a"] == team_id)]
     upcoming.sort(key=lambda f: f["event"])
@@ -32,7 +50,8 @@ def fixture_ease(team_id: int, fixtures: list, next_event: int, n: int = 4) -> f
         return 0.5
     diffs = [f["team_h_difficulty"] if f["team_h"] == team_id else f["team_a_difficulty"]
              for f in upcoming]
-    avg_fdr = sum(diffs) / len(diffs)  # 1 (easy) .. 5 (hard)
+    weights = [decay ** i for i in range(len(diffs))]
+    avg_fdr = sum(d * w for d, w in zip(diffs, weights)) / sum(weights)  # 1 easy .. 5 hard
     return max(0.0, min(1.0, (5 - avg_fdr) / 4))
 
 
@@ -56,6 +75,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
 
     ps = preseason_mod.load() if preseason is None else preseason
     baselines = preseason_mod.price_baselines(bootstrap)
+    club_short = {t["id"]: t.get("short_name") for t in bootstrap["teams"]}
 
     out = {}
     for p in bootstrap["elements"]:
@@ -102,6 +122,13 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             ps_avail = ps.availability(web_name)
             if ps_avail is not None:
                 injury_mult = ps_avail
+
+        # Club-level uncertainty (a new manager, say) compounds with the player's own:
+        # it makes last season's minutes a weaker guide to this season's XI for
+        # everyone at the club, including players FPL has flagged fit.
+        club_avail = ps.club_availability(club_short.get(p["team"]))
+        if club_avail is not None:
+            injury_mult *= club_avail
 
         ease = team_ease.get(p["team"], 0.5)
         ease_mult = 0.8 + ease * 0.4  # 0.8 .. 1.2
