@@ -12,5 +12,8 @@ dependencies = [
     "pulp>=2.8",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
 [tool.setuptools]
 packages = ["engine"]
