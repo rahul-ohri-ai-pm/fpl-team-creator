@@ -10,7 +10,9 @@ POSITION_BY_TYPE = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
 
 
 def _finished_events(bootstrap) -> int:
-    return sum(1 for e in bootstrap["events"] if e["finished"]) or 1
+    """Games played so far this season. 0 pre-season/early season - callers must
+    not divide by this directly (minutes would then look artificially reliable)."""
+    return sum(1 for e in bootstrap["events"] if e["finished"])
 
 
 def fixture_ease(team_id: int, fixtures: list, next_event: int, n: int = 4) -> float:
@@ -36,9 +38,16 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
 
     out = {}
     for p in bootstrap["elements"]:
-        form = float(p["form"] or 0)
+        # `form` is a rolling last-30-days average - it's legitimately 0 pre-season
+        # and early in a new season (no matches played recently), not a signal that
+        # the player is bad. Fall back to last known points-per-game in that case.
+        form = float(p["form"] or 0) or float(p["points_per_game"] or 0)
         minutes = p["minutes"]
-        reliability = min(1.0, minutes / max(1, finished * 90 * 0.6))
+        # Pre-season/early season, `minutes` is still last season's total and there's
+        # no `finished` games this season to normalize against - use a full season
+        # (38 games) as the reference so low-minutes players are still discounted.
+        games_reference = finished if finished > 0 else 38
+        reliability = min(1.0, minutes / (games_reference * 90 * 0.6))
         chance = p["chance_of_playing_next_round"]
         injury_mult = (chance if chance is not None else 100) / 100
         ease = team_ease.get(p["team"], 0.5)
