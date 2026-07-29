@@ -24,3 +24,21 @@ Template for each new entry:
 - **Starting XI (4-4-2):** Roefs; Gabriel, Guéhi, Mukiele, Muñoz; Fernandes, Szoboszlai,
   Guimarães, Wilson; João Pedro, Igor Thiago (bench: Kelleher, van Hecke, Stach, Calvert-Lewin)
 - **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
+
+## Pre-season (re-run) — 2026-07-29
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Season still hasn't started**, so the API returns no bank/value/picks for the entry. Squad below
+  is the optimizer's from-scratch draft after the objective fix logged in `decisions_log.md`;
+  it supersedes the earlier 2026-07-29 snapshot above.
+- **Squad (£100.0m):** GK: David Raya, Martin Dúbravka · DEF: Gabriel Magalhães, Marc Guéhi,
+  Nordi Mukiele, Daniel Muñoz, Tyrick Mitchell · MID: Bruno Fernandes, Antoine Semenyo,
+  Dominik Szoboszlai, Bruno Guimarães, Harry Wilson · FWD: João Pedro, Dominic Calvert-Lewin,
+  Richarlison
+- **Starting XI (4-5-1):** Raya; Gabriel, Guéhi, Mukiele, Muñoz; Fernandes, Semenyo, Szoboszlai,
+  Guimarães, Wilson; João Pedro
+- **Bench (auto-sub order):** Calvert-Lewin, Mitchell, Richarlison, Dúbravka
+- **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
+- All 15 flagged `status=a` (available) with no news at time of writing; 24 injured / 19 doubtful /
+  3 suspended elsewhere in the pool, so the flags are live data, not missing data.
