@@ -22,6 +22,19 @@ FORMATION_LIMITS = {  # (min, max) starters per position, out of 11
 # a starter but above nothing.
 BENCH_WEIGHT = 0.15
 
+# Strength of the risk-profile ownership preference from score.py. Player scores
+# span roughly 0-8 predicted points and `tiebreak` spans -1..1, so at this size it
+# can only decide between players within 0.02 points of each other - a genuine
+# tiebreak. It is excluded from every reported total: `score` is predicted points,
+# and the headline number has to stay comparable to what the squad actually scores.
+OWNERSHIP_TIEBREAK_EPSILON = 0.02
+
+
+def _objective_value(pid: int, players: dict) -> float:
+    """Selection value: predicted points, nudged by the ownership tiebreak."""
+    p = players[pid]
+    return p["score"] + OWNERSHIP_TIEBREAK_EPSILON * p.get("tiebreak", 0.0)
+
 
 def squad_score(squad_ids: list[int], players: dict, bench_weight: float = BENCH_WEIGHT) -> float:
     """Predicted points for a 15-man squad: full credit for the best legal XI,
@@ -51,7 +64,7 @@ def optimal_squad(players: dict, budget: int, current_squad: list[int] | None = 
     s = {pid: pulp.LpVariable(f"s_{pid}", cat="Binary") for pid in players}
 
     prob += pulp.lpSum(
-        players[pid]["score"] * (bench_weight * x[pid] + (1 - bench_weight) * s[pid])
+        _objective_value(pid, players) * (bench_weight * x[pid] + (1 - bench_weight) * s[pid])
         for pid in players
     )
 
@@ -89,7 +102,7 @@ def best_lineup(squad_ids: list[int], players: dict) -> dict:
     prob = pulp.LpProblem("fpl_lineup", pulp.LpMaximize)
     x = {pid: pulp.LpVariable(f"s_{pid}", cat="Binary") for pid in squad_ids}
 
-    prob += pulp.lpSum(players[pid]["score"] * x[pid] for pid in squad_ids)
+    prob += pulp.lpSum(_objective_value(pid, players) * x[pid] for pid in squad_ids)
     prob += pulp.lpSum(x.values()) == 11
     for pos, (lo, hi) in FORMATION_LIMITS.items():
         count = pulp.lpSum(x[pid] for pid in squad_ids if players[pid]["pos"] == pos)
@@ -99,7 +112,7 @@ def best_lineup(squad_ids: list[int], players: dict) -> dict:
     prob.solve(pulp.PULP_CBC_CMD(msg=False))
     starters = [pid for pid in squad_ids if x[pid].value() == 1]
     bench = [pid for pid in squad_ids if pid not in starters]
-    ranked = sorted(starters, key=lambda pid: players[pid]["score"], reverse=True)
+    ranked = sorted(starters, key=lambda pid: _objective_value(pid, players), reverse=True)
     return {
         "starters": starters,
         "bench": bench,

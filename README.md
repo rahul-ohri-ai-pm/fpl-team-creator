@@ -22,6 +22,11 @@ gameweek deadline.
    weighing the -4pt hit cost.
 4. **Weekly review:** the `/fpl-weekly-review` skill (`.claude/skills/fpl-weekly-review/`) runs the
    above, cross-checks against the MCP's qualitative tools, and appends to `records/`.
+5. **Measurement:** every run records its recommended XI and predicted points to
+   `records/predictions.jsonl`. The next run replays that gameweek's real FPL points through
+   `engine/evaluate.py` — applying auto-subs and the vice-captain armband — and reports predicted
+   vs actual before recommending anything, so the scoring weights get tuned against measured error
+   rather than intuition.
 
 ## Repo map
 
@@ -32,9 +37,11 @@ engine/fetch.py              pulls FPL API data
 engine/preseason.py           pre-season layer + price-implied baseline for unknown players
 engine/score.py               predicted-points heuristic
 engine/optimize.py            MILP squad/transfer optimizer
+engine/evaluate.py            records predictions, measures them against real FPL points
 records/team_history.md       squad snapshots over time
 records/decisions_log.md      every transfer decision + reasoning
 records/gameweek_reviews.md   how past decisions actually performed
+records/predictions.jsonl     append-only predicted-vs-actual log (the calibration data)
 .claude/skills/fpl-weekly-review/   the weekly Claude Code workflow
 ```
 

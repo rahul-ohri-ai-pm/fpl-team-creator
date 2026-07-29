@@ -60,6 +60,28 @@ append-only and are the persistent, GitHub-visible memory of this project. Alway
 rewrite past entries. Read `gameweek_reviews.md` before making a new recommendation — it's the
 feedback loop for whether last week's reasoning actually held up.
 
+`records/predictions.jsonl` is the machine-readable half of that loop: one JSON line per run
+holding the recommended XI/bench, captain, and the predicted points. `engine/evaluate.py` reads it
+back the following week, applies real FPL points (auto-subs and the vice-captain armband included),
+and reports predicted vs actual.
+
+- **Evaluate before recommending.** Every weekly run measures the previous gameweek *first*, so
+  this week's call is informed by how the last one did. The skill enforces the ordering.
+- **Record a prediction every run, including holds.** An unrecorded week is a permanent hole in the
+  calibration data — it can't be backfilled once the gameweek's live data ages out.
+- Persistent bias in `calibration(...)` is the evidence for retuning `engine/score.py`'s weights.
+  Change weights off measured error, not intuition, and write the reasoning into
+  `gameweek_reviews.md`.
+
+## Scoring conventions
+
+`score` is **predicted points and nothing else** — an XI's scores sum to a number comparable with
+what the squad actually banks. Preferences that aren't points (the risk-profile ownership lean)
+live in a separate `tiebreak` field and are applied by the optimizer at
+`OWNERSHIP_TIEBREAK_EPSILON`, small enough to separate only near-identical players. Don't add
+non-points terms back into `score`: it silently inflates every total and makes prediction-vs-actual
+tracking meaningless.
+
 ## Token discipline
 
 Weekly runs should end with a short summary (final squad changes, captain/vice, one-line reason

@@ -46,7 +46,13 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
     finished = _finished_events(bootstrap)
     team_ease = {t["id"]: fixture_ease(t["id"], fixtures, next_event) for t in bootstrap["teams"]}
 
-    ownership_weight = {"safe": 1.5, "balanced": 0.3, "differential": -1.5}.get(risk_profile, 0.3)
+    # Direction and strength of the ownership preference, as a *tiebreak* only.
+    # Positive = prefer template/high-ownership cover, negative = prefer differentials.
+    # This deliberately never enters `score`: ownership isn't predicted points, and
+    # adding it there inflated squad totals into looking like a points forecast they
+    # weren't. The optimizer applies it at OWNERSHIP_TIEBREAK_EPSILON strength, so it
+    # can only separate players who are otherwise near-identical.
+    ownership_weight = {"safe": 1.0, "balanced": 0.2, "differential": -1.0}.get(risk_profile, 0.2)
 
     ps = preseason_mod.load() if preseason is None else preseason
     baselines = preseason_mod.price_baselines(bootstrap)
@@ -102,10 +108,13 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
         ownership = float(p["selected_by_percent"] or 0)
 
         predicted = form * ease_mult * reliability * injury_mult
-        predicted += (ownership / 100) * ownership_weight
 
         out[p["id"]] = {
+            # Predicted points, and nothing else. Summing these across an XI gives a
+            # number that can be compared against what the squad actually scores.
             "score": round(predicted, 3),
+            # Signed -1..1 ownership preference, applied only as a tiebreak.
+            "tiebreak": round((ownership / 100) * ownership_weight, 4),
             "pos": POSITION_BY_TYPE[p["element_type"]],
             "team": p["team"],
             "cost": p["now_cost"],

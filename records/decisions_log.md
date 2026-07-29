@@ -90,3 +90,32 @@ Template for each new entry:
   out of contention (5.300 -> 4.056), as does Saka (5.133 -> 3.890).
 - **Optimizer net score:** 63.854 (XI 61.611 + 0.15 x bench 14.954), unchanged — the squad is stable
   under the richer model, which is mild evidence for it rather than against.
+
+## Pre-season (ownership as tiebreak + prediction tracking) — 2026-07-29
+
+- **Decision:** Squad adjusted by three players as a direct consequence of the scoring fix below.
+  **out** Szoboszlai, Muñoz, Dúbravka → **in** Stach, Senesi, Verbruggen. Captain/vice unchanged
+  (Fernandes / Gabriel).
+- **Hit taken:** n/a — pre-season, unlimited changes until the GW1 deadline.
+- **Why the squad moved:** ownership is no longer added to `score`. It was worth up to +0.79 points
+  per player, which is not a small nudge — Szoboszlai (47.3% owned) was carrying +0.71 of padding
+  and ranked above Stach on 4.62 vs 4.82 of *actual* predicted points. Stripping the padding
+  reversed that. Ownership now lives in a separate `tiebreak` field applied by the optimizer at
+  epsilon 0.02, i.e. at most 0.02 points of influence, so it can only separate players who are
+  otherwise near-identical. That is what a tiebreak should mean.
+- **What this fixes beyond the squad:** the reported total is now genuinely predicted points.
+  Previous runs reported 69.21 for a squad whose honest expectation was ~63.8; the gap was 4.29 of
+  ownership padding plus fixture-ease gains, and it made the headline number uncomparable to
+  anything the team could actually score. New predicted total: **64.50** (XI 57.64 + captain 6.87).
+  Independent check: a separate optimizer run on raw last-season ppg put the *theoretical ceiling*
+  for any £100m squad at 64.80, so 64.50 now lands where it should instead of above it.
+- **Prediction tracking added.** `records/predictions.jsonl` (append-only, one JSON line per run)
+  stores the recommended XI/bench, captain and predicted points. `engine/evaluate.py` replays a
+  gameweek's real FPL points against it — applying auto-substitutions and the vice-captain armband,
+  so a blanked starter isn't scored as a zero the real team never took — and reports predicted vs
+  actual, per-player error, MAE and signed bias. The weekly skill now runs this *first*, before any
+  recommendation, so each week's call is made in light of the last week's measured result.
+- **GW1 prediction recorded:** predicted_total 64.504. First measurable entry; nothing to evaluate
+  against yet since no gameweek has been played.
+- **Test note:** a test caught my own arithmetic error rather than a code bug (XI total with a
+  captain double). 57 tests now pass, covering the optimizer, pre-season layer and evaluation.

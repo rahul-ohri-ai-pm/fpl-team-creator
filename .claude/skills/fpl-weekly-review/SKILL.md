@@ -14,7 +14,22 @@ hit tolerance - don't hardcode any of these.
    the next gameweek's real deadline. If running within ~2 hours of it, warn the user up front -
    don't silently proceed as if there's plenty of time.
 
-2. **Fetch data.**
+2. **Evaluate last gameweek before deciding anything.** This runs *first*, so the week's
+   recommendation is made in light of how the last one actually did - not after the fact.
+   ```python
+   from engine.fetch import get_event_live
+   from engine.evaluate import evaluate_gameweek, load_predictions, calibration
+   result = evaluate_gameweek(last_gw, get_event_live(last_gw))
+   ```
+   `evaluate_gameweek` returns `None` if nothing was recorded for that gameweek (a first run, or
+   one that was skipped) - say so plainly rather than inventing a review. Otherwise report
+   `predicted_total` vs `actual_total`, the signed `error`, and the two or three players in
+   `per_player` with the largest errors. `bias > 0` means the model is under-predicting.
+   Re-run `calibration(...)` over all evaluated gameweeks to see whether the error is systematic;
+   if it is, that's evidence for changing `engine/score.py`'s weights, and the reasoning goes in
+   `records/gameweek_reviews.md`.
+
+3. **Fetch data.**
    ```
    python engine/fetch.py --team <team_id from config/settings.md>
    ```
@@ -23,30 +38,44 @@ hit tolerance - don't hardcode any of these.
    the full player pool - import and call these directly in a short script if you need the raw
    JSON rather than just the summarized CLI output.
 
-3. **Score and optimize.** Using `engine.score.score_players(bootstrap, fixtures, next_event,
+4. **Score and optimize.** Using `engine.score.score_players(bootstrap, fixtures, next_event,
    risk_profile)` and `engine.optimize.recommend_transfers(players, current_squad, bank,
    free_transfers)`, get the recommended 0-2 transfers (or "hold"). Then run
    `engine.optimize.best_lineup(...)` on the resulting squad for the starting XI, formation,
    captain, and vice-captain.
 
-4. **Cross-check with the `fpl` MCP.** Before finalizing, check its injury/news tools and any
+5. **Cross-check with the `fpl` MCP.** Before finalizing, check its injury/news tools and any
    rival/mini-league comparison for context the raw stats wouldn't catch (e.g. a press-conference
    knock, a fixture postponement). Adjust the recommendation only if there's a concrete reason to
    override the optimizer - state that reason explicitly if you do.
 
-5. **Review last week first.** Read the most recent entry in `records/gameweek_reviews.md` before
-   finalizing this week's call - it's the feedback loop for whether last week's reasoning held up.
+6. **Read the narrative history.** Read the most recent entry in `records/gameweek_reviews.md`
+   before finalizing this week's call - step 2 gives the numbers, this gives the reasoning behind
+   them and whether it held up.
 
-6. **Log to records/** (append, never rewrite past entries):
-   - `records/gameweek_reviews.md` - how the *previous* gameweek's held squad actually scored.
+7. **Record this week's prediction.** Do this every run, including holds - an unrecorded week is a
+   permanent hole in the calibration data.
+   ```python
+   from engine.evaluate import build_prediction, record_prediction
+   record_prediction(build_prediction(next_event, lineup, players,
+                                      meta={"decision": "hold"}))
+   ```
+   `predicted_total` counts the captain twice, so it is directly comparable to the entry's real
+   gameweek points.
+
+8. **Log to records/** (append, never rewrite past entries):
+   - `records/gameweek_reviews.md` - how the *previous* gameweek's held squad actually scored,
+     using the step 2 numbers (predicted vs actual, biggest misses, what it implies for scoring).
    - `records/decisions_log.md` - this week's decision (hold, or the specific transfer(s)) with
      the reasoning and the optimizer's net (hit-adjusted) score.
    - `records/team_history.md` - the new squad snapshot: bank, value, free transfers, chip status,
      full squad, starting XI/formation, captain/vice.
 
-7. **Report back concisely.** Final squad changes (if any), captain/vice, and a one-line reason
-   each. Do not dump the full player pool or raw stats table into the chat - that defeats the
-   point of running this as a lean weekly check-in.
+9. **Report back concisely.** Lead with last gameweek's predicted vs actual, then the final squad
+   changes (if any), captain/vice, and a one-line reason each. **Always present the final 15 as a
+   table** - one row per player, starting XI and bench separated, with position, club, price and
+   predicted score, captain and vice marked. Do not dump the full player pool or raw stats table
+   into the chat - that defeats the point of running this as a lean weekly check-in.
 
 ## Constraints
 

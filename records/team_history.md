@@ -56,3 +56,18 @@ Template for each new entry:
 - **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
 - 0 of the 15 have zero Premier League minutes, i.e. no unproven players entered the squad once
   the price baseline made 164 of them selectable.
+
+## Pre-season (post ownership-tiebreak fix) — 2026-07-29
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW total:** 64.50 (XI 57.64 + captain 6.87). This is now pure predicted points —
+  earlier entries' higher totals included an ownership term that was never points.
+- **Squad (£100.0m):** GK: David Raya, Bart Verbruggen · DEF: Gabriel Magalhães, Marc Guéhi,
+  Marcos Senesi, Nordi Mukiele, Tyrick Mitchell · MID: Bruno Fernandes, Antoine Semenyo,
+  Bruno Guimarães, Harry Wilson, Anton Stach · FWD: João Pedro, Dominic Calvert-Lewin, Richarlison
+- **Starting XI (4-5-1):** Raya; Gabriel, Guéhi, Senesi, Mukiele; Fernandes, Semenyo, Guimarães,
+  Wilson, Stach; João Pedro
+- **Bench (auto-sub order):** Calvert-Lewin, Richarlison, Mitchell, Verbruggen
+- **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
+- Recorded to `records/predictions.jsonl` as the GW1 prediction for measurement after the gameweek.

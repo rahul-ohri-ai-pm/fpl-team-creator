@@ -42,6 +42,14 @@ def get_entry_picks(team_id: int, event: int):
     return r.json()
 
 
+def get_event_live(event: int):
+    """Per-player stats for a gameweek, including `total_points` actually scored.
+    This is what turns a recorded prediction into a measured one."""
+    r = requests.get(f"{BASE}/event/{event}/live/", timeout=15)
+    r.raise_for_status()
+    return r.json()
+
+
 def get_entry_history(team_id: int):
     r = requests.get(f"{BASE}/entry/{team_id}/history/", timeout=15)
     r.raise_for_status()
