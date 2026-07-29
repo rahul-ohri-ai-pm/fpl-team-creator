@@ -28,6 +28,14 @@ gameweek deadline.
    vs actual before recommending anything, so the scoring weights get tuned against measured error
    rather than intuition.
 
+## Documentation
+
+| Doc | What it covers |
+|---|---|
+| [docs/PRODUCT_LOG.md](docs/PRODUCT_LOG.md) | **Start here.** The problem being solved, the approach and why, the MCP servers and where the human/agent boundary sits, how the evals work, and a dated decision log of every change with its reasoning and what it cost. |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Data flow, module responsibilities, the network and MCP boundaries, configuration, and the testing approach. |
+| [docs/EVALUATION.md](docs/EVALUATION.md) | How predictions are recorded and measured, how to read the error metrics, and the rule for what is allowed to change a scoring weight. |
+
 ## Repo map
 
 ```
