@@ -29,7 +29,20 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    if it is, that's evidence for changing `engine/score.py`'s weights, and the reasoning goes in
    `records/gameweek_reviews.md`.
 
-3. **Fetch data.**
+3. **Refresh the pre-season file (pre-season runs only).** If `data/preseason.json`'s `updated` is
+   more than a few days old and GW1 hasn't been played, refresh it before scoring - late-July and
+   August friendlies are the most informative of the whole calendar. Team results and manager
+   quotes are free (premierleague.com, Sky Sports, Fantasy Football Scout's free articles);
+   player-level friendly **minutes** are paywalled, so leave `minutes` null rather than guessing.
+   Record fitness/lay-off notes as `availability`, always with a `source`.
+   **Always validate afterwards** - a mis-keyed entry silently scores the wrong player:
+   ```python
+   from engine.preseason import load
+   print(load().validate(bootstrap))   # [] means clean
+   ```
+   `web_name` is not unique (14 collisions in the pool). Pin any colliding name with `element_id`.
+
+4. **Fetch data.**
    ```
    python engine/fetch.py --team <team_id from config/settings.md>
    ```
@@ -38,13 +51,13 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    the full player pool - import and call these directly in a short script if you need the raw
    JSON rather than just the summarized CLI output.
 
-4. **Score and optimize.** Using `engine.score.score_players(bootstrap, fixtures, next_event,
+5. **Score and optimize.** Using `engine.score.score_players(bootstrap, fixtures, next_event,
    risk_profile)` and `engine.optimize.recommend_transfers(players, current_squad, bank,
    free_transfers)`, get the recommended 0-2 transfers (or "hold"). Then run
    `engine.optimize.best_lineup(...)` on the resulting squad for the starting XI, formation,
    captain, and vice-captain.
 
-5. **Price the favourite-club preference.** Read the favourite club and club loyalty mode from
+6. **Price the favourite-club preference.** Read the favourite club and club loyalty mode from
    `config/settings.md`.
    ```python
    from engine.optimize import loyalty_cost
@@ -60,16 +73,16 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    Never fold club loyalty into `score` — it isn't predicted points, and `predictions.jsonl` has to
    stay comparable to what the squad actually banks.
 
-6. **Cross-check with the `fpl` MCP.** Before finalizing, check its injury/news tools and any
+7. **Cross-check with the `fpl` MCP.** Before finalizing, check its injury/news tools and any
    rival/mini-league comparison for context the raw stats wouldn't catch (e.g. a press-conference
    knock, a fixture postponement). Adjust the recommendation only if there's a concrete reason to
    override the optimizer - state that reason explicitly if you do.
 
-7. **Read the narrative history.** Read the most recent entry in `records/gameweek_reviews.md`
+8. **Read the narrative history.** Read the most recent entry in `records/gameweek_reviews.md`
    before finalizing this week's call - step 2 gives the numbers, this gives the reasoning behind
    them and whether it held up.
 
-8. **Record this week's prediction.** Do this every run, including holds - an unrecorded week is a
+9. **Record this week's prediction.** Do this every run, including holds - an unrecorded week is a
    permanent hole in the calibration data.
    ```python
    from engine.evaluate import build_prediction, record_prediction
@@ -79,7 +92,7 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    `predicted_total` counts the captain twice, so it is directly comparable to the entry's real
    gameweek points.
 
-9. **Log to records/** (append, never rewrite past entries):
+10. **Log to records/** (append, never rewrite past entries):
    - `records/gameweek_reviews.md` - how the *previous* gameweek's held squad actually scored,
      using the step 2 numbers (predicted vs actual, biggest misses, what it implies for scoring).
    - `records/decisions_log.md` - this week's decision (hold, or the specific transfer(s)) with
@@ -87,7 +100,7 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    - `records/team_history.md` - the new squad snapshot: bank, value, free transfers, chip status,
      full squad, starting XI/formation, captain/vice.
 
-10. **Report back concisely.** Lead with last gameweek's predicted vs actual, then the final squad
+11. **Report back concisely.** Lead with last gameweek's predicted vs actual, then the final squad
    changes (if any), captain/vice, and a one-line reason each. **Always present the final 15 as a
    table** - one row per player, starting XI and bench separated, with position, club, price and
    predicted score, captain and vice marked. Do not dump the full player pool or raw stats table

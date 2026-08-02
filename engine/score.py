@@ -381,7 +381,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
         # Pre-season minutes are the one thing friendlies are genuinely good for:
         # they show who the manager actually intends to start. Blend rather than
         # replace - a few friendlies shouldn't outvote a full season.
-        share = ps.minutes_share(web_name)
+        share = ps.minutes_share(web_name, p["id"])
         if share is not None:
             w = preseason_mod.PRESEASON_MINUTES_WEIGHT
             reliability = (1 - w) * reliability + w * share
@@ -392,7 +392,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             # FPL hasn't flagged this player. Fall back to any pre-season fitness
             # doubt on file; once FPL sets a real percentage it wins, being the
             # harder source.
-            ps_avail = ps.availability(web_name)
+            ps_avail = ps.availability(web_name, p["id"])
             if ps_avail is not None:
                 injury_mult = ps_avail
 

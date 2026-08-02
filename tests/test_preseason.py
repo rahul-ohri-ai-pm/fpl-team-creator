@@ -228,3 +228,66 @@ def test_checked_in_file_club_entries_are_well_formed():
     loaded = ps.load()
     assert loaded.club_availability("MCI") is not None
     assert loaded.club_note("MCI")
+
+
+# --- web_name collisions --------------------------------------------------
+# `web_name` is not unique: the live pool carries 14 collisions, and "Munoz" /
+# "Muñoz" are different footballers at different clubs. A mis-keyed entry does not
+# fail, it silently scores the wrong player - which has now happened twice here.
+
+def _pool_with_collision():
+    def el(pid, web, first, second, team):
+        return {"id": pid, "web_name": web, "first_name": first, "second_name": second,
+                "element_type": 3, "team": team, "now_cost": 60,
+                "points_per_game": "5.0", "form": "0.0", "minutes": 3000,
+                "chance_of_playing_next_round": None, "selected_by_percent": "5.0"}
+    return {"elements": [
+        el(201, "Munoz", "Daniel", "Munoz Mejia", 1),
+        el(377, "Munoz", "Victor", "Munoz", 2),
+        el(426, "B.Fernandes", "Bruno", "Fernandes", 3),
+    ]}
+
+
+def test_validate_flags_an_ambiguous_web_name():
+    pre = ps.Preseason({"players": [{"web_name": "Munoz", "availability": 0.7}]})
+    problems = pre.validate(_pool_with_collision())
+    assert len(problems) == 1
+    assert "AMBIGUOUS" in problems[0]
+    assert "201" in problems[0] and "377" in problems[0]
+
+
+def test_validate_accepts_an_entry_pinned_by_element_id():
+    pre = ps.Preseason({"players": [{"web_name": "Munoz", "element_id": 201, "availability": 0.7}]})
+    assert pre.validate(_pool_with_collision()) == []
+
+
+def test_validate_flags_a_name_that_matches_nobody():
+    pre = ps.Preseason({"players": [{"web_name": "Ghost", "availability": 0.5}]})
+    problems = pre.validate(_pool_with_collision())
+    assert len(problems) == 1 and "matches no player" in problems[0]
+
+
+def test_validate_flags_a_stale_element_id():
+    pre = ps.Preseason({"players": [{"web_name": "Munoz", "element_id": 99999}]})
+    problems = pre.validate(_pool_with_collision())
+    assert len(problems) == 1 and "not in the current pool" in problems[0]
+
+
+def test_a_pinned_entry_reaches_only_its_own_player():
+    """The actual bug: an availability flag meant for Daniel Munoz (CRY) landed on
+    Victor Munoz (LIV), a different player at a different club."""
+    pre = ps.Preseason({"players": [{"web_name": "Munoz", "element_id": 201, "availability": 0.7}]})
+    assert pre.availability("Munoz", 201) == 0.7
+    assert pre.availability("Munoz", 377) is None
+
+
+def test_an_unpinned_entry_still_works_for_a_unique_name():
+    """Pinning must stay optional - most names don't collide and the file should
+    not need an id for every one of them."""
+    pre = ps.Preseason({"players": [{"web_name": "B.Fernandes", "availability": 0.7}]})
+    assert pre.availability("B.Fernandes", 426) == 0.7
+    assert pre.validate(_pool_with_collision()) == []
+
+
+def test_a_clean_file_reports_no_problems():
+    assert ps.Preseason({}).validate(_pool_with_collision()) == []

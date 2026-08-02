@@ -360,3 +360,41 @@ the opening run".
   it is not supported by the underlying numbers.
 - **Predicted GW1 65.215** against 65.081 before — level intentionally preserved, ordering changed.
 - **Reproducible:** `python engine/backtest.py` re-runs the evidence.
+
+## Pre-season file refreshed — World Cup lay-offs, and a name-collision bug — 2026-08-02
+
+Prompted by the user asking whether current friendlies were being checked. They were not. The
+`data/preseason.json` layer was wired in but effectively empty and four days stale, during the most
+informative stretch of the calendar.
+
+- **State before:** `updated` 2026-07-29, friendlies through 2026-07-29, **zero players with
+  friendly minutes**, two availability flags (Saka, Rice), one club flag (MCI). It was moving
+  almost nothing.
+- **Player-level friendly minutes remain unavailable.** Re-checked directly: Fantasy Football
+  Scout's tracker is Premium-only, and the premierleague.com page hosting it points back to the
+  same paywall. `minutes` stays null, per the _README. Never guessed.
+- **What was free and is now recorded — two lay-offs that hit the squad directly:**
+  - **Bruno Fernandes (MUN)** — had not rejoined pre-season training in late July, still on the
+    extended post-World Cup break, with United granting their Portuguese players a further week
+    beyond the standard extension. `availability` 0.70. **7.45 → 5.21, and he lost the captaincy.**
+  - **Daniel Muñoz (CRY)** — listed among Palace's post-World Cup absentees still to be integrated.
+    `availability` 0.70. 4.61 → 3.22, dropped out of the squad.
+  - Neither is flagged by FPL — both read `status=a`, `chance_of_playing_next_round` null, empty
+    `news`. That is precisely the gap this file exists to cover, and FPL's rating wins the moment
+    it sets one.
+- **Recorded but deliberately scoring nothing:** João Pedro's nine-minute hat-trick and Mbeumo's
+  brace against Atlético. Friendly *output* is a weak predictor and the _README rules it out; only
+  minutes and fitness may move a number. Also logged: the "Fernandes" rested with calf fatigue on
+  2026-07-30 was **Mateus** Fernandes (TOT), not Bruno.
+- **Bug found and fixed mid-change, the second of its kind here.** The Muñoz flag was first written
+  keyed on `"Munoz"` — which is **Victor Munoz (LIV)**, a different player at a different club in a
+  a different position. It silently moved his score instead. `web_name` is not unique; the pool has
+  **14 collisions** (three Wilsons, two Martinez, two Henderson…). The 2026-07-29 entry hit the same
+  trap with Wilson and recorded it as a one-off working-note error; it was not a one-off.
+  - **Durable fix:** entries may now carry `element_id`, which is unique and wins over `web_name`;
+    `Preseason.validate(bootstrap)` reports every entry matching no player or several; and a
+    name-keyed entry can no longer leak onto a different player who shares the name. The weekly
+    skill now runs the validation as a step. All four existing entries are pinned by id.
+- **Net effect on GW1:** 65.215 → **62.624**. A fall of 2.6 points that is not a model regression —
+  it is two genuine availability risks the model previously could not see, and it is exactly the
+  kind of correction that only happens if someone refreshes the file.

@@ -24,55 +24,219 @@
     "Friendly goals and assists are deliberately NOT scored. Pre-season output is a famously weak",
     "predictor - weak opposition, trialists, experimental XIs - while minutes are informative."
   ],
-
-  "updated": "2026-07-29",
+  "updated": "2026-08-02",
   "season": "2026/27",
   "gw1_deadline": "2026-08-21T17:30:00Z",
-
   "sources": [
     "https://www.premierleague.com/en/news/4606700/premier-league-clubs-summer-2026-friendlies-and-tours",
     "https://www.fantasyfootballhub.co.uk/how-the-world-cup-could-affect-the-opening-fpl-gameweeks-26-27-article",
-    "https://www.fantasyfootballscout.co.uk/fpl-2026-27-pre-season-minutes-goals-assists-tracker"
+    "https://www.fantasyfootballscout.co.uk/fpl-2026-27-pre-season-minutes-goals-assists-tracker",
+    "https://www.fantasyfootballscout.co.uk/2026/07/29/fpl-pre-season-pedro-hat-trick-alonsos-tactics-ndiaye-absent",
+    "https://www.fantasyfootballscout.co.uk/2026/07/30/fpl-pre-season-tel-lively-why-solanke-fernandes-missed-out-matusiwa-latest",
+    "https://www.unitedinfocus.com/news/manchester-united-confirm-what-date-players-will-return-for-pre-season-training/",
+    "https://www.skysports.com/football/news/11661/13546612/premier-league-pre-season-friendlies-2026-27-fixtures-results-uk-kick-off-times-summer-tour-schedule-and-training-camps"
   ],
-
   "context": [
     "The 2026 World Cup finished ~33 days before GW1. Players who went deep are expected to get",
     "roughly three weeks off, putting some back in club training only around 10-12 August - under",
     "two weeks before the 21 August deadline. Eight clubs also changed manager this summer, so",
-    "last season's minutes are a weaker guide to this season's XI than usual."
+    "last season's minutes are a weaker guide to this season's XI than usual.",
+    "2026-08-02 refresh: the World Cup lay-off predicted in the note above is now confirmed for named",
+    "players rather than generic. Bruno Fernandes had still not rejoined Man Utd pre-season training in",
+    "late July - United granted their Portuguese contingent an extra week beyond the standard World Cup",
+    "extension - and Crystal Palace listed Munoz among a post-World Cup group still to be integrated.",
+    "FPL has flagged neither: both read status=a with chance_of_playing_next_round null and empty news.",
+    "That is exactly the case the availability field exists for, and FPL's own rating wins the moment",
+    "it sets one."
   ],
-
   "friendlies": [
-    {"date": "2026-07-15", "home": "Brentford", "away": "AFC Wimbledon", "score": "3-2"},
-    {"date": "2026-07-18", "home": "Brighton", "away": "Wycombe Wanderers", "score": "4-1"},
-    {"date": "2026-07-18", "home": "Dundee", "away": "Everton", "score": "0-4"},
-    {"date": "2026-07-18", "home": "Newcastle", "away": "Darlington", "score": "3-0"},
-    {"date": "2026-07-18", "home": "Notts County", "away": "Nottingham Forest", "score": "0-2"},
-    {"date": "2026-07-18", "home": "Man Utd", "away": "Wrexham", "score": "0-1"},
-    {"date": "2026-07-21", "home": "Walsall", "away": "Aston Villa", "score": "0-5"},
-    {"date": "2026-07-22", "home": "Nottingham Forest", "away": "Blackburn", "score": "3-0"},
-    {"date": "2026-07-24", "home": "St Pauli", "away": "Bournemouth", "score": "1-4"},
-    {"date": "2026-07-25", "home": "Arsenal", "away": "MK Dons", "score": "3-0"},
-    {"date": "2026-07-25", "home": "Porto", "away": "Aston Villa", "score": "2-1"},
-    {"date": "2026-07-25", "home": "Rosenborg", "away": "Man Utd", "score": "0-5"},
-    {"date": "2026-07-25", "home": "Leeds", "away": "Wrexham", "score": "2-3"},
-    {"date": "2026-07-25", "home": "Liverpool", "away": "Sunderland", "score": "4-2"},
-    {"date": "2026-07-25", "home": "Konyaspor", "away": "Hull", "score": "0-3"},
-    {"date": "2026-07-25", "home": "Fulham", "away": "Norwich", "score": "0-2"},
-    {"date": "2026-07-25", "home": "Crystal Palace", "away": "Swindon", "score": "5-1"},
-    {"date": "2026-07-25", "home": "Gateshead", "away": "Newcastle", "score": "1-1"},
-    {"date": "2026-07-25", "home": "Bromley", "away": "Crystal Palace", "score": "3-0"},
-    {"date": "2026-07-26", "home": "Vitoria", "away": "Nottingham Forest", "score": "1-1"},
-    {"date": "2026-07-28", "home": "Aston Villa", "away": "Real Sociedad", "score": "2-4"},
-    {"date": "2026-07-28", "home": "Western Sydney Wanderers", "away": "Chelsea", "score": "4-6"},
-    {"date": "2026-07-28", "home": "Stoke", "away": "Everton", "score": "1-0"},
-    {"date": "2026-07-28", "home": "Al-Ahli", "away": "Fulham", "score": "1-1"},
-    {"date": "2026-07-28", "home": "Caykur Rizespor", "away": "Hull", "score": "1-2"},
-    {"date": "2026-07-28", "home": "Famalicao", "away": "Crystal Palace", "score": "0-0"},
-    {"date": "2026-07-28", "home": "Lens", "away": "Crystal Palace", "score": "3-0"},
-    {"date": "2026-07-29", "home": "Spurs", "away": "Sydney FC", "score": "1-1"}
+    {
+      "date": "2026-07-15",
+      "home": "Brentford",
+      "away": "AFC Wimbledon",
+      "score": "3-2"
+    },
+    {
+      "date": "2026-07-18",
+      "home": "Brighton",
+      "away": "Wycombe Wanderers",
+      "score": "4-1"
+    },
+    {
+      "date": "2026-07-18",
+      "home": "Dundee",
+      "away": "Everton",
+      "score": "0-4"
+    },
+    {
+      "date": "2026-07-18",
+      "home": "Newcastle",
+      "away": "Darlington",
+      "score": "3-0"
+    },
+    {
+      "date": "2026-07-18",
+      "home": "Notts County",
+      "away": "Nottingham Forest",
+      "score": "0-2"
+    },
+    {
+      "date": "2026-07-18",
+      "home": "Man Utd",
+      "away": "Wrexham",
+      "score": "0-1"
+    },
+    {
+      "date": "2026-07-21",
+      "home": "Walsall",
+      "away": "Aston Villa",
+      "score": "0-5"
+    },
+    {
+      "date": "2026-07-22",
+      "home": "Nottingham Forest",
+      "away": "Blackburn",
+      "score": "3-0"
+    },
+    {
+      "date": "2026-07-24",
+      "home": "St Pauli",
+      "away": "Bournemouth",
+      "score": "1-4"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Arsenal",
+      "away": "MK Dons",
+      "score": "3-0"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Porto",
+      "away": "Aston Villa",
+      "score": "2-1"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Rosenborg",
+      "away": "Man Utd",
+      "score": "0-5"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Leeds",
+      "away": "Wrexham",
+      "score": "2-3"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Liverpool",
+      "away": "Sunderland",
+      "score": "4-2"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Konyaspor",
+      "away": "Hull",
+      "score": "0-3"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Fulham",
+      "away": "Norwich",
+      "score": "0-2"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Crystal Palace",
+      "away": "Swindon",
+      "score": "5-1"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Gateshead",
+      "away": "Newcastle",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Bromley",
+      "away": "Crystal Palace",
+      "score": "3-0"
+    },
+    {
+      "date": "2026-07-26",
+      "home": "Vitoria",
+      "away": "Nottingham Forest",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Aston Villa",
+      "away": "Real Sociedad",
+      "score": "2-4"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Western Sydney Wanderers",
+      "away": "Chelsea",
+      "score": "4-6"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Stoke",
+      "away": "Everton",
+      "score": "1-0"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Al-Ahli",
+      "away": "Fulham",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Caykur Rizespor",
+      "away": "Hull",
+      "score": "1-2"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Famalicao",
+      "away": "Crystal Palace",
+      "score": "0-0"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Lens",
+      "away": "Crystal Palace",
+      "score": "3-0"
+    },
+    {
+      "date": "2026-07-29",
+      "home": "Spurs",
+      "away": "Sydney FC",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-08-01",
+      "home": "Arsenal",
+      "away": "Girona",
+      "score": "4-1"
+    },
+    {
+      "date": "2026-08-01",
+      "home": "Brighton",
+      "away": "Strasbourg",
+      "score": "4-3"
+    },
+    {
+      "date": "2026-08-01",
+      "home": "Man City",
+      "away": "Inter Milan",
+      "score": "1-1"
+    }
   ],
-
   "_clubs_README": [
     "Club-level uncertainty, applied to every player at the club and compounded with",
     "any per-player flag. A new manager is the main case: last season's minutes stop",
@@ -86,16 +250,14 @@
     "Tighten it towards 0.80 if pre-season line-ups look heavily rotated, and remove",
     "the entry once the new XI is established and FPL's own data reflects it."
   ],
-
   "clubs": [
     {
       "short_name": "MCI",
-      "availability": 0.90,
+      "availability": 0.9,
       "note": "Enzo Maresca replaced Pep Guardiola on a three-year deal, ending a decade under one manager. Squad roles, set-piece duties and rotation patterns are all unproven, and last season's minutes were earned under a different system.",
       "source": "Sky Sports / Al Jazeera, June 2026 - Maresca appointed Man City manager"
     }
   ],
-
   "players": [
     {
       "web_name": "Saka",
@@ -103,7 +265,8 @@
       "possible_minutes": null,
       "availability": 0.75,
       "note": "Deep World Cup run; reported as possibly needing an extended break, so a GW1 start is not assured. Editorial risk flag, not a confirmed absence - drop this entry once FPL sets a real chance_of_playing.",
-      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis"
+      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis",
+      "element_id": 17
     },
     {
       "web_name": "Rice",
@@ -111,7 +274,32 @@
       "possible_minutes": null,
       "availability": 0.75,
       "note": "Same deep World Cup involvement as Saka; same caveat.",
-      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis"
+      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis",
+      "element_id": 13
+    },
+    {
+      "web_name": "B.Fernandes",
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.7,
+      "note": "Had not rejoined Man Utd pre-season training as of late July 2026; still on the extended post-World Cup break, with United granting their Portuguese players a further week beyond the standard extension. Not an injury - a preparation risk before a 21 Aug deadline. JUDGMENT CALL, not a measurement: sized like the MCI club flag, enough to break a tie against an equally-rated player with a normal pre-season, not enough to exclude him.",
+      "source": "https://www.unitedinfocus.com/news/manchester-united-confirm-what-date-players-will-return-for-pre-season-training/",
+      "element_id": 426
+    },
+    {
+      "web_name": "Muñoz",
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.7,
+      "note": "Listed by Crystal Palace among the post-World Cup absentees still to be integrated (alongside Henderson, Mateta, Strand Larsen, Riad) as of 2026-07-29. Same judgment-call sizing as B.Fernandes. NOTE: pinned by element_id - 'Munoz' without the tilde is Victor Munoz (LIV), a different player, and this entry hit him by mistake on first write.",
+      "source": "https://www.fantasyfootballscout.co.uk/2026/07/29/fpl-pre-season-pedro-hat-trick-alonsos-tactics-ndiaye-absent",
+      "element_id": 201
     }
+  ],
+  "friendlies_note": "Partial from 2026-07-30 onward - only fixtures whose date could be attributed to a source are listed. Team-level results are decorative anyway: nothing in engine/score.py reads this array. Friendly RESULTS are not scored, by design (see _README). It is kept as provenance for the player and club entries below, which are the parts that move numbers.",
+  "notes_not_scored": [
+    "Joao Pedro (CHE): hat-trick in nine minutes plus an assist vs Western Sydney, 2026-07-29, and public praise from Alonso. Deliberately moves NO number - friendly goals are a weak predictor and the _README rules them out. Recorded so a future run doesn't mistake the silence for absence.",
+    "Mbeumo (MUN): scored twice off the bench in United's 2-1 win over Atletico Madrid, and has been involved throughout pre-season. Same rule - not scored, recorded as context.",
+    "Mateus Fernandes (TOT) was the 'Fernandes' rested with calf fatigue in the 2026-07-30 report, NOT Bruno Fernandes. Logged because the name collision is an easy and expensive mistake to repeat."
   ]
 }

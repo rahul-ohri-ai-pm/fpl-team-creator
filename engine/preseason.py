@@ -33,17 +33,76 @@ UNKNOWN_RELIABILITY = 0.55
 
 
 class Preseason:
-    """Per-player pre-season adjustments, keyed by FPL `web_name`."""
+    """Per-player pre-season adjustments, keyed by FPL `web_name`.
+
+    `web_name` is not unique. The live pool carries 14 collisions - three players
+    answer to "Wilson", and "Munoz" and "Muñoz" are different footballers at
+    different clubs in different positions. A mis-keyed entry doesn't fail, it
+    silently moves the wrong player's score, which has already happened twice in
+    this project's history. Two defences:
+
+    - An entry may carry `element_id`, the FPL element id, which is unique and
+      wins over `web_name` whenever present. Prefer it for any colliding name.
+    - `validate(bootstrap)` reports entries that match no player or several, so a
+      weekly run surfaces the problem instead of quietly scoring the wrong man.
+    """
 
     def __init__(self, data: dict | None = None):
         data = data or {}
         self.updated = data.get("updated")
         self.friendlies = data.get("friendlies") or []
         self.context = data.get("context") or []
-        self._players = {p["web_name"]: p for p in (data.get("players") or [])
-                         if p.get("web_name")}
+        entries = [p for p in (data.get("players") or []) if p.get("web_name")]
+        self._entries = entries
+        self._players = {p["web_name"]: p for p in entries}
+        self._by_id = {int(p["element_id"]): p for p in entries if p.get("element_id")}
         self._clubs = {c["short_name"]: c for c in (data.get("clubs") or [])
                        if c.get("short_name")}
+
+    def validate(self, bootstrap) -> list[str]:
+        """Problems with this file against the live pool, worst first. Empty is good.
+
+        Not raised - a stale name shouldn't take down the weekly run - but the
+        caller is expected to show these, because a silent mis-key is the whole
+        failure mode this exists to catch.
+        """
+        by_name: dict[str, list] = {}
+        ids = set()
+        for p in bootstrap["elements"]:
+            by_name.setdefault(p["web_name"], []).append(p)
+            ids.add(p["id"])
+
+        problems = []
+        for e in self._entries:
+            name = e["web_name"]
+            eid = e.get("element_id")
+            if eid is not None:
+                if int(eid) not in ids:
+                    problems.append(f"{name!r}: element_id {eid} is not in the current pool")
+                continue
+            matches = by_name.get(name, [])
+            if not matches:
+                problems.append(f"{name!r}: matches no player in the pool (renamed or departed?)")
+            elif len(matches) > 1:
+                where = ", ".join(f"id {m['id']} ({m['first_name']} {m['second_name']})"
+                                  for m in matches)
+                problems.append(
+                    f"{name!r}: AMBIGUOUS - {len(matches)} players share this web_name "
+                    f"[{where}]. Add element_id to disambiguate; scoring is currently "
+                    f"applying this entry to whichever one loaded last.")
+        return problems
+
+    def _entry(self, web_name: str, element_id: int | None):
+        """The entry for this player: by element_id when the file gives one, else
+        by name."""
+        if element_id is not None and element_id in self._by_id:
+            return self._by_id[element_id]
+        entry = self._players.get(web_name)
+        # A name-keyed entry must not leak onto a different player who happens to
+        # share the name and was pinned by id elsewhere in the file.
+        if entry is not None and entry.get("element_id") is not None:
+            return entry if element_id == int(entry["element_id"]) else None
+        return entry
 
     def __len__(self):
         return len(self._players)
@@ -62,9 +121,9 @@ class Preseason:
         c = self._clubs.get(short_name or "")
         return c.get("note") if c else None
 
-    def minutes_share(self, web_name: str) -> float | None:
+    def minutes_share(self, web_name: str, element_id: int | None = None) -> float | None:
         """0..1 share of available pre-season minutes, or None if not recorded."""
-        p = self._players.get(web_name)
+        p = self._entry(web_name, element_id)
         if not p:
             return None
         played, possible = p.get("minutes"), p.get("possible_minutes")
@@ -72,16 +131,16 @@ class Preseason:
             return None
         return max(0.0, min(1.0, played / possible))
 
-    def availability(self, web_name: str) -> float | None:
+    def availability(self, web_name: str, element_id: int | None = None) -> float | None:
         """0..1 multiplier for a risk FPL hasn't flagged yet, or None."""
-        p = self._players.get(web_name)
+        p = self._entry(web_name, element_id)
         if not p:
             return None
         a = p.get("availability")
         return None if a is None else max(0.0, min(1.0, float(a)))
 
-    def note(self, web_name: str) -> str | None:
-        p = self._players.get(web_name)
+    def note(self, web_name: str, element_id: int | None = None) -> str | None:
+        p = self._entry(web_name, element_id)
         return p.get("note") if p else None
 
 
