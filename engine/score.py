@@ -129,6 +129,75 @@ def opponent_matchup_ease(pos: str, team_id: int, fixtures: list, next_event: in
     return max(0.0, min(1.0, 1.0 - weighted))
 
 
+def gameweek_ease(pos: str, team_id: int, fixtures: list, event: int,
+                  strengths: dict | None) -> list[float]:
+    """Ease of each fixture this club plays in one specific gameweek.
+
+    Returns one value per fixture, so the list length carries the thing a decayed
+    average silently loses: **no fixture at all is a blank gameweek** (empty list,
+    zero points banked) and **two fixtures is a double** (two payouts). `fixture_ease`
+    walks the next n fixtures whenever they happen to fall, so a blank looks like a
+    normal week that simply borrows next week's game - which is exactly the trap a
+    multi-week plan has to see.
+    """
+    todays = [f for f in fixtures if f["event"] == event
+              and (f["team_h"] == team_id or f["team_a"] == team_id)]
+    out = []
+    for f in todays:
+        at_home = f["team_h"] == team_id
+        fdr = f["team_h_difficulty"] if at_home else f["team_a_difficulty"]
+        ease = max(0.0, min(1.0, (5 - fdr) / 4))
+        if strengths:
+            opponent = f["team_a"] if at_home else f["team_h"]
+            suffix = "away" if at_home else "home"
+            w_att, w_def = POSITION_MATCHUP.get(pos, (0.5, 0.5))
+            att = strengths[f"strength_attack_{suffix}"].get(opponent, 0.5)
+            dfn = strengths[f"strength_defence_{suffix}"].get(opponent, 0.5)
+            m = max(0.0, min(1.0, 1.0 - (w_att * att + w_def * dfn)))
+            ease = (1 - MATCHUP_WEIGHT) * ease + MATCHUP_WEIGHT * m
+        out.append(ease)
+    return out
+
+
+def horizon_scores(bootstrap, fixtures, next_event: int, horizon: int = 6,
+                   risk_profile: str = "safe", preseason=None) -> dict:
+    """Predicted points summed over the next `horizon` gameweeks, for *planning*.
+
+    Why this exists: `score` is deliberately next-gameweek points, and the optimizer
+    maximizing it will happily buy a great GW1 fixture attached to a brutal GW2-6 run.
+    That is a real cost, because only one free transfer arrives per week - a squad
+    that needs four repairs cannot have them. Choosing the 15 on a multi-week total
+    and the XI on this week's `score` matches how the game is actually played.
+
+    Kept separate from `score_players` rather than folded into it, because
+    `records/predictions.jsonl` compares `score` against a *single* gameweek's real
+    points. A horizon total in that field would be measured against the wrong thing
+    and would make every calibration number meaningless. **Never record these.**
+
+    Blanks and doubles fall out of `gameweek_ease` naturally: a blank week contributes
+    nothing, a double contributes twice. Pre-season this changes nothing (all 380
+    fixtures are scheduled one per club per gameweek); it starts to matter once
+    postponements create them.
+    """
+    per_gw = score_players(bootstrap, fixtures, next_event, risk_profile, preseason)
+    strengths = _normalized_strengths(bootstrap["teams"])
+
+    # Cached per (club, position, gameweek) - every defender at a club shares it.
+    ease_cache: dict = {}
+
+    out = {}
+    for pid, p in per_gw.items():
+        total = 0.0
+        for gw in range(next_event, next_event + horizon):
+            key = (p["team"], p["pos"], gw)
+            if key not in ease_cache:
+                ease_cache[key] = gameweek_ease(p["pos"], p["team"], fixtures, gw, strengths)
+            for ease in ease_cache[key]:
+                total += p["base"] * (0.8 + ease * 0.4)
+        out[pid] = dict(p, score=round(total, 3), gw_score=p["score"], horizon=horizon)
+    return out
+
+
 def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "safe",
                   preseason=None) -> dict:
     """Returns {player_id: {"score": float, "pos": str, "team": int, "cost": int, "name": str}}
@@ -229,6 +298,10 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             # Predicted points, and nothing else. Summing these across an XI gives a
             # number that can be compared against what the squad actually scores.
             "score": round(predicted, 3),
+            # Points per fixture *before* any fixture adjustment. `horizon_scores`
+            # re-applies its own per-gameweek ease on top of this, so the two can't
+            # drift apart the way a re-derived copy would.
+            "base": round(form * reliability * injury_mult, 4),
             # Signed -1..1 ownership preference, applied only as a tiebreak.
             "tiebreak": round((ownership / 100) * ownership_weight, 4),
             "pos": pos,

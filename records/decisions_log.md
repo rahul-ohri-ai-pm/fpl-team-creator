@@ -304,3 +304,39 @@ model, no new pipeline logic.
   only arrivals from outside the league that hit the price-baseline floor.
 - **Chips:** nothing to play at GW1. Bench Boost with a £23.0m bench would be poor value, and
   Triple Captain is best held for a double gameweek.
+
+## Multi-gameweek horizon added, and what it did *not* change — 2026-08-02
+
+Prompted by a correct observation: the engine optimised for GW1 while only one free transfer
+arrives per week, so a squad that needs four repairs cannot have them. `score`'s fixture decay
+(53% on the imminent game) is right for "what do I bank next week" and wrong for "which 15 survives
+the opening run".
+
+- **Built `engine/score.horizon_scores`** — predicted points summed over the next N gameweeks,
+  built per-gameweek rather than as a decayed average. That distinction matters beyond weighting:
+  a decayed run-average walks the next n *fixtures* wherever they fall, so **a blank gameweek looks
+  like a normal week that borrowed next week's game**. Per-gameweek, a blank contributes nothing and
+  a double contributes twice, which is what a multi-week plan has to see. Dormant in effect right
+  now — all 380 fixtures are one-per-club-per-week until postponements create blanks.
+- **Kept strictly out of `score` and out of `predictions.jsonl`.** `score` is compared against a
+  single gameweek's real points; a horizon total in that field would be measured against the wrong
+  quantity and would corrupt every calibration number. Same rule as ownership and club loyalty:
+  the squad is chosen on the horizon, the XI and armband on `score`, and only `score` is recorded.
+- **The honest result: on this season's fixture list it barely matters.** Rebuilding the 15 on a
+  6-gameweek horizon instead of GW1 scores **356.0 vs 355.0** over those six gameweeks — a gain of
+  **1.0 point across six weeks** — while giving up 0.26 in GW1 and buying a £22.0m bench against
+  £15.5m. **The recommendation is therefore unchanged.** The horizon view is a check that confirmed
+  the squad, not one that overturned it.
+- **Why the effect is so small:** the six-gameweek FDR spread is flat. Every club sits between 2.83
+  (EVE, LIV, MUN, NEW) and 3.67 (BOU) average difficulty, and no club has a blank or a double. There
+  is no fixture-swing to exploit yet. This is a fact about the 2026/27 opening fixtures, not a
+  property of the method — the same code will move the squad meaningfully in a run containing a
+  blank, a double, or a genuine fixture swing, and should be re-run when one appears.
+- **Transfer priority order is unchanged by the horizon too.** From the user's draft the ladder is
+  Rice → Guimarães, then Cunha → Gibbs-White, then Bruno Fernandes, whether ranked on GW1 or on six
+  gameweeks. The gap is player quality, not fixtures.
+- **Where the one-free-transfer constraint genuinely bites:** the user's draft scores 328.0 over six
+  gameweeks against the engine's 356.0. That 28-point gap needs roughly four transfers to close, and
+  at one per week it would not be closed until GW5 — by which point most of it has already been
+  lost. Pre-season is the only moment those changes are free. That, not fixture-swing, is the real
+  argument for fixing the squad now.

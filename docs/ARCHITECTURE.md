@@ -45,7 +45,7 @@ The `fpl` MCP server sits alongside this, not inside it — see [MCP boundary](#
 ### `fetch.py` — the only network boundary
 
 Keeping every request in one module means the rest of the codebase is trivially testable offline.
-All 90 tests run without network access.
+All 100 tests run without network access.
 
 One piece of real logic lives here: `free_transfers()`. The public API exposes no free-transfer
 balance — that only exists on the authenticated `my-team` endpoint, which this project deliberately
@@ -64,6 +64,12 @@ predicted = expected_ppg × ease_mult × reliability × availability
 | `ease_mult` | FDR blended with position-aware opponent strength | 0.8 – 1.2, decayed over 4 fixtures |
 | `reliability` | Minutes played, blended with pre-season minutes | Falls back to 0.55 for unknowns |
 | `availability` | FPL `chance_of_playing`, else pre-season flag, × club flag | FPL wins when it has an opinion |
+
+`score` is **next gameweek only**. `horizon_scores` answers the separate question the transfer
+budget poses — one free transfer per week means a squad has to survive its opening run — by summing
+per-gameweek predicted points over N gameweeks. It reads `base` (the pre-fixture half of `score`)
+and re-applies a per-gameweek ease, so blanks contribute nothing and doubles contribute twice. Use
+it to pick the **15**; use `score` to pick the **XI and armband**, and record only `score`.
 
 `score` carries no non-points terms. The risk-profile ownership preference is returned separately as
 `tiebreak` and applied by the optimizer at `OWNERSHIP_TIEBREAK_EPSILON` (0.02).
@@ -145,7 +151,7 @@ before anyone decides to switch it on.
 
 ## Testing
 
-90 tests, no network, no fixtures on disk — synthetic payloads throughout.
+100 tests, no network, no fixtures on disk — synthetic payloads throughout.
 
 | File | Tests | Covers |
 |---|---|---|
@@ -153,6 +159,7 @@ before anyone decides to switch it on.
 | `test_preseason.py` | 22 | File loading, price baseline, minutes blend, player and club flags |
 | `test_evaluate.py` | 15 | Recording, auto-subs, armband, bench exclusion, calibration |
 | `test_matchup.py` | 13 | Normalisation, position separation, venue mirroring, flat-field fallback |
+| `test_horizon.py` | 10 | Per-gameweek ease, blanks, doubles, multi-week totals, order-blindness |
 | `test_free_transfers.py` | 11 | Roll-over rules, cap, chip weeks |
 
 Many assert **directional** behaviour rather than fixed values — "a benched player must score less
