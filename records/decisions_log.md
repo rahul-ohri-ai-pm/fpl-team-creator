@@ -242,3 +242,28 @@ Template for each new entry:
   player-level friendly minutes. That's the one signal that legitimately separates a new signing the
   manager intends to start from one who won't play, and it's paywalled (FFS Chief Scout). Guessing
   the numbers is worse than leaving them null.
+
+## GW1 pre-season re-run — 2026-08-02
+
+- **Decision:** **Hold.** The optimizer rebuilds the identical 15 from scratch on today's pool —
+  same XI (3-5-2), same captain and vice as the 2026-07-29 entry.
+  No transfer is recommended and none is needed: pre-season, the squad can be changed freely until
+  the deadline, so "hold" here means "the from-scratch optimum has not moved".
+- **Hit taken:** n/a — unlimited changes until the GW1 deadline (2026-08-21 17:30 UTC).
+- **Predicted GW1 total:** 65.081 (XI 57.890 + captain 7.191). Squad cost exactly £100.0m.
+- **Captain: Bruno Fernandes (7.19), Vice: Gabriel Magalhães (6.59).**
+  - The `fpl` MCP's captain tool disagreed, returning five Arsenal players and ranking Gabriel
+    first on "great home fixture vs COV (diff 2)". Not adopted, and the reason is concrete: it is a
+    fixture-only heuristic — every suggestion is one club, `form` is 0.0 for all of them so it is
+    ranking on ppg and a single fixture. Man Utd's opener is Hull away at difficulty **2**, the same
+    rating as Arsenal–Coventry, and the four-game run behind it is easier (2,2,3,4 vs 2,4,4,3),
+    while Bruno's ppg is higher. The MCP's pick is already the vice, so the disagreement is narrow.
+- **Club spread:** ARS 2, LEE 2, SUN 2, TOT 2, BRE/CHE/CRY/EVE/MUN/NEW/NFO 1 each. No club at the
+  3-player limit.
+- **Chelsea loyalty (mode `report`, floor OFF):** forcing 1 costs **0.00** (João Pedro already
+  starts on merit), 2 costs **0.18** (adds Sánchez to the bench), 3 costs **0.38** (Chalobah +
+  Emegha, neither starting). Reported, not applied, per `config/settings.md`.
+- **Squad state:** all 15 flagged `status=a` with empty `news` in live bootstrap data, so the
+  availability check is live data rather than missing data.
+- **Recorded** to `records/predictions.jsonl` as the GW1 prediction, superseding the identical
+  2026-07-29 line.

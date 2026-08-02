@@ -33,3 +33,24 @@ Template for each new entry:
   61.61 and strictly worse football. Also: `form` stays 0.0 until real matches are played, so every
   recommendation before GW1 rests on last season's points-per-game and should be re-run close to
   the deadline rather than treated as settled.
+
+## Pre-season re-run — 2026-08-02
+
+- **Points scored:** n/a | **Rank movement:** n/a — still no played gameweek. GW1 deadline is
+  2026-08-21 17:30 UTC, 19 days out. `evaluate_gameweek` returns `None` for every event, so there
+  is nothing to measure and no calibration data yet. Recorded so the log stays continuous.
+- **What held up:** the model is stable. Re-running the full pipeline four days after the last
+  entry reproduces the same 15, the same XI, the same captain and the same 65.08 predicted total.
+  Nothing in the inputs moved — `form` is still 0.0 league-wide, prices haven't shifted, and no
+  injury flags changed on the squad.
+- **What that stability does *not* prove:** it is the same last-season `points_per_game` data
+  producing the same answer, not evidence the answer is right. The previous entry's warning stands
+  — re-run close to the deadline, because pre-season is when the inputs are weakest.
+- **Two model limits made explicit this week** (detail in `decisions_log.md`):
+  - New signings cannot be selected at any price. `baseline_ppg × UNKNOWN_RELIABILITY (0.55)` caps
+    them well below the squad's floor; the best, Rashford, ranks #165.
+  - The position-aware matchup layer is still dormant — `strength_attack_*`/`strength_defence_*`
+    are 0 for every club, so scoring is FDR-only and `ease_mult` spans just 0.893–1.073 rather
+    than the designed 0.8–1.2.
+- **Lesson for next run:** the first GW1 evaluation is the only thing that can move any weight.
+  Both limits above are logged as open questions for it, not fixed on intuition now.

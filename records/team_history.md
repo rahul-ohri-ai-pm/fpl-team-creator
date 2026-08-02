@@ -88,3 +88,20 @@ Template for each new entry:
 - No Man City players remain after the managerial-change flag; club spread is now
   ARS 2, LEE 2, SUN 2, TOT 2, BRE/CHE/CRY/EVE/MUN/NEW/NFO 1 each.
 - Recorded to `records/predictions.jsonl` (supersedes the earlier GW1 line from the same day).
+
+## GW1 pre-season re-run (unchanged) — 2026-08-02
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW1 total:** 65.081 (XI 57.890 + captain 7.191)
+- **Squad (£100.0m):** GK: David Raya, Martin Dúbravka · DEF: Gabriel Magalhães, Nordi Mukiele,
+  Marcos Senesi, Daniel Ballard, Tyrick Mitchell · MID: Bruno Fernandes, Morgan Gibbs-White,
+  Bruno Guimarães, Kiernan Dewsbury-Hall, Anton Stach · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-5-2):** Raya; Gabriel, Mukiele, Senesi; Fernandes, Gibbs-White, Guimarães,
+  Dewsbury-Hall, Stach; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Ballard, Calvert-Lewin, Mitchell, Dúbravka
+- **Captain:** Bruno Fernandes | **Vice:** Gabriel Magalhães
+- Identical to the 2026-07-29 snapshot; recorded so the history stays continuous rather than
+  implying the week went unreviewed. Chelsea loyalty floor available but off (forcing 3 would
+  cost 0.38 predicted points).
