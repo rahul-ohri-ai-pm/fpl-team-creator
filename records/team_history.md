@@ -123,3 +123,23 @@ actually has.
 - **Legal:** 2/5/5/3 quotas correct, £100.0m on the nose, ARS at 3 (the limit, not over it).
 - **Predicted GW1 as picked: 57.43** vs the engine's from-scratch squad at 65.08. 7 of the 15
   overlap (Raya, Gabriel, Mukiele, Dewsbury-Hall, João Pedro, Calvert-Lewin, Igor Thiago).
+
+## GW1 revised — xGI blend applied to MID/FWD — 2026-08-02
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW1 total:** 65.215 (XI 57.765 + captain 7.45). Level is deliberately unchanged from
+  the previous 65.081 — the blend re-orders within a position, it does not re-level. See
+  `gameweek_reviews.md`.
+- **Squad (£100.0m):** GK: David Raya, Martin Dúbravka · DEF: Gabriel Magalhães, Nordi Mukiele,
+  Marcos Senesi, Daniel Muñoz, Daniel Ballard · MID: Bruno Fernandes, Bryan Mbeumo,
+  Morgan Gibbs-White, Bruno Guimarães, Enzo Fernández · FWD: João Pedro, Dominic Calvert-Lewin,
+  Chido Obi
+- **Starting XI (4-5-1):** Raya; Gabriel, Mukiele, Senesi, Muñoz; Fernandes, Mbeumo, Gibbs-White,
+  Guimarães, Enzo Fernández; João Pedro
+- **Bench (auto-sub order):** Ballard, Calvert-Lewin, Obi, Dúbravka
+- **Captain:** Bruno Fernandes (7.45) | **Vice:** Gabriel Magalhães (6.59)
+- **Changes from the previous snapshot:** IN Mbeumo, Muñoz, Enzo Fernández, Obi ·
+  OUT Dewsbury-Hall, Stach, Igor Thiago, Mitchell. Club spread MUN 3 (at the limit),
+  ARS/CHE/TOT/SUN 2, CRY/LEE/NEW/NFO 1.
+- Bench cost £19.5m. Recorded to `records/predictions.jsonl`, superseding the 65.081 line.

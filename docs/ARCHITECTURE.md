@@ -41,11 +41,12 @@ The `fpl` MCP server sits alongside this, not inside it — see [MCP boundary](#
 | `engine/preseason.py` | ~130 | Pre-season signal the API can't carry, plus the price-implied baseline. |
 | `engine/optimize.py` | ~220 | MILP squad selection, lineup, and transfer search. No player judgement. |
 | `engine/evaluate.py` | ~200 | Recording predictions and measuring them. Deliberately import-independent of the solver. |
+| `engine/backtest.py` | ~130 | Two-season out-of-sample test of which inputs predict. Evidence for weight changes before a ball is kicked. |
 
 ### `fetch.py` — the only network boundary
 
 Keeping every request in one module means the rest of the codebase is trivially testable offline.
-All 100 tests run without network access.
+All 111 tests run without network access.
 
 One piece of real logic lives here: `free_transfers()`. The public API exposes no free-transfer
 balance — that only exists on the authenticated `my-team` endpoint, which this project deliberately
@@ -60,7 +61,7 @@ predicted = expected_ppg × ease_mult × reliability × availability
 
 | Term | Source | Notes |
 |---|---|---|
-| `expected_ppg` | `form`, else `points_per_game`, else price baseline | `form` is 0.0 until GW1 |
+| `expected_ppg` | `form`, else `points_per_game` (MID/FWD: blended with xGI/90), else price baseline | `form` is 0.0 until GW1 |
 | `ease_mult` | FDR blended with position-aware opponent strength | 0.8 – 1.2, decayed over 4 fixtures |
 | `reliability` | Minutes played, blended with pre-season minutes | Falls back to 0.55 for unknowns |
 | `availability` | FPL `chance_of_playing`, else pre-season flag, × club flag | FPL wins when it has an opinion |
@@ -138,6 +139,8 @@ Tunables are named constants at the top of their module, not scattered literals:
 | `POSITION_MATCHUP` | `score` | table | Per-position weight on opponent attack/defence |
 | `PRESEASON_MINUTES_WEIGHT` | `preseason` | 0.4 | Friendly minutes vs last season |
 | `UNKNOWN_RELIABILITY` | `preseason` | 0.55 | Assumed reliability with no record |
+| `XGI_BLEND` | `score` | MID/FWD 0.5 | Weight on underlying numbers vs banked points |
+| `XGI_MIN_MINUTES` | `score` | 900 | Season needed before xGI/90 means anything |
 | `CLUB_LIMIT` | `optimize` | 3 | FPL's cap on players from one club |
 
 User-facing settings (team ID, risk profile, hit tolerance, favourite club and loyalty mode) live in
@@ -151,7 +154,7 @@ before anyone decides to switch it on.
 
 ## Testing
 
-100 tests, no network, no fixtures on disk — synthetic payloads throughout.
+111 tests, no network, no fixtures on disk — synthetic payloads throughout.
 
 | File | Tests | Covers |
 |---|---|---|
@@ -160,6 +163,7 @@ before anyone decides to switch it on.
 | `test_evaluate.py` | 15 | Recording, auto-subs, armband, bench exclusion, calibration |
 | `test_matchup.py` | 13 | Normalisation, position separation, venue mirroring, flat-field fallback |
 | `test_horizon.py` | 10 | Per-gameweek ease, blanks, doubles, multi-week totals, order-blindness |
+| `test_xgi.py` | 11 | Position gating, mean/spread preservation, minutes floor, missing-field fallback |
 | `test_free_transfers.py` | 11 | Roll-over rules, cap, chip weeks |
 
 Many assert **directional** behaviour rather than fixed values — "a benched player must score less

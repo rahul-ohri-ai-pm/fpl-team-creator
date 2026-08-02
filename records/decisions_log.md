@@ -340,3 +340,23 @@ the opening run".
   at one per week it would not be closed until GW5 — by which point most of it has already been
   lost. Pre-season is the only moment those changes are free. That, not fixture-swing, is the real
   argument for fixing the squad now.
+
+## GW1 revised — underlying numbers blended in — 2026-08-02
+
+- **Decision:** squad changed. **Mbeumo in** (the point the user raised), along with Muñoz, Enzo
+  Fernández and Obi; Dewsbury-Hall, Stach, Igor Thiago and Mitchell out. Captain stays Bruno
+  Fernandes, now 7.45.
+- **Trigger:** a user challenge the model had no answer to — some midfielders finished last season
+  strongly and others faded, and `score` used a flat season-long `points_per_game` with `form` at
+  0.0 pre-season, so it carried no recency or luck adjustment whatsoever.
+- **Full reasoning, backtest table and the near-miss defect are in `gameweek_reviews.md`.** In
+  short: run-in form is genuinely unavailable (per-gameweek history is wiped at rollover), but
+  last season's xGI/90 is already in `bootstrap-static`, and a two-season backtest over 170 players
+  shows it beats banked points for MID and FWD while losing for GK and DEF. Blend applied only
+  where it won, capped at half, and rescaled to preserve each position's mean and spread.
+- **Effect on the players in question:** Mbeumo +0.48 (largest riser — xGI/90 0.585, second only to
+  Bruno, against mid-pack banked points), Bruno +0.26, Cunha −0.04, Gibbs-White −0.14,
+  Guimarães −0.20. The user's read holds for Mbeumo, Gibbs-White and Guimarães; the Cunha half of
+  it is not supported by the underlying numbers.
+- **Predicted GW1 65.215** against 65.081 before — level intentionally preserved, ordering changed.
+- **Reproducible:** `python engine/backtest.py` re-runs the evidence.

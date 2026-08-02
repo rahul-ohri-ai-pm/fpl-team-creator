@@ -15,6 +15,31 @@ from engine import preseason as preseason_mod
 
 POSITION_BY_TYPE = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
 
+# How much of a player's expected points comes from last season's *underlying*
+# numbers (expected goal involvements per 90) rather than the points they actually
+# banked. Realized points carry finishing luck; xGI carries the chances a player got
+# into, and one of those survives a summer better than the other.
+#
+# These are not judgement calls. `engine/backtest.py` measures both inputs against
+# the following season across every player with a full season on both sides
+# (2024/25 -> 2025/26, n=170), and the answer splits by position:
+#
+#   GK   n= 13   points r=0.150   xGI r=0.099   -> points win
+#   DEF  n= 63   points r=0.412   xGI r=0.341   -> points win
+#   MID  n= 81   points r=0.461   xGI r=0.546   -> xGI wins
+#   FWD  n= 13   points r=0.074   xGI r=0.594   -> xGI wins
+#
+# So the blend is applied only where xGI actually won, and capped at half even
+# there, so realized points still anchor the estimate. The forward margin is far
+# larger than half would suggest, but n=13 is too thin to spend on - the cap is
+# deliberate protection against a small sample, not a reading of the data.
+XGI_BLEND = {"GK": 0.0, "DEF": 0.0, "MID": 0.5, "FWD": 0.5}
+
+# A player needs a real season behind them before their xGI/90 means anything.
+# Below this the rate is a few cameos amplified by the division, and the price
+# baseline in preseason.py is the honest fallback instead.
+XGI_MIN_MINUTES = 900
+
 
 def _finished_events(bootstrap) -> int:
     """Games played so far this season. 0 pre-season/early season - callers must
@@ -129,6 +154,92 @@ def opponent_matchup_ease(pos: str, team_id: int, fixtures: list, next_event: in
     return max(0.0, min(1.0, 1.0 - weighted))
 
 
+def _mean_sd(values: list[float]) -> tuple[float, float]:
+    n = len(values)
+    mean = sum(values) / n
+    sd = (sum((v - mean) ** 2 for v in values) / n) ** 0.5
+    return mean, sd
+
+
+def xgi_models(bootstrap) -> dict:
+    """Fit points-per-game ~ xGI/90 per position, on players with a real season.
+
+    Fitted from the live pool each run rather than hardcoded, exactly like
+    `preseason.price_baselines` - the mapping from chances to points shifts when
+    FPL changes its scoring rules, and a refit tracks that for free.
+
+    Each model also carries the rescaling constants that keep the blend
+    **mean- and spread-preserving within the position**. That is not a detail; it
+    is what makes the blend safe to use at all. A raw blend shrinks players toward
+    the fitted line, and the squad is chosen from the top tail where everyone sits
+    above it - so the shrinkage lands almost entirely on the players being picked.
+    Applied to midfielders and forwards but not to keepers and defenders, it
+    quietly re-levels one half of the pitch against the other: measured on the live
+    pool it cost Bruno Fernandes 1.25 predicted points, left an equally exceptional
+    defender untouched, and handed the armband to that defender on nothing but the
+    asymmetry. It would also have biased every recorded `predicted_total` low,
+    against real FPL points that know nothing about our shrinkage.
+
+    Rescaling to the position's original mean and standard deviation keeps the
+    level and the spread exactly where they were, so the blend does the one thing
+    the backtest actually licenses: **re-order players within a position.**
+    """
+    by_pos: dict[int, list[tuple[float, float]]] = {}
+    for p in bootstrap["elements"]:
+        ppg = float(p["points_per_game"] or 0)
+        xgi = float(p.get("expected_goal_involvements_per_90") or 0)
+        if ppg > 0 and p["minutes"] > XGI_MIN_MINUTES and xgi > 0:
+            by_pos.setdefault(p["element_type"], []).append((xgi, ppg))
+
+    models = {}
+    for pos_type, pts in by_pos.items():
+        if len(pts) < 10:
+            continue
+        w = XGI_BLEND.get(POSITION_BY_TYPE[pos_type], 0.0)
+        if w <= 0:
+            continue
+        n = len(pts)
+        mx = sum(x for x, _ in pts) / n
+        my = sum(y for _, y in pts) / n
+        sxx = sum((x - mx) ** 2 for x, _ in pts)
+        if sxx == 0:
+            continue
+        slope = sum((x - mx) * (y - my) for x, y in pts) / sxx
+        intercept = my - slope * mx
+
+        raw = [(1 - w) * ppg + w * max(0.0, slope * xgi + intercept) for xgi, ppg in pts]
+        ppg_mean, ppg_sd = _mean_sd([ppg for _, ppg in pts])
+        raw_mean, raw_sd = _mean_sd(raw)
+        if raw_sd == 0:
+            continue
+        models[pos_type] = {
+            "slope": slope, "intercept": intercept, "weight": w,
+            "ppg_mean": ppg_mean, "ppg_sd": ppg_sd,
+            "raw_mean": raw_mean, "raw_sd": raw_sd,
+        }
+    return models
+
+
+def blended_ppg(models: dict, element_type: int, pos: str, ppg: float,
+                xgi90: float, minutes: int) -> float:
+    """Expected points per game, re-ranked by how well the underlying numbers back
+    up the points banked, then rescaled to the position's own mean and spread.
+
+    Returns `ppg` unchanged wherever the blend isn't supported - a keeper, a
+    defender, a player without a full season behind them, or a position the pool
+    was too thin to fit.
+    """
+    m = models.get(element_type)
+    if m is None or XGI_BLEND.get(pos, 0.0) <= 0 or minutes <= XGI_MIN_MINUTES or xgi90 <= 0:
+        return ppg
+    w = m["weight"]
+    implied = max(0.0, m["slope"] * xgi90 + m["intercept"])
+    raw = (1 - w) * ppg + w * implied
+    # Back onto the position's original scale: same mean, same spread, new order.
+    rescaled = m["ppg_mean"] + (raw - m["raw_mean"]) / m["raw_sd"] * m["ppg_sd"]
+    return max(0.0, rescaled)
+
+
 def gameweek_ease(pos: str, team_id: int, fixtures: list, event: int,
                   strengths: dict | None) -> list[float]:
     """Ease of each fixture this club plays in one specific gameweek.
@@ -229,6 +340,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
 
     ps = preseason_mod.load() if preseason is None else preseason
     baselines = preseason_mod.price_baselines(bootstrap)
+    xgi = xgi_models(bootstrap)
     club_short = {t["id"]: t.get("short_name") for t in bootstrap["teams"]}
 
     out = {}
@@ -243,6 +355,13 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
         ppg = float(p["points_per_game"] or 0)
         if ppg == 0:
             ppg = preseason_mod.baseline_ppg(baselines, p["element_type"], p["now_cost"])
+        else:
+            # Points banked include finishing luck, which doesn't survive a summer.
+            # For the positions where the backtest says the underlying numbers
+            # predict better, blend them in. See XGI_BLEND.
+            ppg = blended_ppg(xgi, p["element_type"], POSITION_BY_TYPE[p["element_type"]],
+                              ppg, float(p.get("expected_goal_involvements_per_90") or 0),
+                              p["minutes"])
         form = float(p["form"] or 0) or ppg
 
         minutes = p["minutes"]
