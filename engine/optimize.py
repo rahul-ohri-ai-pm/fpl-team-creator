@@ -12,6 +12,7 @@ POSITION_QUOTAS = {"GK": 2, "DEF": 5, "MID": 5, "FWD": 3}
 FORMATION_LIMITS = {  # (min, max) starters per position, out of 11
     "GK": (1, 1), "DEF": (3, 5), "MID": (2, 5), "FWD": (1, 3),
 }
+CLUB_LIMIT = 3  # FPL's own cap on players from one real-world club
 
 # Only the starting XI scores in a normal gameweek, so the objective can't just
 # sum all 15 - that spends real budget on bench players who bank nothing, and
@@ -48,7 +49,8 @@ def squad_score(squad_ids: list[int], players: dict, bench_weight: float = BENCH
 
 def optimal_squad(players: dict, budget: int, current_squad: list[int] | None = None,
                    max_transfers_out: int | None = None,
-                   bench_weight: float = BENCH_WEIGHT) -> list[int]:
+                   bench_weight: float = BENCH_WEIGHT,
+                   min_from_team: tuple[int, int] | None = None) -> list[int]:
     """players: {pid: {"score", "pos", "team", "cost"}}. budget in tenths of a million.
 
     Maximizes the starting XI's predicted points plus `bench_weight` times the
@@ -58,6 +60,13 @@ def optimal_squad(players: dict, budget: int, current_squad: list[int] | None = 
     If current_squad + max_transfers_out are given, constrains the result to
     differ from current_squad by at most that many dropped players - i.e. an
     incremental transfer search rather than a from-scratch draft.
+
+    `min_from_team` is (team_id, minimum) - a floor on how many players come from
+    one club, for supporting a favourite team. It is a hard constraint rather than
+    a scoring bonus on purpose: wanting your own players on the pitch is a
+    preference, not a prediction, and folding it into `score` would inflate the
+    predicted total and corrupt prediction-vs-actual tracking. Expressed here, the
+    points it costs stay visible and measurable - see `loyalty_cost`.
     """
     prob = pulp.LpProblem("fpl_squad", pulp.LpMaximize)
     x = {pid: pulp.LpVariable(f"x_{pid}", cat="Binary") for pid in players}
@@ -82,9 +91,21 @@ def optimal_squad(players: dict, budget: int, current_squad: list[int] | None = 
 
     teams = {players[pid]["team"] for pid in players}
     for team in teams:
-        prob += pulp.lpSum(x[pid] for pid in players if players[pid]["team"] == team) <= 3
+        prob += pulp.lpSum(x[pid] for pid in players if players[pid]["team"] == team) <= CLUB_LIMIT
 
     prob += pulp.lpSum(players[pid]["cost"] * x[pid] for pid in players) <= budget
+
+    if min_from_team:
+        fav_team, minimum = min_from_team
+        if minimum > CLUB_LIMIT:
+            raise ValueError(
+                f"min_from_team asks for {minimum} players from club {fav_team}, "
+                f"but FPL allows at most {CLUB_LIMIT}"
+            )
+        if minimum > 0:
+            prob += pulp.lpSum(
+                x[pid] for pid in players if players[pid]["team"] == fav_team
+            ) >= minimum
 
     if current_squad and max_transfers_out is not None:
         in_pool = [pid for pid in current_squad if pid in players]
@@ -123,17 +144,29 @@ def best_lineup(squad_ids: list[int], players: dict) -> dict:
 
 def recommend_transfers(players: dict, current_squad: list[int], bank: int,
                          free_transfers: int, max_search: int = 2,
-                         bench_weight: float = BENCH_WEIGHT) -> dict:
+                         bench_weight: float = BENCH_WEIGHT,
+                         min_from_team: tuple[int, int] | None = None) -> dict:
     """Tries 0..max_search transfers, picks the option with the best
     hit-adjusted predicted score (a -4pt penalty per transfer beyond the
-    number of free transfers available)."""
+    number of free transfers available).
+
+    `min_from_team` is passed through to `optimal_squad`; see there."""
     current_value = sum(players[pid]["cost"] for pid in current_squad if pid in players)
     budget = current_value + bank
 
     best = None
     for k in range(0, max_search + 1):
-        squad = optimal_squad(players, budget, current_squad=current_squad,
-                              max_transfers_out=k, bench_weight=bench_weight)
+        try:
+            squad = optimal_squad(players, budget, current_squad=current_squad,
+                                  max_transfers_out=k, bench_weight=bench_weight,
+                                  min_from_team=min_from_team)
+        except RuntimeError:
+            # A club floor (or a tight bank) can make the low-transfer options
+            # unreachable while a larger k is fine - e.g. a squad holding none of
+            # the favourite club cannot satisfy a floor of 2 without 2 transfers.
+            # Skip those rather than failing the whole search; only a search where
+            # every k is infeasible is a genuine error.
+            continue
         raw_score = squad_score(squad, players, bench_weight)
         hit_cost = max(0, k - free_transfers) * 4
         net = raw_score - hit_cost
@@ -144,4 +177,71 @@ def recommend_transfers(players: dict, current_squad: list[int], bank: int,
                 "transfers": k, "hit_cost": hit_cost, "net_score": net,
                 "squad": squad, "out": transfers_out, "in": transfers_in,
             }
+    if best is None:
+        raise RuntimeError(
+            f"No feasible squad within {max_search} transfers"
+            + (f" while keeping {min_from_team[1]} player(s) from club {min_from_team[0]}"
+               if min_from_team else "")
+        )
     return best
+
+
+def loyalty_cost(players: dict, budget: int, team_id: int,
+                  levels: tuple[int, ...] = (1, 2, 3),
+                  current_squad: list[int] | None = None,
+                  max_transfers_out: int | None = None,
+                  bench_weight: float = BENCH_WEIGHT) -> dict:
+    """What insisting on N players from one club costs, in predicted points.
+
+    Answers "how much would supporting my team cost me?" with a number instead of
+    a feeling. Solves the squad once with no club floor, then once per level in
+    `levels`, and reports the drop in predicted points against the unconstrained
+    optimum. Nothing here changes a recommendation on its own - it exists so the
+    choice to apply a floor (or not) is made against a measured price.
+
+    A level is reported `feasible: False` rather than raising when the floor can't
+    be met: the club may not field enough players the budget and quotas can absorb,
+    and one impossible level shouldn't lose the answer for the others.
+    """
+    def solve(minimum):
+        return optimal_squad(players, budget, current_squad=current_squad,
+                             max_transfers_out=max_transfers_out,
+                             bench_weight=bench_weight,
+                             min_from_team=(team_id, minimum) if minimum else None)
+
+    def from_club(squad):
+        return [pid for pid in squad if players[pid]["team"] == team_id]
+
+    base_squad = solve(0)
+    base_score = squad_score(base_squad, players, bench_weight)
+
+    out = {}
+    for n in levels:
+        if n > CLUB_LIMIT:
+            out[n] = {"feasible": False, "reason": f"FPL allows at most {CLUB_LIMIT} per club"}
+            continue
+        try:
+            squad = solve(n)
+        except RuntimeError as exc:
+            out[n] = {"feasible": False, "reason": str(exc)}
+            continue
+        score = squad_score(squad, players, bench_weight)
+        out[n] = {
+            "feasible": True,
+            "squad": squad,
+            "score": round(score, 3),
+            # Constraining a maximization can never help, so a negative here is
+            # solver noise, not a free lunch.
+            "cost": round(max(0.0, base_score - score), 3),
+            "club_players": from_club(squad),
+        }
+
+    return {
+        "team": team_id,
+        "unconstrained": {
+            "squad": base_squad,
+            "score": round(base_score, 3),
+            "club_players": from_club(base_squad),
+        },
+        "levels": out,
+    }

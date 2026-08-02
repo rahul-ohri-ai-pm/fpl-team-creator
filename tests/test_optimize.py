@@ -10,6 +10,7 @@ from engine.optimize import (
     BENCH_WEIGHT,
     POSITION_QUOTAS,
     best_lineup,
+    loyalty_cost,
     optimal_squad,
     recommend_transfers,
     squad_score,
@@ -265,3 +266,105 @@ def test_fixture_ease_still_bounded_and_defaults_when_no_fixtures():
     fx = [{"event": 1, "team_h": 1, "team_a": 2,
            "team_h_difficulty": 5, "team_a_difficulty": 1}]
     assert 0.0 <= fixture_ease(1, fx, 1) <= 1.0
+
+
+# --- favourite-club floor -------------------------------------------------
+# Wanting your own players in the squad is a preference, not a prediction, so it
+# lives here as a constraint rather than in score.py. What these lock down is that
+# it obeys FPL's rules, and that its price in predicted points is reported honestly.
+
+def make_loyalty_pool():
+    """Every club fields a full set, but club 1's players are the worst in the
+    pool - so an unconstrained optimizer picks none of them and any floor has a
+    measurable, strictly positive cost."""
+    players, pid = {}, 1
+    for club in range(1, 8):
+        for pos in ("GK", "DEF", "MID", "FWD"):
+            for i in range(3):
+                players[pid] = {
+                    "score": (1.0 if club == 1 else 5.0) + i * 0.1,
+                    "pos": pos,
+                    "team": club,
+                    "cost": 45,
+                    "name": f"c{club}{pos}{i}",
+                }
+                pid += 1
+    return players
+
+
+def test_club_floor_puts_the_required_number_in_the_squad():
+    players = make_loyalty_pool()
+    squad = optimal_squad(players, budget=1000, min_from_team=(1, 3))
+    assert sum(1 for pid in squad if players[pid]["team"] == 1) == 3
+
+
+def test_without_the_floor_the_weak_club_is_not_picked_at_all():
+    players = make_loyalty_pool()
+    squad = optimal_squad(players, budget=1000)
+    assert not [pid for pid in squad if players[pid]["team"] == 1]
+
+
+def test_club_floor_never_breaches_the_three_per_club_limit():
+    players = make_loyalty_pool()
+    with pytest.raises(ValueError):
+        optimal_squad(players, budget=1000, min_from_team=(1, 4))
+
+
+def test_club_floor_still_respects_quotas_and_budget():
+    players = make_loyalty_pool()
+    squad = optimal_squad(players, budget=1000, min_from_team=(1, 3))
+    assert squad_positions(squad, players) == POSITION_QUOTAS
+    assert sum(players[pid]["cost"] for pid in squad) <= 1000
+
+
+def test_loyalty_cost_rises_with_each_extra_forced_player():
+    players = make_loyalty_pool()
+    report = loyalty_cost(players, budget=1000, team_id=1)
+    costs = [report["levels"][n]["cost"] for n in (1, 2, 3)]
+    assert costs[0] > 0, "forcing a strictly worse player must cost something"
+    assert costs[0] < costs[1] < costs[2]
+
+
+def test_loyalty_cost_is_zero_when_the_club_is_wanted_anyway():
+    """A floor the optimizer would have satisfied on merit is free. Reporting a
+    cost here would talk the user out of a preference that costs nothing."""
+    players = make_loyalty_pool()
+    for pid, p in players.items():
+        if p["team"] == 1:
+            p["score"] = 9.0  # now the best club in the pool
+    report = loyalty_cost(players, budget=1000, team_id=1)
+    assert report["levels"][3]["cost"] == pytest.approx(0.0)
+
+
+def test_loyalty_cost_reports_infeasible_levels_without_losing_the_others():
+    players = make_loyalty_pool()
+    # Club 1 fields a single (expensive) player, so a floor of 2 cannot be met.
+    players = {pid: p for pid, p in players.items()
+               if p["team"] != 1 or p["name"] == "c1MID0"}
+    report = loyalty_cost(players, budget=1000, team_id=1)
+    assert report["levels"][1]["feasible"] is True
+    assert report["levels"][2]["feasible"] is False
+    assert "reason" in report["levels"][2]
+
+
+def test_loyalty_report_scores_are_comparable_to_squad_score():
+    players = make_loyalty_pool()
+    report = loyalty_cost(players, budget=1000, team_id=1)
+    forced = report["levels"][3]
+    assert forced["score"] == pytest.approx(squad_score(forced["squad"], players), abs=1e-3)
+
+
+def test_transfer_search_honours_the_club_floor():
+    players = make_loyalty_pool()
+    squad = optimal_squad(players, budget=1000)  # holds none of club 1
+    rec = recommend_transfers(players, squad, bank=0, free_transfers=5,
+                              min_from_team=(1, 2))
+    assert sum(1 for pid in rec["squad"] if players[pid]["team"] == 1) >= 2
+
+
+def test_transfer_search_errors_when_no_number_of_transfers_can_satisfy_the_floor():
+    players = make_loyalty_pool()
+    squad = optimal_squad(players, budget=1000)
+    with pytest.raises(RuntimeError):
+        recommend_transfers(players, squad, bank=0, free_transfers=5,
+                            min_from_team=(1, 3), max_search=2)

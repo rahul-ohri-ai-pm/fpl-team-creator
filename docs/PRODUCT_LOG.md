@@ -291,6 +291,29 @@ League record, so the blend averaged against a raw zero.
 invisible to code review and trivial for a property-based test. It's the strongest argument in this
 project for tests that assert *directional* behaviour rather than fixed values.
 
+### Entry 8 — 2026-08-02 — Supporting your own club, priced rather than argued
+
+**Symptom:** the user asked to record a favourite club and whether the squad should hold the maximum
+allowed from it. Nothing in the model represented fandom, and the obvious implementation — a bonus
+on those players' `score` — is exactly the mistake Entry 3 fixed for ownership.
+
+**Fix:** a `min_from_team` floor in `engine/optimize.py`, a hard constraint alongside the quota,
+budget and 3-per-club rules. It never touches `score`, so the predicted total stays comparable to
+what the squad actually banks and `predictions.jsonl` stays honest.
+
+**The more useful half is `loyalty_cost`.** It solves the squad unconstrained, then once per level,
+and reports the drop in predicted points from forcing 1 / 2 / 3 of the club's players. The user
+chose to run in that reporting mode rather than switching the floor on — decide with the number
+visible, not from a feeling. Measured for Chelsea on the current pre-season pool: **1 costs 0.00
+(João Pedro is picked on merit anyway), 2 costs 0.18, 3 costs 0.38 predicted points per gameweek.**
+Under a tenth of a point per player — the "supporting my team is expensive" intuition was wrong
+here, and only measuring it could have shown that.
+
+**A bug the constraint exposed:** `recommend_transfers` raised on the first infeasible transfer
+count, so a floor of 2 against a squad holding none of the club failed the whole search instead of
+reporting that it takes 2 transfers to satisfy. Infeasible counts are now skipped; only an entirely
+infeasible search errors.
+
 ---
 
 ## Open risks

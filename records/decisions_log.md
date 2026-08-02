@@ -193,3 +193,52 @@ Template for each new entry:
   - FDR is already an opponent-strength rating, so H2H would largely re-express it while adding
     variance. The position-aware matchup above targets the same instinct — "the opponent should
     matter more specifically" — using first-party data and without the double-count.
+
+## Pre-season (favourite club priced, new-signing audit) — 2026-08-02
+
+- **Decision:** No squad change, and **no club floor switched on**. Chelsea recorded as the
+  favourite club in `config/settings.md` with loyalty mode `report`, per the user's choice to see
+  the price before committing to a constraint.
+- **Hit taken:** n/a — pre-season.
+- **What forcing Chelsea players would cost** (`optimize.loyalty_cost`, live pool, £100.0m budget,
+  measured in predicted points per gameweek against the unconstrained optimum of 60.10):
+  - **1 player: 0.00** — João Pedro (FWD, £7.5m, 5.13) is already picked on merit, so the floor
+    binds on nothing.
+  - **2 players: 0.18** — adds Robert Sánchez (GK, £5.0m, 3.22), who sits on the bench.
+  - **3 players: 0.38** — Chalobah (DEF, £5.5m, 4.03) and Emegha (FWD, £5.0m, 1.08) alongside
+    João Pedro; only João Pedro starts.
+  - Under a tenth of a point per forced player. The intuition that supporting your club is expensive
+    is wrong on this pool, and the only way to know that was to measure it. Worth revisiting after
+    GW1, when `form` goes live and the gaps between players widen.
+- **Implementation note:** the floor is `optimize.min_from_team`, a hard constraint next to the
+  quota/budget/3-per-club rules — deliberately *not* a bonus on `score`. Adding it to `score` would
+  repeat the ownership mistake of 2026-07-29: inflating the predicted total until it no longer
+  matches what the squad actually banks.
+- **Bug found while adding it:** `recommend_transfers` raised on the first infeasible transfer
+  count. A floor of 2 against a squad holding none of the club made k=0 and k=1 infeasible and
+  killed the whole search, when the correct answer was "this takes 2 transfers". Infeasible counts
+  are now skipped; only an all-infeasible search raises.
+
+### New signings: are they in the recommendation? Audited, and the answer is no.
+
+- 164 of the 564 players in the pool have zero Premier League minutes (new signings, returning
+  loanees, players who missed last season). All 164 *are* scoreable — the price-implied baseline
+  added on 2026-07-29 exists precisely so they aren't invisible — and all 164 are eligible for
+  selection. None of them are chosen.
+- The best-scoring new arrival is **Marcus Rashford (MUN, £7.0m) at 2.29, ranked #165** in the pool.
+  Every player in the recommended 15 outranks him. The next best are Palestra (CHE, 2.11),
+  V. Muñoz (LIV, 1.98), Tzolis (ARS, 1.97), N. Jackson (CHE, 1.83).
+- **Cause, and it's structural, not a bug.** A player with no record is scored
+  `baseline_ppg(price) × ease × UNKNOWN_RELIABILITY (0.55)`. The baseline regresses them onto the
+  league's price/points line — average for their cost by construction, never exceptional — and the
+  0.55 then removes 45% on top. The product cannot reach the ~5.0 the top of the squad scores.
+  So no new signing can enter the squad at any price, on any fixture run.
+- **Deliberately not retuned.** Per `CLAUDE.md`, weights change off measured error, not intuition,
+  and there is zero measured data so far (GW1 is 2026-08-21). Raising `UNKNOWN_RELIABILITY` to make
+  Rashford selectable today would be exactly the intuition-driven change the project rules forbid.
+  Flagged as an open question for the first post-GW1 calibration, when real minutes for these
+  players exist to measure against.
+- **The honest mitigation is already specified and blocked on access:** `data/preseason.json`
+  player-level friendly minutes. That's the one signal that legitimately separates a new signing the
+  manager intends to start from one who won't play, and it's paywalled (FFS Chief Scout). Guessing
+  the numbers is worse than leaving them null.

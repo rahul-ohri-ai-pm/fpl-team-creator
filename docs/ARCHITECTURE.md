@@ -39,13 +39,13 @@ The `fpl` MCP server sits alongside this, not inside it — see [MCP boundary](#
 | `engine/fetch.py` | ~140 | Every call to the FPL API. Nothing else makes network requests. |
 | `engine/score.py` | ~240 | Predicted points per player. The only place judgement about players lives. |
 | `engine/preseason.py` | ~130 | Pre-season signal the API can't carry, plus the price-implied baseline. |
-| `engine/optimize.py` | ~150 | MILP squad selection, lineup, and transfer search. No player judgement. |
+| `engine/optimize.py` | ~220 | MILP squad selection, lineup, and transfer search. No player judgement. |
 | `engine/evaluate.py` | ~200 | Recording predictions and measuring them. Deliberately import-independent of the solver. |
 
 ### `fetch.py` — the only network boundary
 
 Keeping every request in one module means the rest of the codebase is trivially testable offline.
-All 80 tests run without network access.
+All 90 tests run without network access.
 
 One piece of real logic lives here: `free_transfers()`. The public API exposes no free-transfer
 balance — that only exists on the authenticated `my-team` endpoint, which this project deliberately
@@ -83,7 +83,13 @@ Two MILPs via `pulp`/CBC:
 - `best_lineup` picks the legal XI, captain and vice from a fixed 15.
 
 `recommend_transfers` searches 0–2 transfers and scores each option on the same quantity minus the
-hit cost, so the comparison against -4 is in real points.
+hit cost, so the comparison against -4 is in real points. A transfer count that can't satisfy the
+constraints (a favourite-club floor, a tight bank) is skipped, not fatal — only a search where every
+count is infeasible raises.
+
+`loyalty_cost` re-solves the squad with a club floor of 1, 2 and 3 and reports the drop against the
+unconstrained optimum, so a favourite-club preference can be priced in predicted points before it's
+switched on.
 
 Because the constraints are solved to proven optimality, **a strange recommendation is always a
 scoring problem, never a selection problem.** That's the main reason to use a solver here.
@@ -126,16 +132,24 @@ Tunables are named constants at the top of their module, not scattered literals:
 | `POSITION_MATCHUP` | `score` | table | Per-position weight on opponent attack/defence |
 | `PRESEASON_MINUTES_WEIGHT` | `preseason` | 0.4 | Friendly minutes vs last season |
 | `UNKNOWN_RELIABILITY` | `preseason` | 0.55 | Assumed reliability with no record |
+| `CLUB_LIMIT` | `optimize` | 3 | FPL's cap on players from one club |
 
-User-facing settings (team ID, risk profile, hit tolerance) live in `config/settings.md`.
+User-facing settings (team ID, risk profile, hit tolerance, favourite club and loyalty mode) live in
+`config/settings.md`.
+
+Two preferences that are *not* predicted points are deliberately kept out of `score`: the ownership
+lean (applied as `tiebreak` at `OWNERSHIP_TIEBREAK_EPSILON`) and the favourite-club floor (applied
+as `optimize.min_from_team`, a hard constraint). Both stay outside the score so squad totals remain
+comparable with real FPL points. `optimize.loyalty_cost` prices the club floor in predicted points
+before anyone decides to switch it on.
 
 ## Testing
 
-80 tests, no network, no fixtures on disk — synthetic payloads throughout.
+90 tests, no network, no fixtures on disk — synthetic payloads throughout.
 
 | File | Tests | Covers |
 |---|---|---|
-| `test_optimize.py` | 19 | Quotas, budget, club limits, formation legality, objective, transfers, fixture decay |
+| `test_optimize.py` | 29 | Quotas, budget, club limits, formation legality, objective, transfers, fixture decay, favourite-club floor and its cost |
 | `test_preseason.py` | 22 | File loading, price baseline, minutes blend, player and club flags |
 | `test_evaluate.py` | 15 | Recording, auto-subs, armband, bench exclusion, calibration |
 | `test_matchup.py` | 13 | Normalisation, position separation, venue mirroring, flat-field fallback |
