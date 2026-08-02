@@ -267,3 +267,40 @@ Template for each new entry:
   availability check is live data rather than missing data.
 - **Recorded** to `records/predictions.jsonl` as the GW1 prediction, superseding the identical
   2026-07-29 line.
+
+## Assessment of the user's actual GW1 draft — 2026-08-02
+
+The user shared their real app draft (snapshot in `team_history.md`). Scored against the same
+model, no new pipeline logic.
+
+- **2.83 predicted points are free — no transfer required, only a re-arrangement.** This is the
+  headline and it is worth more than any single transfer on the ladder below.
+  - **Start Igor Thiago (£8.0m, 4.86), bench Pedro Porro (£5.5m, 3.49)** → the XI becomes 3-4-3.
+    An £8.0m forward was on the bench behind a £5.5m defender: +1.37.
+  - **Captain Gabriel (6.59), not João Pedro (5.13):** +1.46. Same reasoning as this week's own
+    captaincy note — Gabriel's ppg is the highest in their squad and Arsenal host COV at
+    difficulty 2.
+  - Result: 57.43 → **60.25** with the identical 15.
+- **Then the transfer ladder** (pre-season, so changes are free until the deadline):
+  | Changes | Predicted GW1 | Move |
+  |---|---|---|
+  | 0 (re-arrange only) | 60.25 | as above |
+  | 1 | 61.14 | Rice → Guimarães |
+  | 2 | 61.73 | + Cunha → Gibbs-White |
+  | 3 | 63.53 | Rogers/Cunha/Rice → **Bruno Fernandes** + Stach + Sangaré |
+  | 4 | 64.03 | + Mbeumo/Milenković → Senesi |
+  | from scratch | 65.08 | the engine's own 15 |
+- **The structural problem is bench spend.** £23.0m sits on the bench (Petrović 4.5, Milenković
+  5.5, Rice 7.5, plus Porro 5.5 after the re-arrangement) against £15.5m in the engine's squad.
+  **Declan Rice at £7.5m scoring 3.88 from the bench is the single worst allocation in the squad**
+  — he is the first thing every rung of the ladder sells.
+- **No Bruno Fernandes (7.19), the model's top-rated player.** Two £8.0m Man Utd midfielders
+  (Mbeumo 4.83, Cunha 4.62) occupy £16.0m instead, and duplicate one fixture.
+- **Not a criticism the model can support:** Mbeumo, Cunha and Rogers are all defensible real-world
+  picks. The model prefers Bruno on last season's points-per-game, which pre-season is all it has —
+  `form` is 0.0 league-wide. These gaps are real but they are not certainties.
+- **Worth noting for the new-signings question:** Morgan Rogers (now CHE) is scored properly at
+  4.63 because he moved *within* the Premier League and kept his record (3280 min, 4.6 ppg). It is
+  only arrivals from outside the league that hit the price-baseline floor.
+- **Chips:** nothing to play at GW1. Bench Boost with a £23.0m bench would be poor value, and
+  Triple Captain is best held for a double gameweek.

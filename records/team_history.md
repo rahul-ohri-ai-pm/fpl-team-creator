@@ -105,3 +105,21 @@ Template for each new entry:
 - Identical to the 2026-07-29 snapshot; recorded so the history stays continuous rather than
   implying the week went unreviewed. Chelsea loyalty floor available but off (forcing 3 would
   cost 0.38 predicted points).
+
+## User's actual GW1 draft (as built in the FPL app) — 2026-08-02
+
+Recorded because it is the first sight of the real entry: the app draft differs from the engine's
+recommendation, and the gap is the more useful record. Not a recommendation — this is what the user
+actually has.
+
+- **Squad value:** £100.0m exactly | **Free transfers:** unlimited until the GW1 deadline
+  (Fri 21 Aug 23:00 local = 17:30 UTC) | **Chips:** Bench Boost and Triple Captain available;
+  Wildcard and Free Hit unavailable (normal — the first wildcard unlocks after GW1)
+- **Squad:** GK: Raya (ARS), Petrović (BOU) · DEF: Pedro Porro (TOT), Tarkowski (EVE),
+  Gabriel (ARS), Mukiele (SUN), Milenković (NFO) · MID: Mbeumo (MUN), Rogers (CHE), Cunha (MUN),
+  Dewsbury-Hall (EVE), Rice (ARS) · FWD: João Pedro (CHE), Calvert-Lewin (LEE), Igor Thiago (BRE)
+- **XI as picked (4-4-2):** Raya; Porro, Tarkowski, Gabriel, Mukiele; Mbeumo, Rogers, Cunha,
+  Dewsbury-Hall; João Pedro, Calvert-Lewin. **Captain:** João Pedro | **Vice:** Raya
+- **Legal:** 2/5/5/3 quotas correct, £100.0m on the nose, ARS at 3 (the limit, not over it).
+- **Predicted GW1 as picked: 57.43** vs the engine's from-scratch squad at 65.08. 7 of the 15
+  overlap (Raya, Gabriel, Mukiele, Dewsbury-Hall, João Pedro, Calvert-Lewin, Igor Thiago).
