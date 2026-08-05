@@ -24,7 +24,7 @@
     "Friendly goals and assists are deliberately NOT scored. Pre-season output is a famously weak",
     "predictor - weak opposition, trialists, experimental XIs - while minutes are informative."
   ],
-  "updated": "2026-08-02",
+  "updated": "2026-08-05",
   "season": "2026/27",
   "gw1_deadline": "2026-08-21T17:30:00Z",
   "sources": [
@@ -47,7 +47,13 @@
     "extension - and Crystal Palace listed Munoz among a post-World Cup group still to be integrated.",
     "FPL has flagged neither: both read status=a with chance_of_playing_next_round null and empty news.",
     "That is exactly the case the availability field exists for, and FPL's own rating wins the moment",
-    "it sets one."
+    "it sets one.",
+    "",
+    "5 Aug: friendly programme is ~two-thirds done and the informative matches are still ahead -",
+    "clubs field closer to first-choice XIs in their final one or two warm-ups, and the deep World",
+    "Cup runners rejoin club training around 10-12 August. Man City v Arsenal (FA Community Shield,",
+    "16 Aug) is a competitive fixture five days before the deadline and carries real injury risk for",
+    "assets at both clubs."
   ],
   "friendlies": [
     {
@@ -70,6 +76,12 @@
     },
     {
       "date": "2026-07-18",
+      "home": "Man Utd",
+      "away": "Wrexham",
+      "score": "0-1"
+    },
+    {
+      "date": "2026-07-18",
       "home": "Newcastle",
       "away": "Darlington",
       "score": "3-0"
@@ -79,12 +91,6 @@
       "home": "Notts County",
       "away": "Nottingham Forest",
       "score": "0-2"
-    },
-    {
-      "date": "2026-07-18",
-      "home": "Man Utd",
-      "away": "Wrexham",
-      "score": "0-1"
     },
     {
       "date": "2026-07-21",
@@ -112,15 +118,33 @@
     },
     {
       "date": "2026-07-25",
-      "home": "Porto",
-      "away": "Aston Villa",
-      "score": "2-1"
+      "home": "Bromley",
+      "away": "Crystal Palace",
+      "score": "3-0"
     },
     {
       "date": "2026-07-25",
-      "home": "Rosenborg",
-      "away": "Man Utd",
-      "score": "0-5"
+      "home": "Crystal Palace",
+      "away": "Swindon",
+      "score": "5-1"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Fulham",
+      "away": "Norwich",
+      "score": "0-2"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Gateshead",
+      "away": "Newcastle",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-07-25",
+      "home": "Konyaspor",
+      "away": "Hull",
+      "score": "0-3"
     },
     {
       "date": "2026-07-25",
@@ -136,33 +160,15 @@
     },
     {
       "date": "2026-07-25",
-      "home": "Konyaspor",
-      "away": "Hull",
-      "score": "0-3"
+      "home": "Porto",
+      "away": "Aston Villa",
+      "score": "2-1"
     },
     {
       "date": "2026-07-25",
-      "home": "Fulham",
-      "away": "Norwich",
-      "score": "0-2"
-    },
-    {
-      "date": "2026-07-25",
-      "home": "Crystal Palace",
-      "away": "Swindon",
-      "score": "5-1"
-    },
-    {
-      "date": "2026-07-25",
-      "home": "Gateshead",
-      "away": "Newcastle",
-      "score": "1-1"
-    },
-    {
-      "date": "2026-07-25",
-      "home": "Bromley",
-      "away": "Crystal Palace",
-      "score": "3-0"
+      "home": "Rosenborg",
+      "away": "Man Utd",
+      "score": "0-5"
     },
     {
       "date": "2026-07-26",
@@ -172,27 +178,15 @@
     },
     {
       "date": "2026-07-28",
-      "home": "Aston Villa",
-      "away": "Real Sociedad",
-      "score": "2-4"
-    },
-    {
-      "date": "2026-07-28",
-      "home": "Western Sydney Wanderers",
-      "away": "Chelsea",
-      "score": "4-6"
-    },
-    {
-      "date": "2026-07-28",
-      "home": "Stoke",
-      "away": "Everton",
-      "score": "1-0"
-    },
-    {
-      "date": "2026-07-28",
       "home": "Al-Ahli",
       "away": "Fulham",
       "score": "1-1"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Aston Villa",
+      "away": "Real Sociedad",
+      "score": "2-4"
     },
     {
       "date": "2026-07-28",
@@ -211,6 +205,18 @@
       "home": "Lens",
       "away": "Crystal Palace",
       "score": "3-0"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Stoke",
+      "away": "Everton",
+      "score": "1-0"
+    },
+    {
+      "date": "2026-07-28",
+      "home": "Western Sydney Wanderers",
+      "away": "Chelsea",
+      "score": "4-6"
     },
     {
       "date": "2026-07-29",
@@ -235,6 +241,60 @@
       "home": "Man City",
       "away": "Inter Milan",
       "score": "1-1"
+    },
+    {
+      "date": "2026-08-02",
+      "home": "Liverpool",
+      "away": "Leeds",
+      "score": "2-4"
+    },
+    {
+      "date": "2026-08-02",
+      "home": "Sunderland",
+      "away": "Wrexham",
+      "score": "1-0"
+    },
+    {
+      "date": "2026-08-04",
+      "home": "Aston Villa",
+      "away": "BG Pathum United",
+      "score": "1-3"
+    },
+    {
+      "date": "2026-08-04",
+      "home": "Bournemouth",
+      "away": "Genoa",
+      "score": "1-10"
+    },
+    {
+      "date": "2026-08-04",
+      "home": "Ipswich",
+      "away": "Le Havre",
+      "score": "1-0"
+    },
+    {
+      "date": "2026-08-04",
+      "home": "West Bromwich Albion",
+      "away": "Coventry",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-08-05",
+      "home": "Brentford",
+      "away": "Wycombe",
+      "score": "4-1"
+    },
+    {
+      "date": "2026-08-05",
+      "home": "Chelsea",
+      "away": "Juventus",
+      "score": "0-1"
+    },
+    {
+      "date": "2026-08-05",
+      "home": "K-League All-Stars",
+      "away": "Man City",
+      "score": "1-3"
     }
   ],
   "_clubs_README": [

@@ -398,3 +398,49 @@ informative stretch of the calendar.
 - **Net effect on GW1:** 65.215 → **62.624**. A fall of 2.6 points that is not a model regression —
   it is two genuine availability risks the model previously could not see, and it is exactly the
   kind of correction that only happens if someone refreshes the file.
+
+## GW1 week-2 check — 2026-08-05
+
+- **Decision:** Two changes recommended against the user's actual GW1 draft, plus a free
+  lineup/armband fix that is worth more than either transfer.
+  **out** Rice, Rogers → **in** Bruno Guimarães, Gibbs-White.
+- **Hit taken:** none — pre-season, transfers are unlimited and free until the 21 Aug deadline.
+- **Baseline correction:** this run initially reported "hold, nothing changed" against the
+  *engine's own* hypothetical squad. That was the wrong baseline — the user has a real GW1 draft
+  recorded in `team_history.md`, and it is what changes must be measured against. It was also
+  computed on superseded code: six commits (multi-gameweek horizon, xGI blend, loyalty pricing,
+  `web_name` collision fix, pre-season refresh) landed while this run was in progress, so the
+  earlier conclusion was recomputed from scratch on the merged model rather than pushed.
+- **Where the user's draft stands under today's model:**
+
+  | | Predicted GW1 |
+  |---|---|
+  | As picked (own XI, João Pedro captain) | 56.71 |
+  | Same 15, best XI + armband (free) | 59.78 (+3.07) |
+  | \+ 1 transfer (Rice → Bruno G.) | 60.50 |
+  | \+ 2 transfers (also Rogers → Gibbs-White) | 61.17 |
+  | Engine's from-scratch optimum (8 changes) | 62.62 |
+
+- **The armband is the single biggest item and costs nothing.** Captaining Gabriel (6.59) rather
+  than João Pedro (4.81) is worth +1.78 on its own. The rest of the free +3.07 is starting
+  Igor Thiago ahead of Pedro Porro, moving the shape to 3-4-3.
+- **Why Rice goes first:** he carries the World Cup lay-off flag (`availability` 0.75, deep
+  tournament run, expected back in club training only around 10-12 Aug). This is the one squad
+  member with a live flag, and the swap is free.
+- **Chelsea loyalty (settings: favourite=Chelsea, mode=`report`):** essentially free. Forcing a
+  second Chelsea player costs **0.019** predicted points, a third costs **0.066**. The draft
+  already holds two (Rogers, João Pedro); the recommendation above drops Rogers, leaving one. At
+  these prices the preference is affordable at any level — if you want three Chelsea players, take
+  them, it costs a rounding error.
+- **Friendlies:** 9 new results added (2-5 Aug), file now at 40, `updated` moved to 2026-08-05,
+  `validate()` clean. Recorded but **not scored** — this project scores friendly minutes, not
+  goals, and minutes stay paywalled. So Bournemouth 1-10 Genoa and Liverpool 2-4 Leeds move
+  nothing by design.
+- **Market check:** 0 price changes (FPL freezes prices pre-season), 17 status changes across the
+  pool with only Rice's pre-existing flag touching the draft, and 4 club moves (Lacroix CRY→CHE the
+  most-owned) none of which involve the draft.
+- **Flagged for the next run:** the informative friendlies are still ahead (Leeds v Man Utd 12 Aug,
+  the 15 Aug round); World Cup returnees rejoin ~10-12 Aug, which should replace the editorial
+  0.75 flags with real FPL `chance_of_playing` values; and Man City v Arsenal (Community Shield,
+  16 Aug) is a competitive fixture five days before the deadline with Raya and Gabriel held —
+  Gabriel is now the recommended captain, so a knock there is the highest-impact single risk.
