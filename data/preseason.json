@@ -67,7 +67,17 @@
     "ingested it - the pool still reads NEW. This is the case `moved_to` exists for. FPL lags real",
     "transfers by days during a window, and until it catches up every team-derived term is computed",
     "against the wrong club, including the three-per-club limit, which can silently produce an",
-    "illegal squad. Check the window for further moves each run rather than trusting the pool's club."
+    "illegal squad. Check the window for further moves each run rather than trusting the pool's club.",
+    "",
+    "8 Aug transfer audit: cross-checked every reported 2026 summer PL move against the live pool.",
+    "FPL is up to date on all of them except Bruno Guimaraes - Rogers, Lacroix, Welbeck, J.Henderson,",
+    "Elliot Anderson, Barco, Quenda, Emegha, Palestra, Manzambi, Joao Gomes, Garnacho, Victor Munoz,",
+    "M.Sangare, Trafford, Norgaard, Hornicek, Tonali, Mateus Fernandes, van Hecke, Robertson, Senesi",
+    "and Dubravka all carry the correct club. Also checked the mirror failure - players who left the",
+    "league but linger in the pool: 7 are marked status=u (loans and departures) and all are correctly",
+    "zeroed by chance_of_playing=0, so none can be selected. No top-40-owned player carries any news.",
+    "Beware surname matching when repeating this: Ibrahim vs Mamadou Sangare, Daniel vs Victor Munoz,",
+    "Dean vs Jordan Henderson and Beto vs Joao Gomes are different footballers. Match on element_id."
   ],
   "friendlies": [
     {

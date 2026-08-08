@@ -512,3 +512,29 @@ informative stretch of the calendar.
 - **Standing change to the weekly process:** the pool's `team` field cannot be trusted during a
   transfer window. Check the window for completed-but-not-yet-ingested moves each run and record
   them with `moved_to`, rather than relying on the week-over-week club diff.
+
+## GW1 — transfer-lag audit — 2026-08-08
+
+- **Decision:** No further change. The corrected recommendation stands: **out** Rice, Rogers →
+  **in** Enzo Fernández, Gibbs-White, predicted **61.15**.
+- **What was checked:** every reported 2026 summer Premier League move cross-checked against the
+  live FPL pool, prompted by the Bruno Guimarães miss. **FPL is up to date on all of them except
+  Bruno Guimarães.** Verified correct: Morgan Rogers, Lacroix, Welbeck and Jordan Henderson
+  (all → CHE), Elliot Anderson (→ MCI), Barco/Quenda/Emegha/Palestra (→ CHE), Manzambi, João Gomes
+  and Garnacho (→ AVL), Victor Muñoz (→ LIV), Mamadou Sangaré (→ BRE), Trafford (→ LEE),
+  Nørgaard (→ EVE, no longer an FPL asset), Horníček (→ NEW), and the Spurs intake — Tonali,
+  Mateus Fernandes, van Hecke, Robertson, Senesi, Dúbravka.
+- **The mirror failure was checked too:** players who have left the league but linger in the pool
+  and could be scored despite never playing. Seven carry `status=u` (Burstow, Bassette, Cartwright,
+  Watson, J.Henderson, Uche, Harrison — loans and departures) and **all are correctly zeroed by
+  `chance_of_playing=0`**, so none is selectable. No player in the top 40 by ownership carries any
+  news at all.
+- **Method note for future runs:** surname substring matching produces false positives that look
+  alarming and are not. Ibrahim Sangaré (NFO) and Mamadou Sangaré (BRE), Daniel Muñoz (CRY) and
+  Victor Muñoz (LIV), Dean Henderson (CRY) and Jordan Henderson (CHE), Beto (EVE) and João Gomes
+  (AVL) are all different footballers, and a "Rodri" search matches every Rodrigues in the pool.
+  Confirm on `element_id` before recording a `moved_to`.
+- **Residual risk, stated plainly:** this audit is only as complete as the transfer reporting it
+  was built from. A deal agreed in the last few hours, or one not covered by the sources checked,
+  would not appear. The check is worth repeating close to the deadline rather than treated as
+  settled — the window does not close until 1 September, after GW1.
