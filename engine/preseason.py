@@ -92,6 +92,22 @@ class Preseason:
                     f"applying this entry to whichever one loaded last.")
         return problems
 
+    def club_override(self, web_name: str, element_id: int | None = None) -> str | None:
+        """Club short_name a player has actually moved to, when FPL's pool still
+        lists the old one. None if no override applies.
+
+        FPL ingests a transfer some time after it completes, and during a window
+        that lag is days. Until it catches up, every team-derived term is computed
+        against the wrong club: fixture run, opponent matchup, any club-level flag,
+        and - most dangerously - the three-per-club limit, which can silently
+        produce an illegal squad. `moved_to` in a players[] entry fixes all of them
+        at once by remapping the player's team before scoring.
+        """
+        p = self._entry(web_name, element_id)
+        if not p:
+            return None
+        return p.get("moved_to") or None
+
     def _entry(self, web_name: str, element_id: int | None):
         """The entry for this player: by element_id when the file gives one, else
         by name."""

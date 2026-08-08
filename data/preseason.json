@@ -34,7 +34,8 @@
     "https://www.fantasyfootballscout.co.uk/2026/07/29/fpl-pre-season-pedro-hat-trick-alonsos-tactics-ndiaye-absent",
     "https://www.fantasyfootballscout.co.uk/2026/07/30/fpl-pre-season-tel-lively-why-solanke-fernandes-missed-out-matusiwa-latest",
     "https://www.unitedinfocus.com/news/manchester-united-confirm-what-date-players-will-return-for-pre-season-training/",
-    "https://www.skysports.com/football/news/11661/13546612/premier-league-pre-season-friendlies-2026-27-fixtures-results-uk-kick-off-times-summer-tour-schedule-and-training-camps"
+    "https://www.skysports.com/football/news/11661/13546612/premier-league-pre-season-friendlies-2026-27-fixtures-results-uk-kick-off-times-summer-tour-schedule-and-training-camps",
+    "https://www.nbcsports.com/soccer/news/bruno-guimaraes-headed-to-arsenal-as-newcastle-agree-fee-for-100m-brazilian-maestro"
   ],
   "context": [
     "The 2026 World Cup finished ~33 days before GW1. Players who went deep are expected to get",
@@ -60,7 +61,13 @@
     "B.Fernandes and Munoz should be re-checked next run and dropped as soon as FPL publishes real",
     "chance_of_playing values, which override them automatically.",
     "Man City v Arsenal (FA Community Shield, 16 Aug) is competitive football five days before the",
-    "deadline and is the highest-impact injury risk for Arsenal assets."
+    "deadline and is the highest-impact injury risk for Arsenal assets.",
+    "",
+    "8 Aug (transfer): Bruno Guimaraes has agreed a move from Newcastle to Arsenal and FPL has NOT",
+    "ingested it - the pool still reads NEW. This is the case `moved_to` exists for. FPL lags real",
+    "transfers by days during a window, and until it catches up every team-derived term is computed",
+    "against the wrong club, including the three-per-club limit, which can silently produce an",
+    "illegal squad. Check the window for further moves each run rather than trusting the pool's club."
   ],
   "friendlies": [
     {
@@ -475,6 +482,16 @@
       "note": "Listed by Crystal Palace among the post-World Cup absentees still to be integrated (alongside Henderson, Mateta, Strand Larsen, Riad) as of 2026-07-29. Same judgment-call sizing as B.Fernandes. NOTE: pinned by element_id - 'Munoz' without the tilde is Victor Munoz (LIV), a different player, and this entry hit him by mistake on first write.",
       "source": "https://www.fantasyfootballscout.co.uk/2026/07/29/fpl-pre-season-pedro-hat-trick-alonsos-tactics-ndiaye-absent",
       "element_id": 201
+    },
+    {
+      "web_name": "Bruno G.",
+      "element_id": 452,
+      "moved_to": "ARS",
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.75,
+      "note": "Arsenal agreed a fee with Newcastle (reported ~$100m) and he left the Newcastle pre-season camp for a medical. FPL's pool still lists him at NEW with a NEW price, so without moved_to he is scored on Newcastle's fixture run and counted against Newcastle's three-player limit - both wrong. availability 0.75 is a judgement call for a player joining a new club under two weeks before the deadline: a GW1 start is likely but not assured, and FPL will also re-price him when it ingests the move, so the £7.0m here is stale. Drop both fields once FPL processes the transfer.",
+      "source": "NBC Sports, August 2026 - Newcastle agree fee with Arsenal for Bruno Guimaraes"
     }
   ],
   "friendlies_note": "Partial from 2026-07-30 onward - only fixtures whose date could be attributed to a source are listed. Team-level results are decorative anyway: nothing in engine/score.py reads this array. Friendly RESULTS are not scored, by design (see _README). It is kept as provenance for the player and club entries below, which are the parts that move numbers.",

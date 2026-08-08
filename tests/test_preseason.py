@@ -291,3 +291,57 @@ def test_an_unpinned_entry_still_works_for_a_unique_name():
 
 def test_a_clean_file_reports_no_problems():
     assert ps.Preseason({}).validate(_pool_with_collision()) == []
+
+
+# --- club overrides for transfers FPL hasn't ingested ---------------------
+
+def test_no_override_by_default():
+    assert ps.Preseason({}).club_override("Anyone") is None
+    assert ps.Preseason({"players": [{"web_name": "X"}]}).club_override("X") is None
+
+
+def test_club_override_is_read_by_element_id_not_just_name():
+    p = ps.Preseason({"players": [
+        {"web_name": "Dup", "element_id": 7, "moved_to": "ARS"}]})
+    assert p.club_override("Dup", 7) == "ARS"
+    assert p.club_override("Dup", 99) is None, "must not leak onto a same-named player"
+
+
+def test_moved_player_is_scored_on_the_new_clubs_fixtures():
+    """The whole point: the wrong club means the wrong fixture run."""
+    els = [element(pid=1, name="Mover", team=1)]
+    b = bootstrap(els)
+    b["teams"] = [{"id": 1, "short_name": "OLD"}, {"id": 2, "short_name": "NEW"}]
+    # club 1 has a brutal opener, club 2 an easy one
+    fx = [{"event": 1, "team_h": 1, "team_a": 3, "team_h_difficulty": 5, "team_a_difficulty": 3},
+          {"event": 1, "team_h": 2, "team_a": 4, "team_h_difficulty": 1, "team_a_difficulty": 3}]
+    stay = score_players(b, fx, 1, "safe", preseason=ps.Preseason())[1]
+    moved = score_players(b, fx, 1, "safe", preseason=ps.Preseason(
+        {"players": [{"web_name": "Mover", "element_id": 1, "moved_to": "NEW"}]}))[1]
+    assert moved["team"] == 2, "the scored team must be the new club"
+    assert moved["score"] > stay["score"], "an easier opener must show up in the score"
+
+
+def test_moved_player_counts_against_the_new_clubs_limit():
+    """A stale club silently permits an illegal squad - four from one real club."""
+    els = [element(pid=i, name=f"P{i}", team=1) for i in range(1, 5)]
+    b = bootstrap(els)
+    b["teams"] = [{"id": 1, "short_name": "OLD"}, {"id": 2, "short_name": "NEW"}]
+    scored = score_players(b, [], 1, "safe", preseason=ps.Preseason(
+        {"players": [{"web_name": "P4", "element_id": 4, "moved_to": "NEW"}]}))
+    assert scored[4]["team"] == 2
+    assert [scored[i]["team"] for i in (1, 2, 3)] == [1, 1, 1]
+
+
+def test_unknown_club_code_is_ignored_rather_than_crashing():
+    els = [element(pid=1, name="Mover", team=1)]
+    b = bootstrap(els)
+    b["teams"] = [{"id": 1, "short_name": "OLD"}]
+    scored = score_players(b, [], 1, "safe", preseason=ps.Preseason(
+        {"players": [{"web_name": "Mover", "element_id": 1, "moved_to": "NOPE"}]}))
+    assert scored[1]["team"] == 1
+
+
+def test_checked_in_file_records_the_bruno_g_move():
+    loaded = ps.load()
+    assert loaded.club_override("Bruno G.", 452) == "ARS"

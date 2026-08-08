@@ -342,6 +342,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
     baselines = preseason_mod.price_baselines(bootstrap)
     xgi = xgi_models(bootstrap)
     club_short = {t["id"]: t.get("short_name") for t in bootstrap["teams"]}
+    club_id = {t.get("short_name"): t["id"] for t in bootstrap["teams"] if t.get("short_name")}
 
     out = {}
     for p in bootstrap["elements"]:
@@ -399,13 +400,22 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
         # Club-level uncertainty (a new manager, say) compounds with the player's own:
         # it makes last season's minutes a weaker guide to this season's XI for
         # everyone at the club, including players FPL has flagged fit.
-        club_avail = ps.club_availability(club_short.get(p["team"]))
+        # A transfer FPL hasn't ingested yet leaves the player attached to his old
+        # club, which would score him on the wrong fixtures and, worse, count him
+        # against the wrong club's three-player limit. Remap before anything reads
+        # the team.
+        team_id = p["team"]
+        moved = ps.club_override(web_name, p["id"])
+        if moved and moved in club_id:
+            team_id = club_id[moved]
+
+        club_avail = ps.club_availability(club_short.get(team_id))
         if club_avail is not None:
             injury_mult *= club_avail
 
         pos = POSITION_BY_TYPE[p["element_type"]]
-        ease = team_ease.get(p["team"], 0.5)
-        m = matchup_ease.get((p["team"], pos))
+        ease = team_ease.get(team_id, 0.5)
+        m = matchup_ease.get((team_id, pos))
         if m is not None:
             ease = (1 - MATCHUP_WEIGHT) * ease + MATCHUP_WEIGHT * m
         ease_mult = 0.8 + ease * 0.4  # 0.8 .. 1.2
@@ -424,7 +434,7 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             # Signed -1..1 ownership preference, applied only as a tiebreak.
             "tiebreak": round((ownership / 100) * ownership_weight, 4),
             "pos": pos,
-            "team": p["team"],
+            "team": team_id,
             "cost": p["now_cost"],
             "name": f"{p['first_name']} {p['second_name']}",
         }

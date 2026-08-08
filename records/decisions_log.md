@@ -478,3 +478,37 @@ informative stretch of the calendar.
   player out. The final friendlies (Leeds v Man Utd 12 Aug, the 15 Aug round) and the Community
   Shield on 16 Aug come before the deadline; Gabriel is the recommended captain and an Arsenal
   knock there is the single highest-impact risk to this plan.
+
+## GW1 week-3 CORRECTION — Bruno Guimarães is an Arsenal player — 2026-08-08
+
+- **Decision:** Corrected. **out** Rice, Rogers → **in** Enzo Fernández, Gibbs-White.
+  Supersedes the recommendation logged an hour earlier, which had Bruno Guimarães coming in as a
+  *Newcastle* midfielder. He isn't one.
+- **What was wrong:** Arsenal agreed a fee with Newcastle (reported ~$100m) and Bruno Guimarães
+  left the Newcastle pre-season camp for a medical. FPL has **not** ingested the move — the pool
+  still reads `NEW` with a Newcastle price — so the engine scored him on Newcastle's fixture run
+  and counted him against Newcastle's three-player limit. Both wrong.
+- **Why the market diff didn't catch it:** the weekly check compares this week's bootstrap against
+  last week's and reports players whose `team` changed. That only ever surfaces transfers **FPL has
+  already processed**. A real-world move FPL hasn't ingested produces *no diff at all* — the field
+  is equally stale on both sides — so the check was structurally blind to exactly the case that
+  matters most during an open window. Reported by the user, not by the pipeline.
+- **Fix:** `data/preseason.json` player entries gain `moved_to`, a club short_name that overrides
+  the pool's club. `engine/preseason.py` exposes `club_override(...)`; `engine/score.py` resolves
+  the effective club **before** anything reads it, so the fixture run, the opponent matchup, any
+  club-level flag, the club limit, and the multi-gameweek horizon all follow the new club. Six
+  tests cover it, including that a moved player counts against the *new* club's three-player cap —
+  the failure mode here is a silently illegal squad, not just a mis-scored one.
+- **Effect on his score:** 4.82 → **3.87**. Two causes: Arsenal's opening fixture run is harder
+  than Newcastle's, and he now carries `availability` 0.75 for joining a new club under two weeks
+  before the deadline. That is a judgement call, and it is the reason he drops out rather than
+  merely being re-rated. His £7.0m is also stale — FPL will re-price him when it processes the move.
+- **Replacement:** Enzo Fernández (CHE, £7.0m, 4.80) instead of Bruno Guimarães. Predicted total
+  **61.15**, against 61.17 for the superseded (wrong) version — the level barely moves, but the
+  squad is now legal and correctly scored, which is the point.
+- **Side benefit:** Enzo takes Chelsea to two players alongside João Pedro, so the favourite-club
+  preference is now satisfied at **zero** cost (levels 1 and 2 both cost 0.000; a third would cost
+  0.046).
+- **Standing change to the weekly process:** the pool's `team` field cannot be trusted during a
+  transfer window. Check the window for completed-but-not-yet-ingested moves each run and record
+  them with `moved_to`, rather than relying on the week-over-week club diff.

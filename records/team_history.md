@@ -180,3 +180,21 @@ actually has.
 - **Bench (auto-sub order):** Calvert-Lewin, Pedro Porro, Milenković, Petrović
 - **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
 - All 15 `status=a`, no news, no price movement in the week.
+
+## GW1 week-3 corrected — 2026-08-08
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW1 total:** 61.15 (XI 54.56 + captain 6.59). Supersedes the 61.17 logged earlier
+  today, which wrongly treated Bruno Guimarães as a Newcastle player.
+- **Changes from the user's draft:** OUT Rice, Rogers · IN Enzo Fernández, Gibbs-White.
+- **Squad (£100.0m):** GK: David Raya, Đorđe Petrović · DEF: Gabriel Magalhães, Nordi Mukiele,
+  James Tarkowski, Pedro Porro, Nikola Milenković · MID: Bryan Mbeumo, Morgan Gibbs-White,
+  Enzo Fernández, Kiernan Dewsbury-Hall, Matheus Cunha · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-4-3):** Raya; Gabriel, Mukiele, Tarkowski; Mbeumo, Gibbs-White, Enzo Fernández,
+  Dewsbury-Hall, Cunha; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Calvert-Lewin, Pedro Porro, Milenković, Petrović
+- **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
+- Club spread: ARS 2, CHE 2, EVE 2, MUN 2, NFO 2, BOU/BRE/LEE/SUN/TOT 1. Chelsea preference met
+  at zero cost.
