@@ -102,3 +102,58 @@ knew the difference.
   either.
 - **Still to verify after GW1:** this is an out-of-sample backtest, not this model's own measured
   error. The first real calibration numbers can still contradict it, and take precedence if they do.
+
+## Target-setting note — is 72 points a reasonable GW1 target? — 2026-08-08
+
+Prompted by a fair challenge: the recommendation predicts ~61, so why not aim for 72, which is
+6.0 points from each of the 12 scoring slots (XI + the captain counted twice)?
+
+**72 is above the physical ceiling of the game, not above the model's ambition.** Measured, not
+argued:
+
+| Constraint set | Best attainable predicted GW total |
+|---|---|
+| £100.0m, all FPL rules | **62.70** |
+| £150m budget | 64.43 |
+| Unlimited budget, club limit on | 64.43 |
+| Unlimited budget, **no club limit** | **64.43** |
+
+The last row is the 11 highest-scoring players in the entire league with the best captain. It is
+64.43. There is no legal or illegal squad that predicts 72.
+
+The reason is the supply of elite players, not the budget:
+
+- **Only 3 players in the whole league averaged 6.0+ points per game last season** — Haaland (6.8),
+  Bruno Fernandes (6.7), Gabriel (6.5). Zero reached 7.0. Their combined cost is £35.5m, and a
+  squad needs fifteen players.
+- **Position quotas force low-ceiling slots.** An XI must field a goalkeeper, and the best keeper
+  in the league averages 4.4. It must field at least three defenders, and only one defender is
+  above 5.1.
+- The league's eleven best-scoring players average **5.26**, not 6.00. Asking for 6.0 per slot is
+  asking every slot to beat the best player available for most positions.
+
+Note that budget stops binding at £111m — beyond that, extra money buys nothing, because the
+players simply do not exist. That is the clearest statement of the problem: this is a supply
+constraint, not a spending one.
+
+**The important caveat: 62.70 is an expected value, not a cap on any single week.** FPL scores are
+extremely variable. A captain haul plus two clean sheets and a couple of returns puts a real
+gameweek well past 72. What is not achievable is 72 as a *weekly average* — over 38 gameweeks that
+is 2,736 points, which is a season-winning total rather than a plan.
+
+**What is actually capturable, and where the effort belongs:**
+
+| | Predicted |
+|---|---|
+| User's draft as picked | 56.71 |
+| Current recommendation | 61.15 |
+| Best legal £100m squad | 62.70 |
+
+The real headroom is the ~6 points between the draft as picked and the reachable optimum, and most
+of that (+3.07) is free — the starting XI and the armband, not transfers.
+
+**And the honest limit on all of the above:** these are the *model's* numbers, and the model has
+never been measured. Zero gameweeks have been evaluated. If it systematically under-predicts, the
+GW1 evaluation will show a positive `bias` and the weights get retuned against that evidence — see
+`docs/EVALUATION.md`. A target should be an output of calibration, not a round number chosen in
+advance. Revisit this note after GW1.
