@@ -444,3 +444,37 @@ informative stretch of the calendar.
   0.75 flags with real FPL `chance_of_playing` values; and Man City v Arsenal (Community Shield,
   16 Aug) is a competitive fixture five days before the deadline with Raya and Gabriel held —
   Gabriel is now the recommended captain, so a knock there is the highest-impact single risk.
+
+## GW1 week-3 check — 2026-08-08
+
+- **Decision:** **Unchanged.** The same two changes recommended on 5 Aug still stand —
+  **out** Rice, Rogers → **in** Bruno Guimarães, Gibbs-White — plus the free XI/armband fix
+  (captain Gabriel, not João Pedro; Igor Thiago starts ahead of Pedro Porro).
+- **Hit taken:** none — pre-season, transfers unlimited and free until the 21 Aug deadline
+  (13 days out).
+- **Friendlies refreshed:** +19 results (5 Aug Arsenal 1-3 Real Betis, and the whole 8 Aug round
+  of 18), file now at **59**, `updated` → 2026-08-08, `validate()` clean. Notable for our players:
+  Chelsea 3-0 AC Milan, Leeds 2-0 RB Leipzig, PSG 1-1 Man Utd, Valencia 1-2 Newcastle,
+  Stuttgart 3-1 Everton, both Forest games lost 1-0. **None of it is scored** — this project
+  scores friendly minutes, not goals, and minutes remain behind Fantasy Football Scout's
+  Chief Scout paywall. Recording them keeps the audit trail honest about what was known when.
+- **Transfers / market:** **0 price changes** (FPL still has prices frozen pre-season, so waiting
+  continues to cost nothing). 10 status changes across the pool, **none touching either squad** —
+  Baleba (ankle, back 23 Aug), Gudmundsson (hamstring, 30 Aug) and Butland (arm) out; Wharton,
+  Murillo, Hudson-Odoi and Abraham all returned to full fitness. 2 club moves: Trafford MCI→LEE
+  and Nørgaard ARS→EVE, neither owned by us.
+- **Model output: identical to 5 Aug, to the decimal.** as-picked 56.71 → free XI/armband 59.78 →
+  2 transfers 61.17, against a from-scratch optimum of 62.62. Last week's recommended XV re-scores
+  at 61.17 today (recorded 61.165).
+- **Why nothing moved:** every input the model consumes is still frozen. `form` stays 0.0 until
+  GW1 is played, `points_per_game` is last season's and static, fixtures are unchanged, prices are
+  frozen, and no player in either squad picked up a flag. Three weekly runs have now produced the
+  same answer, which is a property of the pre-season data, not a stuck pipeline.
+- **Chelsea loyalty (mode `report`):** unchanged and still nearly free — 2nd Chelsea player costs
+  **0.019**, 3rd costs **0.066** predicted points.
+- **Next run is the one that matters.** World Cup returnees rejoin club training 10-12 Aug, which
+  should let FPL publish real `chance_of_playing` values and automatically retire the editorial
+  0.75/0.7 flags on Saka, Rice, B.Fernandes and Muñoz — Rice is the sole reason he is the first
+  player out. The final friendlies (Leeds v Man Utd 12 Aug, the 15 Aug round) and the Community
+  Shield on 16 Aug come before the deadline; Gabriel is the recommended captain and an Arsenal
+  knock there is the single highest-impact risk to this plan.

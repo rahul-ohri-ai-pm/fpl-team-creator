@@ -162,3 +162,21 @@ actually has.
 - Captain changed from the user's João Pedro — worth +1.78 and free.
 - Chelsea representation drops from 2 to 1 (João Pedro). Loyalty cost to force it back to 2 is
   0.019 points, to 3 is 0.066 — negligible if preferred.
+
+## GW1 week-3 (recommendation unchanged) — 2026-08-08
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW1 total:** 61.17 — identical to the 5 Aug recommendation. Recorded so the week is
+  not a hole in the calibration data.
+- **Changes from the user's draft (still not applied in-game):** OUT Rice, Rogers ·
+  IN Bruno Guimarães, Gibbs-White.
+- **Squad (£100.0m):** GK: David Raya, Đorđe Petrović · DEF: Gabriel Magalhães, Nordi Mukiele,
+  James Tarkowski, Pedro Porro, Nikola Milenković · MID: Bryan Mbeumo, Morgan Gibbs-White,
+  Bruno Guimarães, Kiernan Dewsbury-Hall, Matheus Cunha · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-4-3):** Raya; Gabriel, Mukiele, Tarkowski; Mbeumo, Gibbs-White, Guimarães,
+  Dewsbury-Hall, Cunha; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Calvert-Lewin, Pedro Porro, Milenković, Petrović
+- **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
+- All 15 `status=a`, no news, no price movement in the week.
