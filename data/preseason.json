@@ -24,7 +24,7 @@
     "Friendly goals and assists are deliberately NOT scored. Pre-season output is a famously weak",
     "predictor - weak opposition, trialists, experimental XIs - while minutes are informative."
   ],
-  "updated": "2026-08-08",
+  "updated": "2026-08-11",
   "season": "2026/27",
   "gw1_deadline": "2026-08-21T17:30:00Z",
   "sources": [
@@ -77,7 +77,15 @@
     "league but linger in the pool: 7 are marked status=u (loans and departures) and all are correctly",
     "zeroed by chance_of_playing=0, so none can be selected. No top-40-owned player carries any news.",
     "Beware surname matching when repeating this: Ibrahim vs Mamadou Sangare, Daniel vs Victor Munoz,",
-    "Dean vs Jordan Henderson and Beto vs Joao Gomes are different footballers. Match on element_id."
+    "Dean vs Jordan Henderson and Beto vs Joao Gomes are different footballers. Match on element_id.",
+    "",
+    "11 Aug: FPL has ingested the Bruno Guimaraes move (pool now reads ARS), so his moved_to override",
+    "is retired - the mechanism stays for the next one. New injury: Mukiele (SUN) is FPL-flagged at 75%",
+    "with a knock, which now feeds the model directly and outranks any editorial guess. The World Cup",
+    "returnee window (10-12 Aug) has NOT yet produced FPL ratings - Saka, Rice, Merino, B.Fernandes,",
+    "Munoz and Bruno G. all still read status=a with chance_of_playing null, so the editorial 0.7/0.75",
+    "flags are still doing the work. Re-check daily from here; this is the last soft spot before the",
+    "deadline."
   ],
   "friendlies": [
     {
@@ -433,6 +441,24 @@
       "home": "Valencia",
       "away": "Newcastle United",
       "score": "1-2"
+    },
+    {
+      "date": "2026-08-09",
+      "home": "Arsenal",
+      "away": "Borussia Dortmund",
+      "score": "2-3"
+    },
+    {
+      "date": "2026-08-09",
+      "home": "Liverpool",
+      "away": "Monaco",
+      "score": "2-3"
+    },
+    {
+      "date": "2026-08-09",
+      "home": "Man City",
+      "away": "Atletico Madrid",
+      "score": "3-1"
     }
   ],
   "_clubs_README": [
@@ -496,11 +522,10 @@
     {
       "web_name": "Bruno G.",
       "element_id": 452,
-      "moved_to": "ARS",
       "minutes": null,
       "possible_minutes": null,
       "availability": 0.75,
-      "note": "Arsenal agreed a fee with Newcastle (reported ~$100m) and he left the Newcastle pre-season camp for a medical. FPL's pool still lists him at NEW with a NEW price, so without moved_to he is scored on Newcastle's fixture run and counted against Newcastle's three-player limit - both wrong. availability 0.75 is a judgement call for a player joining a new club under two weeks before the deadline: a GW1 start is likely but not assured, and FPL will also re-price him when it ingests the move, so the £7.0m here is stale. Drop both fields once FPL processes the transfer.",
+      "note": "Signed by Arsenal from Newcastle (~£75m). FPL has now ingested the move (pool reads ARS as of 11 Aug), so the moved_to override has been retired as redundant. availability 0.75 kept: still a new signing integrating under two weeks before the deadline. Drop it once FPL publishes a real chance_of_playing or he starts a final friendly.",
       "source": "NBC Sports, August 2026 - Newcastle agree fee with Arsenal for Bruno Guimaraes"
     }
   ],

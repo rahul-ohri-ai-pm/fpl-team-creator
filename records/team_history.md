@@ -198,3 +198,22 @@ actually has.
 - **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
 - Club spread: ARS 2, CHE 2, EVE 2, MUN 2, NFO 2, BOU/BRE/LEE/SUN/TOT 1. Chelsea preference met
   at zero cost.
+
+## GW1 week-4 — post-injury-sweep — 2026-08-11
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC) | **Chip active:** none
+- **Predicted GW1 total:** 60.26 (XI 53.67 + captain 6.59). Down from 61.15 because Mukiele picked
+  up a knock (FPL 75%), not because the plan changed.
+- **Changes from the user's draft:** OUT Rice, Milenković · IN Enzo Fernández, Senesi.
+- **Squad (£100.0m):** GK: David Raya, Đorđe Petrović · DEF: Gabriel Magalhães, Marcos Senesi,
+  James Tarkowski, Pedro Porro, Nordi Mukiele · MID: Bryan Mbeumo, Enzo Fernández,
+  Kiernan Dewsbury-Hall, Matheus Cunha, Morgan Rogers · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-5-2):** Raya; Gabriel, Senesi, Tarkowski; Mbeumo, Enzo, Dewsbury-Hall, Cunha,
+  Rogers; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Calvert-Lewin, Mukiele, Pedro Porro, Petrović
+- **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
+- Mukiele benched on a 75% knock rather than sold — cheap cover, and a transfer 10 days out would
+  be premature.
+- Club spread: CHE 3 (at the limit), ARS 2, EVE 2, MUN 2, TOT 2, BOU/BRE/LEE/SUN 1.

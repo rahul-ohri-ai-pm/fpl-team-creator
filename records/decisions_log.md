@@ -538,3 +538,40 @@ informative stretch of the calendar.
   was built from. A deal agreed in the last few hours, or one not covered by the sources checked,
   would not appear. The check is worth repeating close to the deadline rather than treated as
   settled — the window does not close until 1 September, after GW1.
+
+## GW1 week-4 — full injury / availability sweep — 2026-08-11
+
+- **Decision:** Revised. **out** Rice, Milenković → **in** Enzo Fernández, Senesi. Captain Gabriel,
+  vice Mbeumo. Predicted **60.26**, down from 61.15 on 8 Aug — the drop is an injury, not a
+  worse plan.
+- **Hit taken:** none — pre-season, transfers free until the 21 Aug deadline (10 days out).
+- **Injury sweep (whole pool + both squads):** pool now reads 514 available / 35 injured /
+  14 doubtful / 11 unavailable / 3 suspended. Only **two** flagged players are owned by ≥3%:
+  - **Mukiele (SUN) — `d`, 75%, "Knock"**. He was a *starter* in the previous recommendation. FPL's
+    75% now feeds the model directly (it outranks any editorial flag), dropping him 5.04 → 3.78.
+    The optimizer benches rather than sells him: at £5.5m he is still useful cover and a knock at
+    75% ten days out is not worth a transfer.
+  - Kroupi Jr (BOU) — `i`, foot, not owned.
+  - Also new: J.Timber (ARS) groin, unknown return; Chalobah, Digne, Bayindir, Buonanotte and Burns
+    have all left the league (`u`), all correctly zeroed.
+- **Transfers:** FPL has now **ingested the Bruno Guimarães move** — the pool reads ARS. His
+  `moved_to` override is therefore retired as redundant; the mechanism stays for the next lag. One
+  further move: Lukić FUL→IPS, not owned. **0 price changes**, still.
+- **World Cup returnees — unresolved and now the main soft spot.** The 10-12 Aug return window is
+  open, but FPL has published **no** ratings: Saka, Rice, Merino, B.Fernandes, Muñoz and Bruno G.
+  all still read `status=a` with `chance_of_playing` null. Our editorial 0.7/0.75 flags are still
+  carrying that judgement alone, which is the weakest evidence in the model right now. Re-check
+  daily — a single FPL rating on any of them will move the squad.
+- **Friendlies:** +3 (9 Aug — Arsenal 2-3 Dortmund, Liverpool 2-3 Monaco, Man City 3-1 Atlético),
+  file at **62**, validate clean. Still recorded, still not scored: minutes remain paywalled.
+- **Selection probability, stated honestly:** with pre-season minutes unavailable, "will he start"
+  is proxied by last season's minutes reliability plus flags. Every player in the final 15 has
+  reliability 1.00 on last season's minutes, so the only real differentiator inside the squad is
+  Mukiele's 75%. That is a genuine weakness of this squad build, not a strength — the model cannot
+  currently distinguish a nailed starter from a player who has lost his place over the summer.
+- **Chelsea loyalty:** now **free at all three levels** (0.000/0.000/0.000). The recommended squad
+  holds three Chelsea players — Enzo, João Pedro, Rogers — so the preference is fully satisfied at
+  no cost.
+- **Test note:** `test_checked_in_file_records_the_bruno_g_move` failed once the override was
+  retired, correctly — it pinned transient data. Replaced with an invariant test: any `moved_to` on
+  file must name a real club code, which survives the file being cleaned up.

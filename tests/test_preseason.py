@@ -342,6 +342,16 @@ def test_unknown_club_code_is_ignored_rather_than_crashing():
     assert scored[1]["team"] == 1
 
 
-def test_checked_in_file_records_the_bruno_g_move():
+def test_any_move_recorded_in_the_checked_in_file_names_a_real_club():
+    """Overrides are transient - they exist only until FPL ingests the transfer, so
+    pinning one player here would fail the moment the file is correctly cleaned up
+    (as happened when FPL caught up with Bruno Guimaraes). Assert the invariant
+    instead: whatever moves are on file must name clubs that actually exist, or
+    scoring silently ignores them."""
     loaded = ps.load()
-    assert loaded.club_override("Bruno G.", 452) == "ARS"
+    valid = {"ARS", "AVL", "BOU", "BRE", "BHA", "CHE", "COV", "CRY", "EVE", "FUL",
+             "HUL", "IPS", "LEE", "LIV", "MCI", "MUN", "NEW", "NFO", "SUN", "TOT"}
+    for entry in loaded._entries:
+        moved = entry.get("moved_to")
+        if moved is not None:
+            assert moved in valid, f"{entry['web_name']}: moved_to {moved!r} is not a club code"
