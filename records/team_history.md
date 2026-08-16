@@ -217,3 +217,19 @@ actually has.
 - Mukiele benched on a 75% knock rather than sold — cheap cover, and a transfer 10 days out would
   be premature.
 - Club spread: CHE 3 (at the limit), ARS 2, EVE 2, MUN 2, TOT 2, BOU/BRE/LEE/SUN 1.
+
+## GW1 week-5 re-scan (unchanged) — 2026-08-16
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC, 5 days out) | **Chip active:** none
+- **Predicted GW1 total:** 60.26 (XI 53.68 + captain 6.59) — unchanged from 11 Aug.
+- **Squad (£100.0m):** GK: David Raya, Đorđe Petrović · DEF: Gabriel Magalhães, Marcos Senesi,
+  James Tarkowski, Pedro Porro, Nordi Mukiele · MID: Bryan Mbeumo, Enzo Fernández,
+  Kiernan Dewsbury-Hall, Matheus Cunha, Morgan Rogers · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-5-2):** Raya; Gabriel, Senesi, Tarkowski; Mbeumo, Enzo, Dewsbury-Hall, Cunha,
+  Rogers; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Calvert-Lewin, Mukiele, Pedro Porro, Petrović
+- **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
+- 14 of 15 unflagged; Mukiele the only doubt (75% knock), benched.
+- Club spread: CHE 3 (at the limit), ARS/EVE/MUN/TOT 2, BOU/BRE/LEE/SUN 1.

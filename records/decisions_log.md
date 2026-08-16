@@ -575,3 +575,37 @@ informative stretch of the calendar.
 - **Test note:** `test_checked_in_file_records_the_bruno_g_move` failed once the override was
   retired, correctly — it pinned transient data. Replaced with an invariant test: any `moved_to` on
   file must name a real club code, which survives the file being cleaned up.
+
+## GW1 week-5 full re-scan — 2026-08-16 (5 days out)
+
+- **Decision:** **Unchanged.** OUT Rice, Milenković → IN Enzo Fernández, Senesi. Captain Gabriel,
+  vice Mbeumo. Predicted **60.26**, identical to the 11 Aug re-scan.
+- **Injuries:** pool has deteriorated as expected approaching the season — 496 available /
+  45 injured / 24 doubtful / 19 departed / 3 suspended, from 514/35/14/11/3 five days ago.
+  31 status changes since 11 Aug. **Only one touches our squad, and it is unchanged:**
+  Mukiele (SUN) still `d` 75% with a knock, still benched rather than sold. Of the flagged players
+  owned by ≥2%, the other two are Kroupi Jr (BOU, out) and Šeško (MUN, 75% shin) — neither owned.
+  Notable elsewhere: Minteh (BHA) out until 28 Nov, Manzambi and João Gomes (AVL) both out,
+  Mount (MUN) 50%, Schär (NEW) 75%.
+- **Transfers:** 3 club moves (Guessand AVL→CRY, Johnson CRY→EVE, McNeil EVE→CRY), none owned;
+  10 new players in the pool. **0 price changes — still zero across the entire pre-season**, so
+  nothing has been lost by not committing earlier.
+- **Friendlies:** +18 (12 and 15 Aug rounds), file now at **80**, validate clean. These were the
+  final warm-ups and therefore the most first-choice XIs of the summer — Brentford 7-0 Frankfurt,
+  Chelsea 3-1 Real Sociedad, Man Utd 2-4 Milan, Spurs 3-0 Hoffenheim, Man Utd 1-1 Leeds.
+  **Still not scored, and this is now the model's biggest single gap:** the matches that best
+  reveal a manager's intended XI are exactly the ones we cannot read, because player minutes stay
+  behind the Chief Scout paywall. Recording the scores is an audit trail, not a signal.
+- **World Cup returnee flags — still unresolved, now with 5 days left.** Saka, Rice, Merino,
+  B.Fernandes, Muñoz and Bruno G. all read `status=a` with `chance_of_playing` null. Our editorial
+  0.7/0.75 haircuts have carried that judgement for two weeks without confirmation. This is the
+  weakest input in the model and it is directly responsible for Rice being the first player out.
+- **FA Community Shield (Arsenal v Man City) is TODAY and unplayed at time of writing.** Competitive
+  football five days before the deadline. We hold Raya and Gabriel, and Gabriel is the recommended
+  captain — a knock there is the single highest-impact risk to this plan and would want re-checking
+  before the deadline.
+- **Chelsea loyalty:** free at all three levels (0.000/0.000/0.000); the squad holds three.
+- **Verdict:** five weekly scans have now produced a stable answer. Every input the model consumes
+  is still frozen — `form` 0.0, `points_per_game` last season's, prices unmoved — so stability here
+  is a property of pre-season data rather than evidence the squad is right. The first real
+  information arrives when GW1 is played and `evaluate.py` measures this prediction.
