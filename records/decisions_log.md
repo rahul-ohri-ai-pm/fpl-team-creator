@@ -609,3 +609,39 @@ informative stretch of the calendar.
   is still frozen — `form` 0.0, `points_per_game` last season's, prices unmoved — so stability here
   is a property of pre-season data rather than evidence the squad is right. The first real
   information arrives when GW1 is played and `evaluate.py` measures this prediction.
+
+## GW1 captaincy question — João Pedro vs Gabriel — 2026-08-16
+
+- **Question:** should João Pedro take the armband on pre-season form?
+- **Answer:** the model says Gabriel by **1.78** predicted points, and I'd keep Gabriel — but the
+  case for João Pedro is legitimate and rests on something the model deliberately cannot express.
+- **The hat-trick is not the evidence.** João Pedro's nine-minute hat-trick came off the bench
+  against Western Sydney Wanderers (A-League) in a 6-4 friendly. This project's standing rule is to
+  score friendly *minutes*, not friendly *goals*, precisely because of games like that one.
+- **What is real evidence for him:** 15 goals and 9 assists last season with 49% of his points from
+  attacking returns, xGI/90 of **0.57** against Gabriel's 0.16, 20 goals in all competitions,
+  Chelsea's player of the season — and, materially for this gameweek, **he was left out of Brazil's
+  World Cup squad**, so he is fully rested with a complete pre-season while Saka, Rice, Merino,
+  B.Fernandes and Muñoz are all carrying lay-off flags.
+- **What is against him:** Gabriel is on 6.5 ppg to his 5.1, and the fixtures diverge — Arsenal are
+  **home to Coventry (FDR 2)**, a promoted side, while Chelsea are **away at Fulham (FDR 3)**.
+  Arsenal at home to a promoted club is a prime clean-sheet spot, and 34% of Gabriel's points come
+  from clean sheets with another 30 from bonus.
+- **On expected points the answer is unambiguous:** captaining doubles a player's score, so the
+  right captain is simply the highest expected scorer. Variance does not change an expectation.
+  On that criterion Gabriel wins by 1.78 and it is not close.
+- **The genuine argument for João Pedro is about rank, not expectation.** He is owned by **57.0%**
+  against Gabriel's 27.4%, so captaining him is the *template* move and captaining Gabriel is the
+  *differential*. If João Pedro hauls and we captained Gabriel, we lose ground to well over half the
+  field. The `safe` risk profile in `config/settings.md` explicitly favours exactly that kind of
+  protection — and since ownership was reduced to a 0.02 tiebreak, **the model has no way to say
+  so**. That is a real cost of a design choice made earlier this month, showing up for the first
+  time on a decision that matters.
+- **Inconsistency found while checking this:** Man City carry a 0.90 club flag for Maresca
+  replacing Guardiola, but **Chelsea carry none despite appointing Xabi Alonso this summer** — the
+  same category of change. Eight clubs changed manager and only one is flagged. Deliberately not
+  fixed in this run: it would lower João Pedro, Enzo and Rogers while the captaincy question was
+  live, and quietly moving the numbers mid-question is the wrong way to answer one. It should be
+  settled on its own terms next run.
+- **Recorded decision:** captain remains **Gabriel**; no squad change. Overriding to João Pedro is
+  a defensible risk-preference call rather than a modelling error, and it is the manager's to make.
