@@ -233,3 +233,21 @@ actually has.
 - **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
 - 14 of 15 unflagged; Mukiele the only doubt (75% knock), benched.
 - Club spread: CHE 3 (at the limit), ARS/EVE/MUN/TOT 2, BOU/BRE/LEE/SUN 1.
+
+## GW1 — post-Community Shield — 2026-08-17
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until the GW1 deadline
+  (2026-08-21 17:30 UTC, 4 days out) | **Chip active:** none
+- **Predicted GW1 total:** 60.62 (XI 54.03 + captain 6.59)
+- **Changes from the user's draft:** OUT Rice, Milenković · IN Bruno Guimarães, Senesi.
+- **Squad (£100.0m):** GK: David Raya, Đorđe Petrović · DEF: Gabriel Magalhães, Marcos Senesi,
+  James Tarkowski, Pedro Porro, Nordi Mukiele · MID: Bryan Mbeumo, Bruno Guimarães,
+  Kiernan Dewsbury-Hall, Matheus Cunha, Morgan Rogers · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (3-5-2):** Raya; Gabriel, Senesi, Tarkowski; Mbeumo, Bruno Guimarães,
+  Dewsbury-Hall, Cunha, Rogers; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Calvert-Lewin, Mukiele, Pedro Porro, Petrović
+- **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
+- Bruno Guimarães enters on the strength of starting the Community Shield; Rice leaves on the
+  strength of being benched for it.
+- Club spread: ARS 3 (at the limit), CHE/EVE/MUN/TOT 2, BOU/BRE/LEE/SUN 1.

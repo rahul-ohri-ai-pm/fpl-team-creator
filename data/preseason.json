@@ -24,7 +24,7 @@
     "Friendly goals and assists are deliberately NOT scored. Pre-season output is a famously weak",
     "predictor - weak opposition, trialists, experimental XIs - while minutes are informative."
   ],
-  "updated": "2026-08-16",
+  "updated": "2026-08-17",
   "season": "2026/27",
   "gw1_deadline": "2026-08-21T17:30:00Z",
   "sources": [
@@ -35,7 +35,8 @@
     "https://www.fantasyfootballscout.co.uk/2026/07/30/fpl-pre-season-tel-lively-why-solanke-fernandes-missed-out-matusiwa-latest",
     "https://www.unitedinfocus.com/news/manchester-united-confirm-what-date-players-will-return-for-pre-season-training/",
     "https://www.skysports.com/football/news/11661/13546612/premier-league-pre-season-friendlies-2026-27-fixtures-results-uk-kick-off-times-summer-tour-schedule-and-training-camps",
-    "https://www.nbcsports.com/soccer/news/bruno-guimaraes-headed-to-arsenal-as-newcastle-agree-fee-for-100m-brazilian-maestro"
+    "https://www.nbcsports.com/soccer/news/bruno-guimaraes-headed-to-arsenal-as-newcastle-agree-fee-for-100m-brazilian-maestro",
+    "https://www.ysscores.com/en/lineup/58641177/Arsenal-FC-vs-Manchester-City"
   ],
   "context": [
     "The 2026 World Cup finished ~33 days before GW1. Players who went deep are expected to get",
@@ -96,7 +97,28 @@
     "captain) both Arsenal. Re-check FPL for new flags after it finishes.",
     "World Cup returnee flags STILL unresolved with 5 days to go: Saka, Rice, Merino, B.Fernandes,",
     "Munoz and Bruno G. all read status=a, chance_of_playing null. The editorial 0.7/0.75 flags have",
-    "now been carrying that call for two weeks unverified - treat as the weakest input in the model."
+    "now been carrying that call for two weeks unverified - treat as the weakest input in the model.",
+    "",
+    "17 Aug - COMMUNITY SHIELD READ (Arsenal 3-0 Man City, 16 Aug). The first competitive XIs of the",
+    "season and by far the best selection evidence we have had; it is worth more than the entire",
+    "friendly programme above.",
+    "  Arsenal XI: Raya; White, Mosquera, Gabriel, Calafiori; Odegaard, Lewis-Skelly, Guimaraes;",
+    "  Madueke, Havertz, Tzolis. Subs incl. Saka, Rice, Merino, Eze, Zubimendi, Gyokeres.",
+    "  Man City XI: Donnarumma; Khusanov, Dias, Gvardiol, O'Reilly; Kovacic, Anderson, Semenyo;",
+    "  Foden, Haaland, Doku. Subs incl. Guehi, Marmoush, Cherki, Grealish.",
+    "Readings: Raya and Gabriel both started and kept a clean sheet in a 3-0 win, which supports the",
+    "Gabriel captaincy. Bruno Guimaraes started - flag retired. Saka, Rice and Merino were all benched",
+    "- they are FIT (named in a competitive squad) but not starting, so their flags are kept and are",
+    "now observation rather than speculation. Note this cuts both ways: a manager may rest returnees",
+    "for a Shield and start them in GW1, so treat as strong evidence, not proof.",
+    "Maresca confirmed in charge of Man City, so the MCI 0.90 flag stands. Guehi was on the City",
+    "BENCH, which is worth remembering if he is ever considered.",
+    "",
+    "17 Aug DATA BUG: the entry labelled 'Saka' carried element_id 17, which is Merino. Saka (id 12)",
+    "was therefore going completely unflagged while Merino silently took the haircut meant for him.",
+    "validate() did not catch it because it only checked that the id EXISTED in the pool, not that it",
+    "matched the web_name - a transposed id points at a real player, just the wrong one. validate()",
+    "now compares the name too. Fixed: Saka -> id 12, Merino given his own entry at id 17."
   ],
   "friendlies": [
     {
@@ -578,6 +600,13 @@
       "home": "Union Berlin",
       "away": "Ipswich",
       "score": "2-4"
+    },
+    {
+      "date": "2026-08-16",
+      "home": "Arsenal",
+      "away": "Man City",
+      "score": "3-0",
+      "note": "FA Community Shield (competitive, not in FPL)"
     }
   ],
   "_clubs_README": [
@@ -603,24 +632,6 @@
   ],
   "players": [
     {
-      "web_name": "Saka",
-      "minutes": null,
-      "possible_minutes": null,
-      "availability": 0.75,
-      "note": "Deep World Cup run; reported as possibly needing an extended break, so a GW1 start is not assured. Editorial risk flag, not a confirmed absence - drop this entry once FPL sets a real chance_of_playing.",
-      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis",
-      "element_id": 17
-    },
-    {
-      "web_name": "Rice",
-      "minutes": null,
-      "possible_minutes": null,
-      "availability": 0.75,
-      "note": "Same deep World Cup involvement as Saka; same caveat.",
-      "source": "fantasyfootballhub.co.uk World Cup / opening gameweeks analysis",
-      "element_id": 13
-    },
-    {
       "web_name": "B.Fernandes",
       "minutes": null,
       "possible_minutes": null,
@@ -628,6 +639,23 @@
       "note": "Had not rejoined Man Utd pre-season training as of late July 2026; still on the extended post-World Cup break, with United granting their Portuguese players a further week beyond the standard extension. Not an injury - a preparation risk before a 21 Aug deadline. JUDGMENT CALL, not a measurement: sized like the MCI club flag, enough to break a tie against an equally-rated player with a normal pre-season, not enough to exclude him.",
       "source": "https://www.unitedinfocus.com/news/manchester-united-confirm-what-date-players-will-return-for-pre-season-training/",
       "element_id": 426
+    },
+    {
+      "web_name": "Bruno G.",
+      "element_id": 452,
+      "minutes": null,
+      "possible_minutes": null,
+      "note": "STARTED the FA Community Shield for Arsenal (16 Aug, 3-0 win) five days before the deadline. The 0.75 new-signing flag is therefore retired: he is integrated and in the XI, which is the strongest selection evidence available pre-GW1.",
+      "source": "FA Community Shield 16 Aug 2026 (Arsenal 3-0 Man City) - confirmed lineups"
+    },
+    {
+      "web_name": "Merino",
+      "element_id": 17,
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.7,
+      "note": "NAMED ON THE BENCH for the FA Community Shield (16 Aug) - fit enough for a competitive matchday squad, but not in the XI five days before the deadline. Observed non-selection, not World Cup speculation. Fitness is no longer the concern; starting is.",
+      "source": "FA Community Shield 16 Aug 2026 (Arsenal 3-0 Man City) - confirmed lineups"
     },
     {
       "web_name": "Muñoz",
@@ -639,13 +667,22 @@
       "element_id": 201
     },
     {
-      "web_name": "Bruno G.",
-      "element_id": 452,
+      "web_name": "Rice",
       "minutes": null,
       "possible_minutes": null,
-      "availability": 0.75,
-      "note": "Signed by Arsenal from Newcastle (~£75m). FPL has now ingested the move (pool reads ARS as of 11 Aug), so the moved_to override has been retired as redundant. availability 0.75 kept: still a new signing integrating under two weeks before the deadline. Drop it once FPL publishes a real chance_of_playing or he starts a final friendly.",
-      "source": "NBC Sports, August 2026 - Newcastle agree fee with Arsenal for Bruno Guimaraes"
+      "availability": 0.7,
+      "note": "NAMED ON THE BENCH for the FA Community Shield (16 Aug) - fit enough to be in a competitive matchday squad, but not in the XI five days before the deadline. This upgrades the flag from editorial World Cup speculation to observed non-selection. Fitness is no longer the concern; starting is. Drop once he starts a competitive match or FPL publishes a chance_of_playing.",
+      "source": "FA Community Shield 16 Aug 2026 (Arsenal 3-0 Man City) - confirmed lineups",
+      "element_id": 13
+    },
+    {
+      "web_name": "Saka",
+      "minutes": null,
+      "possible_minutes": null,
+      "availability": 0.7,
+      "note": "NAMED ON THE BENCH for the FA Community Shield (16 Aug) - fit enough for a competitive matchday squad, but not in the XI five days before the deadline. Observed non-selection, not World Cup speculation. Fitness is no longer the concern; starting is.",
+      "source": "FA Community Shield 16 Aug 2026 (Arsenal 3-0 Man City) - confirmed lineups",
+      "element_id": 12
     }
   ],
   "friendlies_note": "Partial from 2026-07-30 onward - only fixtures whose date could be attributed to a source are listed. Team-level results are decorative anyway: nothing in engine/score.py reads this array. Friendly RESULTS are not scored, by design (see _README). It is kept as provenance for the player and club entries below, which are the parts that move numbers.",

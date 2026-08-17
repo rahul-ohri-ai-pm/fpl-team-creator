@@ -355,3 +355,20 @@ def test_any_move_recorded_in_the_checked_in_file_names_a_real_club():
         moved = entry.get("moved_to")
         if moved is not None:
             assert moved in valid, f"{entry['web_name']}: moved_to {moved!r} is not a club code"
+
+
+def test_validate_catches_an_element_id_pointing_at_a_different_player():
+    """A transposed id points at a REAL player, just the wrong one, so an
+    existence check passes while every flag lands on the wrong man."""
+    b = bootstrap([element(pid=12, name="Saka"), element(pid=17, name="Merino")])
+    problems = ps.Preseason({"players": [
+        {"web_name": "Saka", "element_id": 17, "availability": 0.7}]}).validate(b)
+    assert len(problems) == 1
+    assert "Saka" in problems[0] and "Merino" in problems[0]
+
+
+def test_validate_passes_when_ids_match_their_names():
+    b = bootstrap([element(pid=12, name="Saka"), element(pid=17, name="Merino")])
+    assert ps.Preseason({"players": [
+        {"web_name": "Saka", "element_id": 12},
+        {"web_name": "Merino", "element_id": 17}]}).validate(b) == []

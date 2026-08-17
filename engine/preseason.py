@@ -72,13 +72,26 @@ class Preseason:
             by_name.setdefault(p["web_name"], []).append(p)
             ids.add(p["id"])
 
+        by_id = {p["id"]: p for p in bootstrap["elements"]}
+
         problems = []
         for e in self._entries:
             name = e["web_name"]
             eid = e.get("element_id")
             if eid is not None:
-                if int(eid) not in ids:
+                target = by_id.get(int(eid))
+                if target is None:
                     problems.append(f"{name!r}: element_id {eid} is not in the current pool")
+                elif target["web_name"] != name:
+                    # Checking only that the id exists is not enough: a transposed or
+                    # stale id points at a real player, just the wrong one, and then
+                    # every flag on this entry silently lands on them instead. This
+                    # has happened - a "Saka" entry carrying Merino's id meant Saka
+                    # went unflagged while Merino took the haircut.
+                    problems.append(
+                        f"{name!r}: element_id {eid} belongs to "
+                        f"{target['web_name']!r} ({target['first_name']} {target['second_name']}). "
+                        f"Every flag on this entry is being applied to the wrong player.")
                 continue
             matches = by_name.get(name, [])
             if not matches:

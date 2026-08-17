@@ -645,3 +645,43 @@ informative stretch of the calendar.
   settled on its own terms next run.
 - **Recorded decision:** captain remains **Gabriel**; no squad change. Overriding to João Pedro is
   a defensible risk-preference call rather than a modelling error, and it is the manager's to make.
+
+## GW1 — Community Shield read + element_id bug — 2026-08-17 (4 days out)
+
+- **Decision:** Revised. **out** Rice, Milenković → **in** Bruno Guimarães, Senesi.
+  Captain Gabriel, vice Mbeumo. Predicted **60.62**.
+- **The Community Shield is the best selection evidence of the entire pre-season** — the first
+  competitive XIs of the season, four days before the deadline. It is worth more than all 80
+  friendlies combined, because friendlies are experimental and this was a trophy.
+  - **Arsenal XI:** Raya; White, Mosquera, Gabriel, Calafiori; Ødegaard, Lewis-Skelly, Guimarães;
+    Madueke, Havertz, Tzolis. **Subs:** Kepa, Hincapié, Zubimendi, Merino, Rice, Eze, Dowman,
+    Saka, Gyökeres. Won 3-0.
+  - **Man City XI:** Donnarumma; Khusanov, Dias, Gvardiol, O'Reilly; Kovacic, Anderson, Semenyo;
+    Foden, Haaland, Doku. **Subs:** Rulli, Guéhi, Marmoush, Cherki, González, Grealish, Nouri,
+    Lewis, Reis. Maresca confirmed in charge, so the MCI 0.90 flag stands.
+- **What it changed:**
+  - **Bruno Guimarães started** — flag retired (3.87 → 5.16) and he now comes *into* the squad in
+    place of Enzo Fernández. A £75m signing starting a competitive final is about as clear an
+    integration signal as exists.
+  - **Rice, Saka and Merino were all on the bench.** Their flags are kept and are now *observation*
+    rather than speculation. Note the important distinction: being named in a competitive squad
+    means they are **fit**; not starting means the concern is now selection, not fitness. Rice
+    leaving the squad is directly justified by this.
+  - **Raya and Gabriel both started and kept a clean sheet in a 3-0 win**, which supports the
+    Gabriel captaincy that was questioned yesterday.
+  - Caveat recorded: a manager may rest returnees for a Shield and start them in GW1. Strong
+    evidence, not proof.
+- **Data bug found and fixed — the entry labelled `Saka` carried `element_id` 17, which is
+  Merino.** Consequences: **Saka was going completely unflagged** while **Merino silently absorbed
+  the haircut meant for Saka** (which is why Merino scored an implausible 1.20). Fixed to Saka=12
+  and Merino given his own entry at 17.
+- **`validate()` had a hole and has been closed.** It only checked that an `element_id` *existed*
+  in the pool. A transposed id points at a *real* player — just the wrong one — so the check
+  passed while every flag landed on someone else. It now compares the name behind the id too, with
+  two tests. This is the second time a name/id mix-up has hit this project (after the three
+  "Wilson"s), and it is exactly what the id mechanism was introduced to prevent.
+- **Post-Shield injuries:** 6 changes overnight, **none in our squad and no Arsenal or City player
+  hurt in the match**. Arsenal's flagged players (J.Timber, Saliba) were already out beforehand.
+  Matheus N. (MCI) picked up a knock at 75%, Joelinton (NEW) now out.
+- **Club spread note:** the squad now holds **3 Arsenal** (Raya, Gabriel, Bruno G.) — at the limit,
+  legal. Chelsea drops to 2, so a third Chelsea player would now cost 0.358 rather than 0.
