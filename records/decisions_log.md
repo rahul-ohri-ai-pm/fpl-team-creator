@@ -724,3 +724,31 @@ informative stretch of the calendar.
   18-20 Aug — the friendly programme is over; season starts tomorrow.
 - **This is the deadline-eve squad.** No further pre-season run is planned; the next evaluation
   happens after GW1 is played, against this recorded prediction.
+
+## GW1 — Virgil van Dijk question (Newcastle/Forest H2H) — 2026-08-20
+
+- **Question:** Liverpool haven't fared well historically against Newcastle and Forest — is Virgil
+  still right?
+- **Fact-checked, and the premise only half holds.** Vs Newcastle, Liverpool are actually strongly
+  dominant (23W-5L-7D all-time; won 4 of the last 5, most recently 4-1 in Jan 2026). Vs Forest the
+  record is genuinely mixed — 2W-1D-2L in the last 5, including a 0-3 home defeat in Nov 2025 in
+  which Gibbs-White (now in our own XI) scored. So the Forest concern is real; the Newcastle one
+  is not borne out by the record.
+- **This project deliberately does not model head-to-head** — a decision made earlier this project
+  at explicit request. FPL's API carries no historical results at all (`/fixtures/` is
+  current-season only), H2H is weakly predictive generally, and this season specifically several
+  clubs changed manager, which further ages out old results. So this concern sits entirely outside
+  what the model checks, by design — flagging it here rather than silently overriding a stated
+  decision.
+- **What the model does check (FDR) already rates both games moderate, not friendly:** GW1 away at
+  Newcastle FDR 3, GW2 home to Forest FDR 3. Neither reads as an easy opener.
+- **Checked whether an alternative defender buys a materially safer opening run — it doesn't.**
+  Tarkowski's (EVE) GW1-3 includes a trip to Man Utd at FDR 4, the hardest fixture any of these
+  players face in that window; Guéhi's (MCI) is FDR 3/3/2. Nobody in the pool opens on an easy
+  run this season; FDR 3 is close to the field median for GW1-2. On the 6-gameweek horizon score
+  Virgil (28.06), Tarkowski (28.06) and Guéhi (27.54) are essentially tied.
+- **Virgil's own reliability is as strong as it gets:** 3420/3420 minutes last season (100%), no
+  status flag, no rotation risk on the data available.
+- **Verdict: kept Virgil.** The Forest history is a legitimate soft spot worth remembering — not
+  as a reason to bench him now, since swapping buys no easier fixture run, but as a real note for
+  GW2 team selection specifically. No squad change from this question.
