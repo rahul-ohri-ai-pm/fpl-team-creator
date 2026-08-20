@@ -685,3 +685,42 @@ informative stretch of the calendar.
   Matheus N. (MCI) picked up a knock at 75%, Joelinton (NEW) now out.
 - **Club spread note:** the squad now holds **3 Arsenal** (Raya, Gabriel, Bruno G.) — at the limit,
   legal. Chelsea drops to 2, so a third Chelsea player would now cost 0.358 rather than 0.
+
+## GW1 — deadline-eve final build — 2026-08-20 (deadline 21 Aug 17:30 UTC)
+
+- **Decision:** Full rebuild from scratch, not an incremental transfer from the prior draft — this
+  is the deadline-eve call and the user asked for FDR to dominate given only one free transfer
+  arrives per week from GW2 onward. Squad **selected on a 6-gameweek horizon score** (FDR/opponent
+  matchup weighted and decayed exactly as `engine/score.py` does for a single week, just summed
+  over six), so the pick already accounts for fixture runs rather than just GW1. Lineup and captain
+  still use the single-gameweek score, per `horizon_scores`' own docstring — a 6-week total isn't
+  comparable to one gameweek's real points and must never be what gets recorded as `score`.
+- **out (from the previous recommendation):** Bruno Guimarães, Cunha, Rogers, Pedro Porro,
+  Milenković, Petrović → **in:** Virgil van Dijk, Stach, Roefs, Tarkowski (bench), Calvert-Lewin
+  moves to bench, others reshuffled. Predicted GW1: **61.54** (XI 54.95 + captain 6.59).
+- **Bruno Guimarães excluded.** Came off at half-time in the Community Shield with ice on his
+  thigh; Arteta declined to confirm him for the Coventry opener ("wasn't fit, maybe"). FPL has now
+  rated him `d`, 75% — a harder source than any editorial guess, confirmed independently by press
+  coverage. He was the previous recommendation's headline addition eleven days ago; he is out now
+  on hard evidence, not a reversal of judgement.
+- **World Cup returnee flags remain unresolved by FPL even on deadline eve.** Saka, Rice, Merino,
+  B.Fernandes and Muñoz all still read `status=a`, `chance_of_playing` null. All five stay excluded
+  on the two-week-old 0.7/0.75 editorial haircut, which has never been confirmed or denied by FPL.
+  This is now the single largest source of uncertainty left in the squad, and it will not resolve
+  before the deadline — it is still the manager's judgement call, not the model's.
+- **Chelsea: 2 of 15** (Enzo Fernández, João Pedro), both selected purely on merit by the
+  unconstrained optimizer — the config's `report` loyalty mode was not invoked, no floor was
+  applied, and no Chelsea player was added or kept for loyalty. Rogers dropped out of the horizon
+  build on the numbers alone.
+- **Injury/status sweep:** 40 pool-wide changes since 17 Aug, zero landing on the final XI or
+  bench. Mukiele's earlier knock fully resolved (`d`→`a`, chance 75→100). Pedro Porro is reported
+  to have played no minutes all summer after a deep World Cup run ("expected available", no FPL
+  flag) — excluded by the horizon optimizer on current numbers rather than by any injury flag.
+  Bournemouth carry the league's longest injury list (11 out/doubtful); none of it is in our pool.
+- **Transfers:** 0 price changes (still zero across the entire pre-season). 2 further club moves
+  (Gelhardt LEE→HUL, Awoniyi NFO→COV), neither owned.
+- **Friendlies:** +4 final results (16 Aug: Liverpool 0-0 Como, Spurs 2-2 Hoffenheim, Forest 2-0
+  Brest, Newcastle 1-1 Strasbourg). File now at **85**, validate clean. No results found for
+  18-20 Aug — the friendly programme is over; season starts tomorrow.
+- **This is the deadline-eve squad.** No further pre-season run is planned; the next evaluation
+  happens after GW1 is played, against this recorded prediction.

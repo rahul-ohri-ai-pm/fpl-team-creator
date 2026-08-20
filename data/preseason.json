@@ -24,7 +24,7 @@
     "Friendly goals and assists are deliberately NOT scored. Pre-season output is a famously weak",
     "predictor - weak opposition, trialists, experimental XIs - while minutes are informative."
   ],
-  "updated": "2026-08-17",
+  "updated": "2026-08-20",
   "season": "2026/27",
   "gw1_deadline": "2026-08-21T17:30:00Z",
   "sources": [
@@ -118,7 +118,18 @@
     "was therefore going completely unflagged while Merino silently took the haircut meant for him.",
     "validate() did not catch it because it only checked that the id EXISTED in the pool, not that it",
     "matched the web_name - a transposed id points at a real player, just the wrong one. validate()",
-    "now compares the name too. Fixed: Saka -> id 12, Merino given his own entry at id 17."
+    "now compares the name too. Fixed: Saka -> id 12, Merino given his own entry at id 17.",
+    "",
+    "20 Aug (deadline eve, deadline 21 Aug 17:30 UTC): friendly programme is over - no results found",
+    "for 18-20 Aug. Final scores added for 16 Aug (Liverpool 0-0 Como, Spurs 2-2 Hoffenheim,",
+    "Forest 2-0 Brest, Newcastle 1-1 Strasbourg).",
+    "Bruno Guimaraes: confirmed doubtful for the Coventry opener - ice on the thigh at the Shield,",
+    "Arteta non-committal. FPL already rates him 75% (status=d), so this is now a hard source rather",
+    "than our editorial flag. World Cup flags on Saka, Rice, Merino, B.Fernandes and Munoz remain",
+    "UNRESOLVED by FPL even this close to deadline - chance_of_playing still null for all five. Pedro",
+    "Porro (TOT) is reported as not having played all summer after a deep World Cup run but 'expected",
+    "available' - no FPL flag exists, worth a discount on reliability alone. Bournemouth carry the",
+    "league's longest injury list (11 out/doubtful) - none of it is in our squad."
   ],
   "friendlies": [
     {
@@ -607,6 +618,30 @@
       "away": "Man City",
       "score": "3-0",
       "note": "FA Community Shield (competitive, not in FPL)"
+    },
+    {
+      "date": "2026-08-16",
+      "home": "Liverpool",
+      "away": "Como",
+      "score": "0-0"
+    },
+    {
+      "date": "2026-08-16",
+      "home": "Newcastle",
+      "away": "Strasbourg",
+      "score": "1-1"
+    },
+    {
+      "date": "2026-08-16",
+      "home": "Nottingham Forest",
+      "away": "Brest",
+      "score": "2-0"
+    },
+    {
+      "date": "2026-08-16",
+      "home": "Spurs",
+      "away": "Hoffenheim",
+      "score": "2-2"
     }
   ],
   "_clubs_README": [
@@ -645,8 +680,8 @@
       "element_id": 452,
       "minutes": null,
       "possible_minutes": null,
-      "note": "STARTED the FA Community Shield for Arsenal (16 Aug, 3-0 win) five days before the deadline. The 0.75 new-signing flag is therefore retired: he is integrated and in the XI, which is the strongest selection evidence available pre-GW1.",
-      "source": "FA Community Shield 16 Aug 2026 (Arsenal 3-0 Man City) - confirmed lineups"
+      "note": "Came off at half-time in the Community Shield (16 Aug) with ice on his thigh; Arteta: 'he wasn't fit, maybe'. FPL now rates him 75% (status=d) for the GW1 opener - a harder source than our own guess, so no override kept here. Recheck before the deadline in case the rating moves again.",
+      "source": "Arsenal press conference, 20 Aug 2026 + FPL status"
     },
     {
       "web_name": "Merino",

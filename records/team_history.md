@@ -251,3 +251,21 @@ actually has.
 - Bruno Guimarães enters on the strength of starting the Community Shield; Rice leaves on the
   strength of being benched for it.
 - Club spread: ARS 3 (at the limit), CHE/EVE/MUN/TOT 2, BOU/BRE/LEE/SUN 1.
+
+## GW1 — FINAL (deadline eve) — 2026-08-20
+
+- **Bank:** n/a | **Squad value:** £100.0m | **Free transfers:** unlimited until deadline
+  (2026-08-21 17:30 UTC) — one free transfer per week from GW2 | **Chip active:** none
+- **Predicted GW1 total:** 61.54 (XI 54.95 + captain 6.59). Squad selected on a 6-gameweek
+  FDR-weighted horizon; lineup/captain on single-gameweek score.
+- **Squad (£100.0m):** GK: David Raya, Robin Roefs · DEF: Gabriel Magalhães, Nordi Mukiele,
+  Marcos Senesi, Virgil van Dijk, James Tarkowski · MID: Bryan Mbeumo, Morgan Gibbs-White,
+  Enzo Fernández, Kiernan Dewsbury-Hall, Anton Stach · FWD: João Pedro, Igor Thiago,
+  Dominic Calvert-Lewin
+- **Starting XI (4-4-2):** Raya; Gabriel, Mukiele, Senesi, Virgil; Mbeumo, Gibbs-White, Enzo,
+  Dewsbury-Hall; João Pedro, Igor Thiago
+- **Bench (auto-sub order):** Tarkowski, Stach, Roefs, Calvert-Lewin
+- **Captain:** Gabriel Magalhães (6.59) | **Vice:** Bryan Mbeumo (5.31)
+- Excluded on hard evidence: Bruno Guimarães (thigh, FPL 75%). Excluded on unresolved WC flags:
+  Saka, Rice, Merino, B.Fernandes, Muñoz. Chelsea 2/15 (Enzo, João Pedro), on merit only.
+- Club spread: ARS/CHE/EVE/LEE/SUN 2 each, BRE/LIV/MUN/NFO/TOT 1 each.
