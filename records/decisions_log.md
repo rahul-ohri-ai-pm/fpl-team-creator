@@ -752,3 +752,29 @@ informative stretch of the calendar.
 - **Verdict: kept Virgil.** The Forest history is a legitimate soft spot worth remembering — not
   as a reason to bench him now, since swapping buys no easier fixture run, but as a real note for
   GW2 team selection specifically. No squad change from this question.
+
+## GW1 — Tzolis re-check (Community Shield: 2 assists, started) — 2026-08-20
+
+- **Question:** Tzolis started the Shield and assisted twice — does that change the exclusion?
+- **Verified, and it's stronger than first presented.** Not just "started": Sofascore has him at
+  **5 pre-season appearances, 304 minutes, 1 goal, 4 assists, 7.72 average rating**, and in the
+  Shield specifically he set up both the Havertz and Ødegaard goals — first Arsenal player with
+  multiple assists on debut since Willian in 2020, ahead of Saka in the XI. That's a real, sourced
+  signal, not the friendly-hat-trick-off-the-bench case this project already ruled out for
+  João Pedro.
+- **Fix applied, and it's the right kind of fix.** Per the project's own rule, the assists
+  themselves stay unscored — only *minutes* are informative pre-season, and 304/450 is legitimate,
+  sourced minutes data (Sofascore), not an invented number. Added to `data/preseason.json` and
+  blended into his reliability at the standard `PRESEASON_MINUTES_WEIGHT`. This is the **first
+  entry in the file to use real minutes data** rather than an availability-discount flag — closer
+  to what the mechanism was originally built for.
+- **Effect: small, and the reason why matters.** Score moves 1.97 → **2.15** (6-GW horizon:
+  → 12.72, rank 73/262 MID). Nowhere near the ~28-30 horizon tier that actually made this squad.
+  The bottleneck was never reliability — it's that his baseline (3.53 ppg) is fitted from **price**,
+  because `points_per_game`/xGI are Premier League-only fields in FPL's data and his real form
+  (51 goal contributions in 52 games at Club Brugge) has no field to land in at all. That is a
+  structural gap in the model, not a data-entry problem, and fixing it properly (a
+  non-PL-league production input) is out of scope 19 hours before deadline — flagged for next
+  season rather than patched under time pressure.
+- **Squad unchanged**, confirmed by rebuilding from scratch on the same 6-GW horizon methodology
+  used for the deadline-eve squad and diffing against the recorded prediction: identical.

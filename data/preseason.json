@@ -718,6 +718,14 @@
       "note": "NAMED ON THE BENCH for the FA Community Shield (16 Aug) - fit enough for a competitive matchday squad, but not in the XI five days before the deadline. Observed non-selection, not World Cup speculation. Fitness is no longer the concern; starting is.",
       "source": "FA Community Shield 16 Aug 2026 (Arsenal 3-0 Man City) - confirmed lineups",
       "element_id": 12
+    },
+    {
+      "web_name": "Tzolis",
+      "element_id": 557,
+      "minutes": 304,
+      "possible_minutes": 450,
+      "note": "£34m Club Brugge signing, 51 G/A in 52 games last season (2025/26 Belgian Pro League) - entirely invisible to this model, since points_per_game/xGI are PL-only fields, so he scores off the price-fitted baseline alone. Started 5 of Arsenal's pre-season fixtures including the Community Shield final on the left wing ahead of Saka, and delivered directly: 1 goal, 4 assists, 7.72 average Sofascore rating, 304 of a possible ~450 minutes (5 games x 90). minutes/possible_minutes recorded here are that sourced figure, not an estimate. Per project rule the assists themselves are NOT scored - only the minutes share, which raises his reliability from the 0.55 no-PL-record floor to ~0.60. That is a modest move (score ~1.97 -> ~2.15); the larger gap is that his real quality signal (Brugge output) has no field to land in, which is a model limitation, not a data-entry fix, and shouldn't be papered over by inflating this one number further.",
+      "source": "Sofascore pre-season stats (x.com/Sofascore, 17 Aug 2026); Arsenal.com Community Shield report"
     }
   ],
   "friendlies_note": "Partial from 2026-07-30 onward - only fixtures whose date could be attributed to a source are listed. Team-level results are decorative anyway: nothing in engine/score.py reads this array. Friendly RESULTS are not scored, by design (see _README). It is kept as provenance for the player and club entries below, which are the parts that move numbers.",
