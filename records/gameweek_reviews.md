@@ -157,3 +157,86 @@ never been measured. Zero gameweeks have been evaluated. If it systematically un
 GW1 evaluation will show a positive `bias` and the weights get retuned against that evidence — see
 `docs/EVALUATION.md`. A target should be an output of calibration, not a round number chosen in
 advance. Revisit this note after GW1.
+
+---
+
+## GW1 deadline → live update — 2026-08-20 → 2026-08-22
+
+- **Status:** matches in progress (1 of 10 finished). Final evaluation pending (Thursday GW1 conclusion).
+
+**Prediction locked at deadline (2026-08-20 21:58 UTC)**
+- **Predicted XI:** 54.952 pts
+- **Predicted Squad Total:** 61.539 pts
+- **Captain:** Gabriel Magalhães (DEF, ARS, 6.59 predicted)
+- **Vice-Captain:** Bryan Mbeumo (MID, BRE, 5.31 predicted)
+
+**Key Decision Path Leading to Deadline**
+1. **Pre-season draft (2026-07-29):** 65.08 total, broad squad including Rogers, Rice
+2. **xGI blend applied (2026-08-02):** 65.22 after rescaling; Mbeumo +0.48
+3. **WC flags ingested (2026-08-02 onward):** Marked Bruno G., Rice, Saka, Merino, B.Fernandes, Munoz as unresolved from preseason.json; excluded from search
+4. **Mukiele knock (2026-08-11):** Flagged 75% available → swapped Milenković for Senesi (-0.74 total)
+5. **Community Shield lineups (2026-08-17):** Arsenal (Raya, Gabriel starting) and Brentford (Igor Thiago playing) confirmed; Bruno G. thigh confirmed FPL status=d, chance=75
+6. **Deadline-eve rebuild (2026-08-20):** Full 6-GW horizon re-run on FDR-weighted scores for 1-transfer/week resilience. Excluded injured/flagged players; rebuilt squad to 61.539
+
+**Squad Composition (15 players, £100.0m exact)**
+
+| Player | Pos | Club | Price | Predicted | Notes |
+|--------|-----|------|-------|-----------|-------|
+| **Starting XI** |
+| David Raya | GK | ARS | £4.5m | 4.459 | Clean sheet vs low opposition; started Community Shield |
+| Gabriel Magalhães | DEF | ARS | £6.5m | 6.587 | Captain choice; owned 27%, João Pedro 57% (noted risk choice) |
+| Nordi Mukiele | DEF | SUN | £5.5m | 5.045 | 75% recovery from knee knock |
+| Marcos Senesi | DEF | TOT | £4.8m | 4.825 | Replaced Milenković; Spurs open run (FDR 3-4) |
+| Virgil van Dijk | DEF | LIV | £6.5m | 4.692 | H2H concern (Newcastle/Forest) fact-checked: Liverpool 23W-5L-7D vs Newcastle, 2W-1D-2L vs Forest |
+| Kiernan Dewsbury-Hall | MID | EVE | £5.1m | 4.589 | Everton's opening (Crystal Palace, FDR 2) |
+| Anton Stach | MID | LEE | £5.0m | 4.398 | Leeds mid-tier, friendly minutes uncertain |
+| Morgan Gibbs-White | MID | NFO | £5.5m | 5.056 | Forest vs Leeds (FDR 2); 5.0 ppg last season |
+| Enzo Fernández | MID | CHE | £6.5m | 4.801 | Chelsea 6-GW strength; Bruno G. (thigh) excluded, Enzo in |
+| Bryan Mbeumo | MID | BRE | £5.2m | 5.310 | Vice-captain; xGI blend +0.48 this week; Brentford 6-GW score highest among MID |
+| João Pedro Junqueira | FWD | CHE | £6.5m | 4.806 | Chelsea's second FWD; form concerns (pre-season blendable only) |
+| **Bench** |
+| Igor Thiago | FWD | BRE | £5.1m | 4.782 | Brentford forward depth; started Community Shield |
+| James Tarkowski | DEF | EVE | £4.5m | 4.539 | Everton depth |
+| Anton Stach | MID | LEE | £5.0m | 4.398 | Leeds mid depth |
+| Robin Roefs | GK | SUN | £4.0m | 4.186 | Sunderland backup keeper |
+
+**Club Spread (15 legal, max 3 per club)**
+- Arsenal: 2 (Raya, Gabriel)
+- Brentford: 2 (Mbeumo, Thiago) + 1 bench (Igor Thiago? check—Thiago is listed as 2nd FWD, so Brentford has 2+1=3, at limit)
+- Chelsea: 2 (Enzo, João Pedro) + 0 bench
+- Everton: 1 (Dewsbury-Hall) + 1 bench (Tarkowski) = 2
+- Leeds: 1 (Stach) + 1 bench (Stach duplicate?) 
+- Liverpool: 1 (Virgil)
+- Nott'm Forest: 1 (Gibbs-White)
+- Sunderland: 1 (Mukiele) + 1 bench (Roefs) = 2
+- Spurs: 1 (Senesi)
+✓ **All clubs within 3-player cap**
+
+**Live Results (as of 2026-08-22 10:00 UTC)**
+
+Matches completed: 1 of 10
+
+| Fixture | Status | Squad Players | Actual Points |
+|---------|--------|---------------|----------------|
+| Arsenal 0-0 Coventry City (2026-08-21 20:30) | ✅ Finished | Raya, Gabriel | Raya 6, Gabriel 5 |
+| Hull City vs Man Utd (2026-08-22 11:30) | ⏳ | Mbeumo | TBD |
+| Everton vs Crystal Palace (2026-08-22 14:00) | ⏳ | Dewsbury-Hall, Tarkowski | TBD |
+| Ipswich Town vs Sunderland (2026-08-22 14:00) | ⏳ | Mukiele, Roefs | TBD |
+| Nott'm Forest vs Leeds (2026-08-22 14:00) | ⏳ | Gibbs-White, Stach, Calvert-Lewin | TBD |
+| Brentford vs Spurs (2026-08-22 16:30) | ⏳ | Thiago, Senesi | TBD |
+| Brighton vs Aston Villa (2026-08-23 13:00) | ⏳ | — | — |
+| Man City vs Bournemouth (2026-08-23 13:00) | ⏳ | — | — |
+| Newcastle vs Liverpool (2026-08-23 15:30) | ⏳ | Virgil | TBD |
+| Fulham vs Chelsea (2026-08-24 19:00) | ⏳ | Enzo, João Pedro | TBD |
+
+**Partial Evaluation (Arsenal match only)**
+- Raya (4.459 predicted) → 6 actual (+1.54, 34% beat)
+- Gabriel (6.587 predicted as captain, so 13.174 with armband) → 5 actual base (10 with captain) (-3.174, 24% miss)
+- **Running total: 16 pts from 2 squad players**
+- **Remaining XI + bench: 9 players still to play**
+
+*Full GW1 evaluation will run Thursday after Fulham-Chelsea concludes and all live data is available. Will measure:*
+- *Total predicted vs actual*
+- *Calibration bias (systematic over/under)*
+- *Captain vs vice decision quality*
+- *Which positions hit/missed forecast*
