@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPL Team Analyzer — MVP Screens</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 40px 0 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .screen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .screen {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .screen-label {
+            background: #f3f4f6;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .viewport {
+            width: 375px;
+            height: 667px;
+            background: white;
+            overflow: auto;
+            margin: 0 auto;
+        }
+
+        /* Mobile screen common styles */
+        .mobile-screen {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0;
+        }
+
+        .status-bar {
+            background: white;
+            padding: 8px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header {
+            padding: 20px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card.hero {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .card.recommendation {
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .rating-large {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .rating-text {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .cta-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 8px 0;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #2563eb;
+        }
+
+        .cta-button.secondary {
+            background: white;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .cta-button.secondary:hover {
+            background: #eff6ff;
+        }
+
+        .transfer-arrow {
+            font-size: 24px;
+            margin: 0 8px;
+            color: #10b981;
+        }
+
+        .transfer-players {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0;
+            font-weight: 600;
+        }
+
+        .player-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .player-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .player-team {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .impact-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 12px 0;
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #15803d;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .confidence-badge.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .confidence-badge.low {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin: 12px 0;
+        }
+
+        .bullet-list li {
+            font-size: 13px;
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .bullet-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .risk-section {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
+            font-size: 13px;
+        }
+
+        .risk-section .label {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 4px;
+        }
+
+        .alt-option {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alt-number {
+            background: #3b82f6;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            margin-right: 12px;
+        }
+
+        .alt-content {
+            flex: 1;
+        }
+
+        .alt-player {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .alt-points {
+            font-size: 12px;
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .screenshot-upload {
+            background: linear-gradient(135deg, #f3e8ff 0%, #fce7f3 100%);
+            border: 2px dashed #c084fc;
+            border-radius: 8px;
+            padding: 32px 16px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .upload-subtext {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .divider {
+            text-align: center;
+            padding: 12px 0;
+            color: #d1d5db;
+            font-size: 12px;
+        }
+
+        .input-group {
+            margin: 12px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .footer {
+            padding: 16px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .screen-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FPL Team Analyzer — MVP Interface Design</h1>
+        <p class="description">Mobile-first wireframes for the Phase 1 MVP. Each screen shows key user flows and interaction patterns. The design prioritizes decision-first UX: show the recommendation clearly, explain why, provide alternatives, allow "do nothing."</p>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 1: Homepage</h2>
+        <p class="description">Zero-friction entry. Three input methods. Screenshot import is primary CTA (lowest barrier).</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Homepage</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>FPL Team Analyzer</h1>
+                            <p>Know your next move</p>
+                        </div>
+
+                        <div class="content">
+                            <div class="card hero">
+                                <div class="rating-text">See what to transfer.</div>
+                                <div style="font-size: 18px; margin: 12px 0;">Understand why. Decide.</div>
+                            </div>
+
+                            <div class="screenshot-upload">
+                                <div class="upload-icon">📸</div>
+                                <div class="upload-text">Upload Screenshot</div>
+                                <div class="upload-subtext">Easiest way to start</div>
+                            </div>
+                            <button class="cta-button">📸 Upload Screenshot</button>
+
+                            <div class="divider">or</div>
+
+                            <div class="input-group">
+                                <label>Enter FPL Manager ID</label>
+                                <input type="text" placeholder="e.g., 123456">
+                            </div>
+                            <button class="cta-button">Analyze Team</button>
+
+                            <div class="divider">or</div>
+
+                            <button class="cta-button secondary">Build Manually</button>
+
+                            <div style="margin-top: 20px; padding: 12px; background: #f0fdf4; border-radius: 6px; font-size: 12px; color: #15803d;">
+                                ✓ <strong>No account needed</strong> — Analyze instantly.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 2: Team Analysis Loading</h2>
+        <p class="description">Show work in progress. Build confidence before showing recommendation.</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Analysis Loading</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>Analyzing Your Team</h1>
+                        </div>
+
+                        <div class="content">
+                            <div style="text-align: center; padding: 40px 20px;">
+                                <div style="font-size: 32px; margin-bottom: 20px; animation: spin 2s linear infinite;">⚙️</div>
+
+                                <div style="font-size: 14px; font-weight: 600; margin: 20px 0; color: #1a1a1a;">Fetching your team...</div>
+                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Reading FPL data</div>
+
+                                <div style="height: 4px; background: #e5e7eb; border-radius: 2px; margin: 20px 0; overflow: hidden;">
+                                    <div style="height: 100%; background: #3b82f6; width: 33%; animation: slide 1s ease-in-out infinite;"></div>
+                                </div>
+
+                                <div style="font-size: 12px; color: #6b7280;">Calculating fixtures...</div>
+                                <div style="font-size: 12px; color: #6b7280; margin-top: 8px;">Generating recommendation...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 3: Team Rating</h2>
+        <p class="description">Give user confidence in their squad before showing recommendation. Build-up to the main decision.</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Team Rating</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>Your Team</h1>
+                        </div>
+
+                        <div class="content">
+                            <div class="card" style="text-align: center;">
+                                <div style="font-size: 48px; font-weight: 700; color: #10b981; margin: 20px 0;">82</div>
+                                <div style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">Strong Squad</div>
+                                <div style="font-size: 13px; color: #6b7280;">Better than average this gameweek</div>
+                            </div>
+
+                            <div class="card">
+                                <div style="font-size: 12px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">POSITION STRENGTH</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px;">
+                                    <div style="background: #f0fdf4; padding: 8px; border-radius: 4px;">
+                                        <div style="font-weight: 600; color: #15803d;">GK: 8.2</div>
+                                    </div>
+                                    <div style="background: #f0fdf4; padding: 8px; border-radius: 4px;">
+                                        <div style="font-weight: 600; color: #15803d;">DEF: 8.0</div>
+                                    </div>
+                                    <div style="background: #fef3c7; padding: 8px; border-radius: 4px;">
+                                        <div style="font-weight: 600; color: #92400e;">MID: 7.8</div>
+                                    </div>
+                                    <div style="background: #fee2e2; padding: 8px; border-radius: 4px;">
+                                        <div style="font-weight: 600; color: #991b1b;">FWD: 6.2</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="background: #fef2f2; border: 1px solid #fecaca;">
+                                <div style="font-size: 12px; font-weight: 600; color: #991b1b; margin-bottom: 8px;">⚠️ BIGGEST CONCERN</div>
+                                <div style="font-size: 13px;">Your forward line is projected to score <strong>8.4 points less</strong> than average over the next 4 gameweeks.</div>
+                            </div>
+
+                            <button class="cta-button">See Recommendation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 4: Recommendation (MAIN SCREEN)</h2>
+        <p class="description">The core of the product. Single, clear, actionable recommendation. Bold design. Transparent reasoning. This screen sells the decision engine.</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Primary Recommendation</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>Your Best Move</h1>
+                        </div>
+
+                        <div class="content">
+                            <div class="card recommendation">
+                                <div class="transfer-players">
+                                    <div class="player-box">
+                                        <div>👤</div>
+                                        <div class="player-name">Calafiori</div>
+                                        <div class="player-team">Bologna</div>
+                                    </div>
+                                    <div class="transfer-arrow">→</div>
+                                    <div class="player-box">
+                                        <div>👤</div>
+                                        <div class="player-name">Player X</div>
+                                        <div class="player-team">Arsenal</div>
+                                    </div>
+                                </div>
+
+                                <div class="impact-badge">✨ +7.8 projected points</div>
+
+                                <div style="text-align: center; margin: 12px 0;">
+                                    <span class="confidence-badge">87% confident</span>
+                                </div>
+
+                                <div style="border-top: 1px solid rgba(0,0,0,0.1); margin: 12px 0; padding-top: 12px;">
+                                    <div style="font-size: 12px; font-weight: 600; color: #059669; margin-bottom: 8px;">WHY THIS WORKS</div>
+                                    <ul class="bullet-list">
+                                        <li>Better fixture run (4 of next 5 FDR-2)</li>
+                                        <li>92% expected start probability</li>
+                                        <li>Higher attacking involvement (xGI: 0.58 vs 0.42)</li>
+                                        <li>Saves £0.3m in budget</li>
+                                    </ul>
+                                </div>
+
+                                <div class="risk-section">
+                                    <div class="label">⚠️ Key Risk</div>
+                                    <div>Low ownership (7.2%) — if you transfer and he doesn't haul, you'll fall behind.</div>
+                                </div>
+
+                                <button class="cta-button" style="background: #10b981; margin-top: 12px;">✓ Make This Move</button>
+                                <button class="cta-button secondary">? Why This?</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 5: Alternatives</h2>
+        <p class="description">Show #2 and #3 options. Let users compare trade-offs. Build confidence in recommendation #1.</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Alternatives</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>Other Options</h1>
+                        </div>
+
+                        <div class="content">
+                            <div style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Choose a different move, or keep primary recommendation.</div>
+
+                            <div class="alt-option">
+                                <div class="alt-number">1</div>
+                                <div class="alt-content">
+                                    <div class="alt-player">Calafiori → Player X</div>
+                                    <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">Primary (recommended)</div>
+                                </div>
+                                <div class="alt-points">+7.8</div>
+                            </div>
+
+                            <div class="alt-option">
+                                <div class="alt-number">2</div>
+                                <div class="alt-content">
+                                    <div class="alt-player">Calafiori → Player Y</div>
+                                    <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">73% confidence</div>
+                                </div>
+                                <div class="alt-points">+5.9</div>
+                            </div>
+
+                            <div class="alt-option">
+                                <div class="alt-number">3</div>
+                                <div class="alt-content">
+                                    <div class="alt-player">Rogers → Player Z</div>
+                                    <div style="font-size: 12px; color: #6b7280; margin-top: 2px;">68% confidence</div>
+                                </div>
+                                <div class="alt-points">+4.7</div>
+                            </div>
+
+                            <div class="card" style="margin-top: 20px; background: #fef3c7; border: 1px solid #fcd34d;">
+                                <div style="font-size: 12px; font-weight: 600; color: #92400e; margin-bottom: 8px;">💡 TIP</div>
+                                <div style="font-size: 13px;">Option #2 protects you if you want lower-risk plays. Option #3 targets your forward line weakness.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 6: Keep Team Option</h2>
+        <p class="description">Permission to do nothing. Shows confidence-building: "your team is good as-is." Trust mechanism.</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Hold / Do Nothing</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>Keep Your Team</h1>
+                        </div>
+
+                        <div class="content">
+                            <div class="card" style="background: #f0f9ff; border: 1px solid #bfdbfe;">
+                                <div style="font-size: 12px; font-weight: 600; color: #1e40af; margin-bottom: 8px;">✓ This is also valid</div>
+                                <div style="font-size: 13px; line-height: 1.6;">
+                                    Holding your squad is a reasonable choice if:
+                                </div>
+                                <ul class="bullet-list" style="color: #1e40af;">
+                                    <li>You prefer to preserve transfers for later</li>
+                                    <li>You want to bank the extra 0.2m</li>
+                                    <li>You're unsure about the confidence (87% is good, not certain)</li>
+                                </ul>
+                                <div style="font-size: 13px; line-height: 1.6; margin-top: 12px;">
+                                    <strong>Expected impact of holding:</strong> Your team averages 7.2 pts over the next 4 GWs.
+                                </div>
+                            </div>
+
+                            <button class="cta-button secondary" style="margin-top: 16px;">✓ Keep As-Is</button>
+                            <button class="cta-button">← Back to Recommendation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Screen 7: Share Result</h2>
+        <p class="description">Viral loop. Every analysis generates a share card. Users share team URLs on WhatsApp, Reddit, X, Discord.</p>
+
+        <div class="screen-grid">
+            <div class="screen">
+                <div class="screen-label">Share Team</div>
+                <div class="viewport">
+                    <div class="mobile-screen">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span>⚡📶</span>
+                        </div>
+
+                        <div class="header">
+                            <h1>Share Your Team</h1>
+                        </div>
+
+                        <div class="content">
+                            <div class="card" style="background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%); border: none; text-align: center;">
+                                <div style="font-size: 24px; margin: 16px 0;">⭐</div>
+                                <div style="font-size: 16px; font-weight: 600; color: #1a1a1a;">Your Team Scored</div>
+                                <div style="font-size: 32px; font-weight: 700; color: #3b82f6; margin: 8px 0;">84/100</div>
+                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 16px;">Stronger than average this GW</div>
+                            </div>
+
+                            <div class="card">
+                                <div style="font-size: 12px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">BEST MOVE</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px;">Calafiori → Player X</div>
+                                <div style="font-size: 12px; color: #10b981; font-weight: 600;">+7.8 projected pts</div>
+                            </div>
+
+                            <div style="background: white; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px; margin: 16px 0; text-align: center;">
+                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">Share Link</div>
+                                <div style="font-family: monospace; font-size: 11px; color: #1a1a1a; background: #f3f4f6; padding: 8px; border-radius: 4px; word-break: break-all;">
+                                    fpl.tc/team/a7k3m2
+                                </div>
+                            </div>
+
+                            <button class="cta-button" style="background: #25c934;">📱 Share on WhatsApp</button>
+                            <button class="cta-button" style="background: #ff4500;">🔗 Share on Reddit</button>
+                            <button class="cta-button" style="background: #000;">𝕏 Share on X</button>
+                            <button class="cta-button secondary">📋 Copy Link</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Design System & Color Language</h2>
+
+        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 40px;">
+            <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Confidence Levels</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div style="padding: 12px; background: #dcfce7; border: 1px solid #86efac; border-radius: 6px; text-align: center;">
+                        <div style="font-weight: 600; color: #15803d; font-size: 14px;">80%+</div>
+                        <div style="font-size: 11px; color: #4ade80;">High confidence</div>
+                    </div>
+                    <div style="padding: 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; text-align: center;">
+                        <div style="font-weight: 600; color: #92400e; font-size: 14px;">60–80%</div>
+                        <div style="font-size: 11px; color: #fbbf24;">Medium confidence</div>
+                    </div>
+                    <div style="padding: 12px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: 6px; text-align: center;">
+                        <div style="font-weight: 600; color: #991b1b; font-size: 14px;">&lt;60%</div>
+                        <div style="font-size: 11px; color: #f87171;">Use caution</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Typography Scale</h3>
+                <div style="display: grid; gap: 12px;">
+                    <div><div style="font-size: 20px; font-weight: 600;">Headline: 20px, Weight 600</div></div>
+                    <div><div style="font-size: 16px; font-weight: 600;">Subheading: 16px, Weight 600</div></div>
+                    <div><div style="font-size: 14px; font-weight: 600;">Label: 14px, Weight 600</div></div>
+                    <div><div style="font-size: 13px;">Body: 13px, Weight 400</div></div>
+                    <div><div style="font-size: 12px; color: #6b7280;">Caption: 12px, Color #6b7280</div></div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Button States</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <button class="cta-button">Primary (Active)</button>
+                    <button class="cta-button secondary">Secondary</button>
+                    <button class="cta-button" style="opacity: 0.5; cursor: not-allowed;">Disabled</button>
+                    <button class="cta-button" style="background: #10b981;">Confirmation</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 18px; margin: 30px 0 15px; font-weight: 600;">Next Steps</h2>
+
+        <div style="background: #f0f9ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 20px;">
+            <ol style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Frontend stack:</strong> React (Vite) or HTML/CSS/JavaScript (lightweight)</li>
+                <li><strong>API integration:</strong> Wire recommendation engine (engine/score.py, engine/optimize.py) to web UI</li>
+                <li><strong>Screenshot import:</strong> Integrate OCR (TensorFlow.js or Tesseract.js)</li>
+                <li><strong>Shareable URLs:</strong> Generate short IDs, persist analysis results</li>
+                <li><strong>Responsive design:</strong> Test on 375px (mobile) and 1024px+ (desktop)</li>
+                <li><strong>Performance:</strong> Target &lt;3s recommendation display on 4G</li>
+                <li><strong>Analytics:</strong> Track activation (recommendation viewed), engagement (share clicked), conversion (upgrade clicked)</li>
+            </ol>
+        </div>
+
+        <style>
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            @keyframes slide {
+                0%, 100% { width: 0%; }
+                50% { width: 100%; }
+            }
+        </style>
+    </div>
+</body>
+</html>
