@@ -33,3 +33,24 @@ Template for each new entry:
   61.61 and strictly worse football. Also: `form` stays 0.0 until real matches are played, so every
   recommendation before GW1 rests on last season's points-per-game and should be re-run close to
   the deadline rather than treated as settled.
+
+## GW1 review — 2026-08-24
+
+- **Points scored:** 37 | **Bench:** 20 pts (unused) | **Rank:** 3,926,627
+- **What worked:** 
+  - Gabriel + Raya (Arsenal defence) solid base
+  - João Pedro gamble (0.98 predicted) hit value, showed up in bench points
+  - Mbeumo + Gibbs-White performed near expectations
+- **What didn't:** 
+  - **Massive model underperformance:** Predicted 61.54, actual 37 (-40% variance)
+  - Enzo scored 0 (didn't play/benched in GW1) — major flag for GW2
+  - Mukiele returning from injury, barely played (0.04 GW2 score)
+  - Early-season `form` data still 0.0; model relying entirely on last-season ppg caused systematic over-estimate
+  - New signings (João Pedro) and promoted-team players (Stach, Calvert-Lewin) invisible to pre-season model
+- **Model bias identified:** Pre-season scoring over-weighted last-season ppg by ~25 pts on this squad
+- **Lesson for next run:** 
+  - Don't trust raw ppg for early gameweeks — form accumulates after GW2-3 with real match data
+  - Flag players who didn't play (Enzo 0 pts) as forced transfers into GW2
+  - Injury flags (Mukiele 75% available) should trigger auto-swap if FPL updates confirm benching
+  - Recalibrate risk profile post-GW1 if `safe` produced >35% variance
+

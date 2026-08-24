@@ -56,3 +56,28 @@ Template for each new entry:
 - **Caveat:** `form` is 0.0 for every player until real matches are played, so this is last
   season's points-per-game adjusted for fixture ease and minutes reliability. Treat as a starting
   point and re-run nearer 2026-08-21 — prices, transfers and pre-season injury news will all move.
+
+## GW2 Decision — 2026-08-24
+
+**Transfers:** 1 free transfer (available: 1)
+- **OUT:** Enzo Fernández (MID, Chelsea, £7.0m) — scored 0 in GW1, major red flag
+- **IN:** Dominik Szoboszlai (MID, Liverpool, £7.0m) — nailed starter, 1.00 predicted GW2, Liverpool friendly GW2 run
+
+**Reasoning:**
+- Enzo's 0-point performance in GW1 is a forced transfer signal (either benched or injured)
+- Same price swap (no budget impact) to a proven nailed player on better form
+- Szoboszlai aligns with "safe" profile (high ownership, clear role in Liverpool's midfield hierarchy)
+- Liverpool's GW2 run (Newcastle, Fulham, Brighton) is favorable
+
+**Risk:** Early-season model still calibrating (form data = 0.0), so GW2 scores are heavily weighted to last-season ppg. Actual variance will likely be high.
+
+**Other considerations (deferred to GW3):**
+- Mukiele (0.04 GW2 score): Returning from injury, worth monitoring but risky to swap with £0 bank
+- João Pedro (0.98): Gamble on new signing paying off; hold through GW2-3 for form data
+- Bench depth (Roefs, Stach): Accept as necessary insurance given £0 bank constraint
+
+**Squad value post-transfer:**
+- Bank: £0.0m
+- Squad value: £100.0m (unchanged)
+- Starting XI estimated: ~37-40 pts (based on early-season variance)
+
