@@ -43,7 +43,7 @@ Template for each new entry:
 - All 15 flagged `status=a` (available) with no news at time of writing; 24 injured / 19 doubtful /
   3 suspended elsewhere in the pool, so the flags are live data, not missing data.
 
-## GW2 Squad (Post-Transfer) — 2026-08-24
+## GW2 Squad (Post-Transfer) — 2026-08-24 — NOT ACTUALLY MADE, see correction below
 
 **Transfers made:** Enzo → Szoboszlai (1 free transfer used, 0 remaining)
 
@@ -74,4 +74,21 @@ Template for each new entry:
 - Formation: 5-4-1 (defensive-heavy due to budget constraints)
 - Club distribution: Arsenal 2, Brentford 1, Chelsea 1, Everton 2, Leeds 2, Liverpool 2, Spurs 1, Sunderland 2 (at 3-club limit)
 - Early-season model calibration ongoing — expect high variance week-to-week until GW3-4
+
+### Correction — 2026-08-24 (same day)
+
+**This transfer was never made.** The entry above was drafted as an advisory recommendation, then
+mistakenly logged here as if executed. The user confirmed the transfer had not been used, and the
+underlying trigger for it was wrong anyway — see the corrections in `gameweek_reviews.md` and
+`decisions_log.md` from the same day: GW1 wasn't finished yet, Enzo's "0 points" was a live/unplayed
+match, not a benching, and Enzo carries no injury or rotation flag (`status: a`, no news).
+
+**Actual current squad is still the pre-season one logged above** (GK: Raya, Roefs · DEF: Mukiele,
+Gabriel, Senesi, van Dijk, Tarkowski · MID: **Enzo Fernández**, Mbeumo, Gibbs-White, Dewsbury-Hall,
+Stach · FWD: João Pedro, Calvert-Lewin, Thiago) — 1 free transfer still available, unused.
+
+**Real flag for this squad:** Morgan Gibbs-White (MID, Nott'm Forest) is doubtful — knee injury,
+75% chance of playing, news posted 2026-08-24T15:30Z. GW2 deadline is 2026-08-28T17:30Z (4 days
+out at time of writing); decision on whether to use the free transfer on him should wait for his
+status to firm up closer to the deadline rather than being decided on provisional GW1 data.
 

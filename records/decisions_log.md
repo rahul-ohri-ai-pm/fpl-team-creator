@@ -57,7 +57,7 @@ Template for each new entry:
   season's points-per-game adjusted for fixture ease and minutes reliability. Treat as a starting
   point and re-run nearer 2026-08-21 — prices, transfers and pre-season injury news will all move.
 
-## GW2 Decision — 2026-08-24
+## GW2 Decision (draft) — 2026-08-24 — SUPERSEDED, see correction below
 
 **Transfers:** 1 free transfer (available: 1)
 - **OUT:** Enzo Fernández (MID, Chelsea, £7.0m) — scored 0 in GW1, major red flag
@@ -80,4 +80,33 @@ Template for each new entry:
 - Bank: £0.0m
 - Squad value: £100.0m (unchanged)
 - Starting XI estimated: ~37-40 pts (based on early-season variance)
+
+## Correction — 2026-08-24 (same day)
+
+**This draft was premature and is superseded.** Two things were wrong when it was written:
+
+1. **GW1 was not finished.** `bootstrap['events'][0]['finished']` was `False` and Chelsea's
+   fixture (Fulham vs Chelsea) had not kicked off yet at review time — it kicked off at
+   2026-08-24T19:00Z, after this entry was drafted. The "37 pts, Enzo scored 0" read was
+   provisional, not final. Enzo's 0 was "match not yet played," not a benching.
+2. **Enzo has no injury/rotation flag.** Direct bootstrap check: `status: a`,
+   `chance_of_playing_next_round: None`, `news: ''`. There was no fitness reason to transfer him
+   out — the draft above treated a live-match zero as a red flag.
+
+**No transfer has actually been made** — the user confirmed the free transfer is still unused,
+which is the correct call. **Real flag found instead:** Morgan Gibbs-White (MID, Nott'm Forest) —
+`status: d`, knee injury, 75% chance of playing, news posted 2026-08-24T15:30Z.
+
+**Revised decision: HOLD.** GW2 deadline is 2026-08-28T17:30Z — 4 days out, no need to decide now.
+- Do not transfer Enzo — he's fully fit; his GW1 zero will resolve once tonight's Chelsea match
+  finishes.
+- Watch Gibbs-White's status over the next few days; re-check nearer the deadline before deciding
+  whether a -4 hit (0 free transfers would remain if used) is justified. Per `config/settings.md`
+  hit tolerance, only take it if the swap's predicted gain over 3 GWs exceeds 4 points combined.
+- Do not captain/vice Gibbs-White while he's doubtful.
+
+**Lesson:** the weekly-review skill should check `event['finished']` and each live fixture's
+`started`/`finished_provisional` status before treating a gameweek's points as final, and should
+pull `status`/`news`/`chance_of_playing_next_round` from bootstrap directly for every squad player
+rather than inferring injury/rotation risk from a raw points total.
 

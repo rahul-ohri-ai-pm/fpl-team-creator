@@ -34,7 +34,7 @@ Template for each new entry:
   recommendation before GW1 rests on last season's points-per-game and should be re-run close to
   the deadline rather than treated as settled.
 
-## GW1 review — 2026-08-24
+## GW1 review (draft) — 2026-08-24 — PREMATURE, see correction below
 
 - **Points scored:** 37 | **Bench:** 20 pts (unused) | **Rank:** 3,926,627
 - **What worked:** 
@@ -53,4 +53,26 @@ Template for each new entry:
   - Flag players who didn't play (Enzo 0 pts) as forced transfers into GW2
   - Injury flags (Mukiele 75% available) should trigger auto-swap if FPL updates confirm benching
   - Recalibrate risk profile post-GW1 if `safe` produced >35% variance
+
+### Correction — 2026-08-24 (same day)
+
+**This entry was written before GW1 actually finished and its headline numbers are wrong.**
+`bootstrap['events'][0]['finished']` was `False` at the time, and Chelsea's fixture (Fulham vs
+Chelsea, kickoff 2026-08-24T19:00Z) hadn't been played yet — it kicked off *after* this entry was
+logged. The "37 pts" total was provisional (9 of 10 GW1 fixtures were only
+`finished_provisional`, not officially `finished`), and "Enzo scored 0 / benched" was actually
+"Enzo's match is still 0-0 in-progress." Direct bootstrap check on Enzo: `status: a`,
+`chance_of_playing_next_round: None`, `news: ''` — fully fit, no rotation/injury signal at all.
+The -40% "model underperformance" conclusion above should not be trusted until GW1 is confirmed
+`finished` and re-scored against the final total.
+
+**Actual flag missed by this draft:** Morgan Gibbs-White (MID, Nott'm Forest) — `status: d`, knee
+injury, 75% chance of playing, news posted 2026-08-24T15:30Z, *after* the "performed near
+expectations" line above was written.
+
+**Real lesson for next run:** check `event['finished']` (and ideally each fixture's `started`/
+`finished_provisional` flags) before writing a "points scored" review — a gameweek with a
+postponed/delayed fixture is not done just because its deadline has passed. Also pull
+`status`/`news`/`chance_of_playing_next_round` from bootstrap for every squad player directly,
+rather than inferring injury/rotation risk from a raw points total.
 
