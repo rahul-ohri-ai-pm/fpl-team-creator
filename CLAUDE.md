@@ -41,6 +41,31 @@ append-only and are the persistent, GitHub-visible memory of this project. Alway
 rewrite past entries. Read `gameweek_reviews.md` before making a new recommendation — it's the
 feedback loop for whether last week's reasoning actually held up.
 
+## Verification loop
+
+Apply this before treating any conclusion as final — whether inside `/fpl-weekly-review` or in an
+ad-hoc question — not just at the end of a formal run:
+
+1. **Draft** the conclusion (a "points scored" total, an injury/rotation flag, a transfer
+   rationale) from the data fetched so far.
+2. **Verify each claim against the raw source** before repeating it:
+   - A gameweek is only final when `bootstrap['events'][n]['finished']` is `True` — a passed
+     deadline does not mean the gameweek is over. Check individual fixtures' `started` /
+     `finished_provisional` flags too if the total matters (e.g. a postponed/delayed match).
+   - A player's injury/rotation status comes from `status`, `news`, and
+     `chance_of_playing_next_round` on that player's `bootstrap` element — not from a raw points
+     total, and not from the `fpl` MCP's player-detail tools alone (they don't surface these
+     fields).
+   - A transfer is only "made" if the user has explicitly said they executed it in the live FPL
+     app. Never log one to `records/team_history.md` as done based on a recommendation alone.
+3. **If a check fails, revise the conclusion and re-verify** — repeat until every claim is
+   confirmed against source data, not assumed. Don't report or log a claim you haven't checked
+   this way.
+
+This loop is what catches "the deadline passed so the gameweek must be over" or "zero points means
+benched" — both wrong, and both bit this project on 2026-08-24 (see `records/decisions_log.md` and
+`records/gameweek_reviews.md` correction entries from that date).
+
 ## Token discipline
 
 Weekly runs should end with a short summary (final squad changes, captain/vice, one-line reason
