@@ -4,6 +4,23 @@ A playbook for which agent type fits which FPL-analysis task — to avoid both u
 (re-deriving context by hand every time) and over-using them (spawning one for a question that's
 faster to just answer).
 
+## Project-specific custom agents (`.claude/agents/`)
+
+Three subagents defined for this project, on top of the built-in Explore/Plan/general-purpose:
+
+- **`qa`** — verifies a change against this project's actual rules (squad/budget/club legality,
+  the verification loop, append-only records) and runs `pytest`. Read-only: checks and reports,
+  doesn't fix. Use after touching `engine/*.py`, after a `/fpl-weekly-review` run, or before
+  trusting a backtest result.
+- **`code-reviewer`** — reviews `engine/*.py` and the skill workflows for correctness bugs, reuse/
+  duplication, simplification, and efficiency, and proposes concrete fixes. Use after implementing
+  a new engine feature or skill, or on request to review a specific workflow.
+- **`deep-research`** — multi-source research the FPL API can't answer directly: cross-competition
+  rotation risk, press/transfer-market synthesis, "what's the consensus on X." Has `WebSearch`/
+  `WebFetch`; the other two don't need them.
+
+Each has its own `.claude/agents/*.md` with the full brief - don't duplicate their scope here.
+
 ## Explore — read-only code search
 
 **Use for**: "Where is X?" questions about this codebase.
