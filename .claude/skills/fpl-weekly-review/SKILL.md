@@ -39,14 +39,18 @@ disagree, treat `WEEKLY_WORKFLOW.md` as canonical and fix this summary.
 5. **Review last week first.** Read the most recent entry in `records/gameweek_reviews.md` before
    finalizing this week's call - it's the feedback loop for whether last week's reasoning held up.
 
-6. **Log to records/** (append, never rewrite past entries):
+6. **Verify before concluding.** Apply `CLAUDE.md`'s verification loop - gameweek-finished status,
+   per-player injury/rotation fields, transfer-execution confirmation - before writing anything to
+   `records/` or reporting a conclusion.
+
+7. **Log to records/** (append, never rewrite past entries):
    - `records/gameweek_reviews.md` - how the *previous* gameweek's held squad actually scored.
    - `records/decisions_log.md` - this week's decision (hold, or the specific transfer(s)) with
      the reasoning and the optimizer's net (hit-adjusted) score.
    - `records/team_history.md` - the new squad snapshot: bank, value, free transfers, chip status,
      full squad, starting XI/formation, captain/vice.
 
-7. **Report back concisely.** Final squad changes (if any), captain/vice, and a one-line reason
+8. **Report back concisely.** Final squad changes (if any), captain/vice, and a one-line reason
    each. Do not dump the full player pool or raw stats table into the chat - that defeats the
    point of running this as a lean weekly check-in.
 
@@ -55,3 +59,5 @@ disagree, treat `WEEKLY_WORKFLOW.md` as canonical and fix this summary.
 - Never attempt to execute a transfer against the live FPL account - this is advisory only.
 - If the optimizer errors (e.g. infeasible squad), report the error plainly rather than
   improvising a squad by hand.
+- A stale/broken `fpl` MCP should never block steps 2-3 (the core fetch → score → optimize
+  pipeline) - MCP is context enrichment, not a dependency.
