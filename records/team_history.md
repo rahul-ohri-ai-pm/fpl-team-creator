@@ -92,3 +92,23 @@ Stach · FWD: João Pedro, Calvert-Lewin, Thiago) — 1 free transfer still avai
 out at time of writing); decision on whether to use the free transfer on him should wait for his
 status to firm up closer to the deadline rather than being decided on provisional GW1 data.
 
+## GW2 Squad — 2026-08-28
+
+**Transfer made:** Mukiele (SUN) → De Cuyper (BHA), 1 free transfer used, 0 hit. See
+`decisions_log.md` for full reasoning (including the declined Enzo→Sangaré swap the optimizer
+suggested).
+
+- **Bank:** £0.9m | **Squad value:** £99.1m | **Free transfers:** 0 (will roll to 1 after GW2) |
+  **Chip active:** none
+- **Squad:** GK: Raya, Roefs · DEF: Gabriel, Senesi, van Dijk, Tarkowski, **De Cuyper** · MID:
+  Enzo Fernández, Mbeumo, Gibbs-White, Dewsbury-Hall, Stach · FWD: João Pedro, Calvert-Lewin,
+  Igor Thiago
+- **Starting XI (5-4-1):** Raya; Senesi, Gabriel, van Dijk, De Cuyper, Tarkowski; Mbeumo,
+  Gibbs-White, Dewsbury-Hall, Stach; João Pedro (bench: Enzo Fernández, Calvert-Lewin, Igor
+  Thiago, Roefs)
+- **Captain:** João Pedro (home vs Brighton, difficulty 2, 67.7% owned) | **Vice:** Gabriel
+  (@ Aston Villa, difficulty 4, 29.2% owned)
+- **Note:** Gibbs-White remains a starter despite `status: d` (75% chance, knee) — his score
+  already carries that discount and no stronger alternative was available in that slot; he is
+  explicitly not captain or vice while doubtful.
+

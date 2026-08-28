@@ -110,3 +110,44 @@ which is the correct call. **Real flag found instead:** Morgan Gibbs-White (MID,
 pull `status`/`news`/`chance_of_playing_next_round` from bootstrap directly for every squad player
 rather than inferring injury/rotation risk from a raw points total.
 
+## GW2 — 2026-08-28
+
+**Decision:** Transferred Nordi Mukiele (DEF, Sunderland, £5.5m) → Maxim De Cuyper (DEF,
+Brighton, £4.6m). Held the optimizer's suggested second transfer (Enzo Fernández → M.Sangaré).
+
+**Hit taken:** 0 (1 free transfer used, 1 free transfer was available — no hit).
+
+**Reasoning:**
+- **Mukiele → De Cuyper (taken):** Mukiele played 0 minutes in GW1 for Sunderland — a genuine
+  squad-role signal (dropped from the matchday XI), not just a form dip. De Cuyper played 77
+  minutes and returned a goal + assist + clean sheet. Budget-neutral-ish (frees £0.9m). This
+  transfer stands on non-form grounds alone.
+- **Enzo → Sangaré (declined, overriding the optimizer):** `engine.optimize.recommend_transfers`
+  picked this as part of a 2-transfer, -4 combo with a net score of 90.04 vs 81.36 for the
+  1-transfer-only option — a +8.68 edge even after the hit. **Declined it anyway.** Both
+  Sangaré (14 pts) and De Cuyper (17 pts) are one-game samples (75 and 77 minutes respectively) —
+  exactly the small-sample overfitting risk documented in `records/scoring_backtest.md`'s GW1
+  backtest (Baseline scheme: +43% bias, driven by the same fallback-to-raw-recent-output pattern).
+  The `fpl` MCP's own transfer analysis called Sangaré "⚖️ Consider — close call," not a clear buy.
+  Enzo carries no injury/rotation flag (`status: a`, fully fit, nailed) and just had a quiet
+  personal game. Per `config/settings.md`'s hit tolerance ("only take a -4 hit if the predicted
+  gain over the next 3 gameweeks exceeds 4 points combined"), `recommend_transfers` only optimizes
+  a *single* gameweek's net score — it has no 3-gameweek projection to actually confirm that
+  threshold, so the model's one-GW edge here isn't sufficient evidence to spend a hit on a
+  one-game riser. Revisit Sangaré after 2-3 more gameweeks of sustained returns.
+- **Gibbs-White:** re-checked bootstrap directly before this decision — unchanged since
+  2026-08-24 (`status: d`, 75% chance, same knee-injury news). His score already reflects the 75%
+  `injury_mult` discount; he remains a starter (best available MID score even discounted) but is
+  **not** captain or vice.
+- **Captain/Vice override:** `engine.optimize.best_lineup` auto-selected De Cuyper as captain
+  purely on his (one-game-inflated) predicted score — declined for the same small-sample reason
+  as the transfer above, and because it directly contradicts the `safe` risk profile's own
+  preference for high-ownership picks (De Cuyper: 7.6% owned vs João Pedro: 67.7% owned). Set
+  **Captain: João Pedro** (home vs Brighton, fixture difficulty 2, genuine goal involvement in
+  GW1, nailed) and **Vice: Gabriel** (highly-owned, nailed, set-piece threat, despite a tougher
+  fixture at Villa).
+
+**Optimizer net score (post-hit):** 81.36 (1-transfer squad, 0 hit) — declined the higher raw
+92.04/net-90.04 2-transfer option for the reasons above; this is a deliberate override, not a
+model error.
+
