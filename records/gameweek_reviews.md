@@ -76,3 +76,43 @@ postponed/delayed fixture is not done just because its deadline has passed. Also
 `status`/`news`/`chance_of_playing_next_round` from bootstrap for every squad player directly,
 rather than inferring injury/rotation risk from a raw points total.
 
+## GW1 review (FINAL) — 2026-08-28
+
+**Verified per the CLAUDE.md verification loop before writing this:** `bootstrap['events'][0]`
+now shows `finished: True` and `data_checked: True` — GW1 is officially final, unlike the
+premature draft above.
+
+- **Points scored:** 49 (official, incl. captain bonus) | **Points on bench:** 20 (unused) |
+  **Rank:** 4,673,932 (overall), 55th percentile
+- **Starting XI actual breakdown:** Raya 6, Senesi 3, **Gabriel (C) 5×2=10**, van Dijk 2, Mbeumo 2,
+  Gibbs-White 2, Dewsbury-Hall 11, Enzo Fernández 1, Igor Thiago 0, Calvert-Lewin 1, João Pedro
+  (VC) 11 → sums to 49 with the captain double, confirming the API total.
+- **Bench (unused, 20 pts left on the table):** Anton Stach **13**, James Tarkowski **6**, Robin
+  Roefs 1, Mukiele 0.
+- **What worked:** Dewsbury-Hall (11) and João Pedro (11) both returned well above their
+  pre-season prediction; Gabriel's captaincy paid off (10 pts from the armband).
+- **What didn't:**
+  - Anton Stach scored **13 on the bench** — the single biggest missed value of the gameweek.
+    Starting him over Enzo Fernández (1 pt) or Igor Thiago (0 pts) would have been +12 to +13 pts.
+  - Tarkowski (6, benched) also outscored two of the starting defenders.
+  - Enzo Fernández's GW1 status is now resolved: he **did play** and scored 1 — the earlier
+    "scored 0 / benched" draft read was wrong on both counts (unplayed match, not a benching), and
+    the "hold, he's fully fit" call in `decisions_log.md`'s correction was the right one.
+  - Morgan Gibbs-White played through his knee doubt (`status: d` at the time) and returned a
+    modest 2 pts — the flag was real but didn't cost points this week.
+- **Corrected model-bias reading:** a proper reconstruction of the pre-season inputs (last
+  season's per-90 output + fixture ease, run through `engine/score.py`'s actual formula) predicts
+  ~52.9 for this squad's best XI against an actual of 37 (excluding captain bonus, since the
+  optimizer doesn't know who will be armbanded) — a **+43% over-estimate**, in the same direction
+  as originally suspected but now backed by a real recomputation rather than an assumed number.
+  See `records/scoring_backtest.md` for the full methodology and all 4 weight-scheme results
+  across 3 real historical squads.
+- **Lesson for next run:**
+  - The scoring model's pre-season over-estimate is confirmed and quantified (not just suspected):
+    +43% on the baseline weighting. The **Conservative** weighting scheme cut this to a ~+2%
+    average bias across 3 test squads (see `scoring_backtest.md`) — worth adopting going into
+    GW2's decision if the pattern holds.
+  - Bench selection cost real points this week (Stach 13, Tarkowski 6 unused) — the optimizer's
+    `BENCH_WEIGHT=0.15` already tries to build a useful bench, but the gap here suggests the
+    starting-XI picks (not just bench depth) deserve a second look once real form data exists.
+

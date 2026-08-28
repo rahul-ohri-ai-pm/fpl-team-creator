@@ -6,7 +6,9 @@ description: Weekly FPL squad check-in - fetches live data, scores players, runs
 # FPL Weekly Review
 
 Run this from the repo root. Read `config/settings.md` first for the team ID, risk profile, and
-hit tolerance - don't hardcode any of these.
+hit tolerance - don't hardcode any of these. Full step-by-step detail lives in
+`.claude/docs/WEEKLY_WORKFLOW.md` - this file is the quick-reference version; if the two ever
+disagree, treat `WEEKLY_WORKFLOW.md` as canonical and fix this summary.
 
 ## Steps
 
