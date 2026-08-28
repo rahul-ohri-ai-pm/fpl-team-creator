@@ -110,3 +110,41 @@ the next 3 gameweeks before treating the scheme choice as settled.
   snapshot. **Action item:** start snapshotting `bootstrap-static` before each gameweek deadline
   (e.g. to `records/snapshots/gw{N}_pre.json`, gitignored or committed depending on size) so
   future backtests don't need this reconstruction workaround.
+
+## GW1 Backtest — code-verified re-run — 2026-08-28
+
+The manual analysis above is now backed by a reusable simulator: `engine/backtest.py` generalizes
+`score.py`'s formula into a configurable scheme, caches the reconstruction to
+`records/snapshots/gw1_preseason_reconstruction.json` (the action item above, done), and exposes
+`--scheme <name>` and `--custom <json>` on the CLI so any weight combination can be tried, not
+just the 4 pre-picked ones.
+
+Re-ran all 4 named schemes (`python -m engine.backtest --gw 1 --scheme <name>`), one per agent run
+in parallel, cross-checked against this file's manual figures above:
+
+| Scheme | form_mult | ease range | reliability divisor | injury penalty | ownership wt (safe/bal/diff) | Team A pred | Team B pred | Team C pred | RMSE | MAE | Bias |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Baseline | 1.0 | 0.8–1.2 | 38×90×0.6 | none | 1.5 / 0.3 / -1.5 | 52.90 | 55.72 | 54.83 | 10.94 | 10.15 | +10.15 |
+| **Conservative** | 0.9 | 0.8–1.15 | 38×90×0.5 | -0.1 flat | 2.0 / 0.5 / -1.0 | 43.87 | 46.55 | 45.50 | **4.30** | **3.61** | **+0.97** |
+| Aggressive | 1.1 | 0.75–1.25 | 38×90×0.75 | none | 1.0 / 0.0 / -2.0 | 56.61 | 59.10 | 58.73 | 14.41 | 13.82 | +13.82 |
+| New-signing-aware | 1.0 | 0.8–1.2 | 38×90×0.6 | none | 1.5 / 0.3 / -1.5 | 52.90 | 55.72 | 54.83 | 10.94 | 10.15 | +10.15 |
+
+(Actual XI totals, unchanged from the manual run: Team A 37, Team B 48, Team C 48.)
+
+**All 4 schemes reproduce the manual figures exactly** — no divergence, confirming the code port
+of the formula is correct. New-signing-aware confirmed identical to Baseline for the same reason
+as before: checked prior-season minutes for all 27 unique players across the 3 squads, lowest was
+Richarlison at 1,954 — none is anywhere near the <270-minute threshold that triggers its downweight.
+
+**Recommendation unchanged: Conservative** (RMSE 4.30 vs Baseline's 10.94, bias +0.97 vs +10.15).
+This is still a single gameweek's confirmation — GW2's deadline is today (2026-08-28) and hasn't
+been played, so it isn't backtestable yet per the verification loop
+(`bootstrap['events'][1]['finished'] == False` as of this writing). Re-run
+`python -m engine.backtest --gw 2 --scheme <name>` once GW2 is confirmed finished before
+strengthening this recommendation further.
+
+**New capability**: the `--custom` flag is a genuine weight simulator — e.g.
+`python -m engine.backtest --gw 1 --custom '{"form_mult": 0.95, ...}'` — for trying combinations
+outside the 4 named schemes without editing any code. `tests/test_backtest.py` pins these 4
+schemes' GW1 numbers as a regression check so future edits to `engine/backtest.py` can't silently
+drift from this table.
