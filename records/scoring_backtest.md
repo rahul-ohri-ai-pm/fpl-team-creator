@@ -148,3 +148,34 @@ strengthening this recommendation further.
 outside the 4 named schemes without editing any code. `tests/test_backtest.py` pins these 4
 schemes' GW1 numbers as a regression check so future edits to `engine/backtest.py` can't silently
 drift from this table.
+
+## Formula correction — injury_mult now scales the ownership term — 2026-08-28
+
+A code-reviewer pass found that both `engine/score.py` and `engine/backtest.py` added the
+ownership nudge *after* `injury_mult` had already been applied to the base prediction:
+`predicted = form*ease*reliability*injury_mult; predicted += (ownership/100)*ownership_weight`.
+A confirmed-out player (`chance_of_playing_next_round == 0`, so `injury_mult == 0`) still carried
+a positive score purely from ownership — a highly-owned player ruled out for the next gameweek
+could still outrank a fit, lower-ownership alternative in `best_lineup`/`recommend_transfers`.
+
+**Fix** (applied identically in both files): scale the whole prediction by `injury_mult`, ownership
+term included — `predicted = (form*ease*reliability + (ownership/100)*ownership_weight) * injury_mult`.
+Added `tests/test_score.py::test_confirmed_out_player_scores_zero_despite_high_ownership` as a
+regression guard (40%-owned, `chance: 0` player now scores exactly `0.0`, not `~0.6`).
+
+**Re-ran all 4 named schemes against GW1** after the fix — only Conservative's numbers moved (its
+non-zero `injury_penalty_flat` and higher `ownership_weight` make it the scheme most sensitive to
+this term; Baseline/Aggressive/New-signing-aware's GW1 test-squad totals were unaffected to 2
+decimal places):
+
+| Scheme | RMSE (before → after) | MAE (before → after) | Bias (before → after) |
+|---|---|---|---|
+| Baseline | 10.94 → 10.94 | 10.15 → 10.15 | +10.15 → +10.15 |
+| **Conservative** | 4.30 → **4.24** | 3.61 → **3.83** | +0.97 → **+0.40** |
+| Aggressive | 14.41 → 14.41 | 13.82 → 13.82 | +13.82 → +13.82 |
+| New-signing-aware | 10.94 → 10.94 | 10.15 → 10.15 | +10.15 → +10.15 |
+
+Conservative's RMSE improved slightly (4.30 → 4.24) and its bias moved closer to zero (+0.97 →
++0.40) — the recommendation to use Conservative for pre-season/early-season predictions is
+unchanged and, if anything, slightly reinforced. `tests/test_backtest.py`'s pinned regression
+values have been updated to these post-fix numbers.

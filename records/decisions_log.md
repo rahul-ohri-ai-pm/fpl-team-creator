@@ -151,3 +151,33 @@ Brighton, £4.6m). Held the optimizer's suggested second transfer (Enzo Fernánd
 92.04/net-90.04 2-transfer option for the reasons above; this is a deliberate override, not a
 model error.
 
+## Model calibration — 2026-08-28
+
+**Decision:** Applied 3 bug fixes surfaced by a `code-reviewer` subagent pass over the scoring/
+transfer workflow, rather than a weight-scheme swap. All three were correctness bugs, not
+calibration choices, so no `/score-calibrate` run was needed to justify them.
+
+1. **`engine/fetch.py`'s `free_transfers()`** — the weekly `+1` roll-over was applying even on a
+   Wildcard/Free Hit gameweek, inflating the derived free-transfer count by 1 every time a chip
+   was played (and compounding forward through later weeks). Real FPL rule: a chip week leaves the
+   count unchanged. Fixed; `tests/test_free_transfers.py`'s two chip-week cases (previously pinned
+   to the buggy incremented value) now assert the correct kept value.
+2. **`engine/score.py`'s `form == 0` fallback** — fired any time `form` was exactly 0, not just
+   pre-season, so a genuine mid-season scoring slump got silently overridden by a stale season-long
+   `points_per_game` average. Gated on `finished == 0` (season stage) instead. New
+   `tests/test_score.py` added — this project had no dedicated scoring-formula test file before.
+3. **`engine/score.py` + `engine/backtest.py`'s ownership term** — added after `injury_mult` had
+   already been applied, so a confirmed-out player (`chance_of_playing_next_round == 0`) still
+   carried a positive score from ownership alone. Now the whole prediction (including ownership) is
+   scaled by `injury_mult`. See `records/scoring_backtest.md`'s "Formula correction" entry for the
+   before/after GW1 backtest numbers — only Conservative's metrics moved (RMSE 4.30→4.24, bias
+   +0.97→+0.40), recommendation unchanged.
+
+**Not applied in this pass** (subagent attempts hit an environment issue — worktree isolation
+branched from an unrelated `master` fork instead of this session's branch, so 3 of 5 planned fixes
+were re-derived and applied directly instead of merged): two documentation fixes remain queued —
+adding a verification-loop step to `.claude/skills/fpl-weekly-review/SKILL.md` and pointing
+`.claude/skills/gw-backtest/SKILL.md` at `engine/backtest.py` instead of describing hand-computation.
+
+**Test status:** `pytest tests/ -q` — 42 passed (was 38; +4 from the new `tests/test_score.py`).
+

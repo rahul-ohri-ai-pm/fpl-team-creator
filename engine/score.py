@@ -39,9 +39,11 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
     out = {}
     for p in bootstrap["elements"]:
         # `form` is a rolling last-30-days average - it's legitimately 0 pre-season
-        # and early in a new season (no matches played recently), not a signal that
-        # the player is bad. Fall back to last known points-per-game in that case.
-        form = float(p["form"] or 0) or float(p["points_per_game"] or 0)
+        # (no matches played yet this season), not a signal the player is bad, so
+        # fall back to last known points-per-game there. Gate on season stage, not
+        # the raw value: a mid-season `form` of exactly 0 is a real slump signal
+        # and must not be papered over by a stale season-long average.
+        form = float(p["points_per_game"] or 0) if finished == 0 else float(p["form"] or 0)
         minutes = p["minutes"]
         # Pre-season/early season, `minutes` is still last season's total and there's
         # no `finished` games this season to normalize against - use a full season
@@ -54,8 +56,10 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
         ease_mult = 0.8 + ease * 0.4  # 0.8 .. 1.2
         ownership = float(p["selected_by_percent"] or 0)
 
-        predicted = form * ease_mult * reliability * injury_mult
-        predicted += (ownership / 100) * ownership_weight
+        # injury_mult scales the whole prediction, including the ownership nudge -
+        # a confirmed-out player (chance_of_playing_next_round == 0) must not still
+        # carry a positive score purely from being highly owned.
+        predicted = (form * ease_mult * reliability + (ownership / 100) * ownership_weight) * injury_mult
 
         out[p["id"]] = {
             "score": round(predicted, 3),

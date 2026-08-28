@@ -171,14 +171,16 @@ def score_with_scheme(player: dict, scheme: dict, risk_profile: str = "safe") ->
     chance = player["chance"]
     injury_mult = max(0.0, (chance if chance is not None else 100) / 100 + scheme["injury_penalty_flat"])
 
-    predicted = form * ease_mult * reliability * injury_mult
+    base = form * ease_mult * reliability
     if player["minutes"] < scheme["new_signing_minutes_threshold"]:
-        predicted *= scheme["new_signing_downweight_factor"]
+        base *= scheme["new_signing_downweight_factor"]
 
     ownership_weight = scheme["ownership_weight"].get(
         risk_profile, scheme["ownership_weight"].get("balanced", 0.0)
     )
-    predicted += (player["ownership"] / 100) * ownership_weight
+    # injury_mult scales the whole prediction, including the ownership nudge -
+    # mirrors the same fix in engine/score.py's score_players.
+    predicted = (base + (player["ownership"] / 100) * ownership_weight) * injury_mult
     return predicted
 
 

@@ -122,7 +122,7 @@ def test_new_signing_aware_downweights_low_minutes_player():
 
 @pytest.mark.parametrize("scheme_name,expected_rmse,expected_bias", [
     ("baseline", 10.94, 10.15),
-    ("conservative", 4.30, 0.97),
+    ("conservative", 4.24, 0.40),
     ("aggressive", 14.41, 13.82),
     ("new_signing_aware", 10.94, 10.15),
 ])
@@ -134,10 +134,12 @@ def test_named_schemes_reproduce_recorded_gw1_numbers(scheme_name, expected_rmse
 
 
 def test_backtest_per_squad_predicted_matches_recorded_values():
+    """Pinned against records/scoring_backtest.md's "injury_mult scaling fix" entry -
+    post-fix numbers, not the pre-fix manual GW1 backtest (which predates the fix)."""
     result = backtest(SCHEMES["conservative"], gw=1)
-    assert result["per_squad"]["Team A"]["predicted"] == pytest.approx(43.87, abs=0.01)
-    assert result["per_squad"]["Team B"]["predicted"] == pytest.approx(46.55, abs=0.01)
-    assert result["per_squad"]["Team C"]["predicted"] == pytest.approx(45.50, abs=0.01)
+    assert result["per_squad"]["Team A"]["predicted"] == pytest.approx(43.35, abs=0.01)
+    assert result["per_squad"]["Team B"]["predicted"] == pytest.approx(45.91, abs=0.01)
+    assert result["per_squad"]["Team C"]["predicted"] == pytest.approx(44.94, abs=0.01)
 
 
 def test_unfinished_gameweek_is_refused(monkeypatch):
