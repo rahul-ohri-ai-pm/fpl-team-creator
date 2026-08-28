@@ -72,12 +72,12 @@ def free_transfers(history) -> int:
     available = 0
     for ev in sorted(events, key=lambda e: e["event"]):
         if ev["event"] == 1:
-            leftover = 0
+            available = min(FREE_TRANSFER_CAP, 0 + 1)
         elif ev["event"] in chip_events:
-            leftover = available
+            pass  # unchanged: no weekly increment on a chip week
         else:
             leftover = max(0, available - (ev.get("event_transfers") or 0))
-        available = min(FREE_TRANSFER_CAP, leftover + 1)
+            available = min(FREE_TRANSFER_CAP, leftover + 1)
     return available
 
 
