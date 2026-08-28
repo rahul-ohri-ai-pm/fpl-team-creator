@@ -33,8 +33,10 @@ season's fixture difficulty shifts, new-manager effects, or squad changes at oth
 
 ## Four weight schemes
 
-Introduced to let `/gw-backtest` compare alternatives against confirmed-finished gameweek data,
-rather than guessing at a fix.
+`engine/backtest.py`'s `SCHEMES` dict is now the source of truth for these values (this table is
+a human-readable mirror — if the two ever disagree, trust the code). It also accepts a `--custom`
+JSON scheme with the same shape, so any weight combination can be backtested, not just these 4 —
+see "Weight simulator" below.
 
 | Scheme | Form mult | Ease range | Reliability divisor | Injury penalty | Ownership weight (safe/balanced/differential) | Rationale |
 |---|---|---|---|---|---|---|
@@ -42,6 +44,25 @@ rather than guessing at a fix.
 | **Conservative** | 0.9x | 0.8–1.15 | `38×90×0.5` (stricter) | -0.1 flat | 2.0 / 0.5 / -1.0 | Lower variance; penalize low-minutes and rotation risk harder |
 | **Aggressive** | 1.1x | 0.75–1.25 | `38×90×0.75` (looser) | none | 1.0 / 0.0 / -2.0 | Trust form more; chase fixture swings and differentials |
 | **New-signing-aware** | 1.0x (same as Baseline) | 0.8–1.2 | `38×90×0.6` | none | 1.5 / 0.3 / -1.5 | Baseline + ×0.85 downweight when last-season PL minutes < 270 (i.e. genuinely no top-flight track record) |
+
+### Weight simulator
+
+`engine/backtest.py` is a reusable CLI, not a one-off script — it's how you experiment with a
+weight combination instead of guessing:
+
+```
+python engine/backtest.py --gw 1 --scheme conservative
+python engine/backtest.py --gw 1 --custom '{"form_mult": 0.95, "ease_min": 0.8, "ease_max": 1.15, \
+  "reliability_divisor_factor": 0.55, "injury_penalty_flat": -0.05, \
+  "ownership_weight": {"safe": 1.8, "balanced": 0.4, "differential": -1.2}, \
+  "new_signing_downweight_factor": 0.9, "new_signing_minutes_threshold": 270}'
+```
+
+It refuses to run against a gameweek that isn't `finished` yet (the verification loop applied to
+backtesting), caches the reconstructed pre-gameweek inputs under
+`records/snapshots/gw{N}_preseason_reconstruction.json` so re-runs cost no API calls, and always
+scores the same Baseline-selected XI across schemes so squad-selection doesn't confound scoring
+accuracy. `tests/test_backtest.py` pins the 4 named schemes' GW1 numbers as a regression check.
 
 ### GW1 backtest result (see `records/scoring_backtest.md` for full methodology)
 
