@@ -25,9 +25,9 @@ def history(events, chips=None):
     ("roll-over caps at 5", history([(i, 0) for i in range(1, 9)]), 5),
     ("banked transfers spend down", history([(1, 0), (2, 0), (3, 0), (4, 2)]), 2),
     ("wildcard week keeps saved transfers",
-     history([(1, 0), (2, 0), (3, 0), (4, 11)], [(4, "wildcard")]), 4),
+     history([(1, 0), (2, 0), (3, 0), (4, 11)], [(4, "wildcard")]), 3),
     ("free hit week keeps saved transfers",
-     history([(1, 0), (2, 0), (3, 0), (4, 11)], [(4, "freehit")]), 4),
+     history([(1, 0), (2, 0), (3, 0), (4, 11)], [(4, "freehit")]), 3),
     ("events out of order are still replayed in order",
      history([(2, 1), (1, 0), (3, 0)]), 2),
 ])

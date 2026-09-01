@@ -363,7 +363,9 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             ppg = blended_ppg(xgi, p["element_type"], POSITION_BY_TYPE[p["element_type"]],
                               ppg, float(p.get("expected_goal_involvements_per_90") or 0),
                               p["minutes"])
-        form = float(p["form"] or 0) or ppg
+        # Gate on season stage, not the raw value: a mid-season `form` of exactly 0
+        # is a real slump signal and must not be papered over by `ppg`.
+        form = ppg if finished == 0 else float(p["form"] or 0)
 
         minutes = p["minutes"]
         # Pre-season/early season, `minutes` is still last season's total and there's

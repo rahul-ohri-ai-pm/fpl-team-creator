@@ -47,6 +47,13 @@ file and `engine/score.py`'s weighting table should need touching.
   - Score friendly **minutes**, not friendly goals. Pre-season output is a weak predictor (weak
     opposition, trialists, experimental XIs); minutes reveal who the manager intends to start.
 
+## Reference docs
+
+`.claude/docs/` has supplementary material from an earlier parallel-branch exploration (data
+source notes, an older scoring-scheme backtest, a weekly-workflow walkthrough, an agents playbook)
+- not canonical, this file and the working agreements above still win on any conflict, but worth a
+look for background before re-deriving something from scratch.
+
 ## Weekly workflow
 
 The `/fpl-weekly-review` skill (`.claude/skills/fpl-weekly-review/SKILL.md`) is the canonical
