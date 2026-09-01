@@ -978,3 +978,49 @@ was moved out of `score` entirely into a separate `tiebreak` field, never re-add
 fix did not carry forward into the merged `engine/score.py`. Item 1 (the `form == 0` gate) was
 still a live bug on `master` and was ported forward as-is.
 
+
+## GW3 — 2026-09-01
+
+**Decision:** Transferred Enzo Fernández (MID, Chelsea, £6.9m) → Rayan Cherki (MID, Man City,
+£7.7m). Held the optimizer's suggested second transfer (Marcos Senesi → Semi Ajayi).
+
+**Hit taken:** 0 (1 free transfer used, 1 free transfer was available — no hit).
+
+**Reasoning:**
+- **Enzo → Cherki (taken):** Enzo has played only 25 minutes combined across GW1-GW2 despite
+  carrying no injury/rotation flag (`status: a`, no news) — a genuine squad-role signal (he isn't
+  starting for Chelsea), not a form dip the model should be second-guessing. Cherki has started
+  and delivered in his 2 appearances (22 total points, 11.0 form) with an excellent GW3 fixture
+  (Man City home vs newly-promoted Coventry, FDR 2) against Enzo's brutal one (Chelsea away at
+  Arsenal, FDR 5). The `fpl` MCP's own transfer analysis called this "⚖️ Consider — close call,"
+  not a clear buy, but the underlying driver (Enzo's minutes, not a scoring streak) is a stronger
+  basis than the raw score gap alone.
+- **Senesi → Ajayi (declined, overriding the optimizer):** `engine.optimize.recommend_transfers`
+  picked this as part of a 2-transfer, -4 combo with a net score of 78.493 vs 76.631 for the
+  1-transfer-only option — only a +1.862 edge after the hit. **Declined it anyway.** Both Ajayi
+  (153 min) and Cherki (108 min) are 2-game samples this season — the same small-sample
+  overfitting risk flagged repeatedly in this project (`records/scoring_backtest.md`'s GW1
+  backtest, and the GW2 decision above declining a similar-shaped Sangaré/De Cuyper swap). Taking
+  a second thin-sample bet on top of the first, for a marginal net gain that doesn't clear
+  `config/settings.md`'s hit-tolerance bar ("only take a -4 hit if the predicted gain over the next
+  3 gameweeks exceeds 4 points combined" — `recommend_transfers` only optimizes a single gameweek,
+  so it has no 3-gameweek projection to actually confirm that threshold), isn't justified.
+- **Tarkowski:** now starts. Verified via the `fpl` MCP directly: 90 minutes both gameweeks, a goal
+  and a clean sheet split across GW1 (6 pts) and GW2 (12 pts), 9.0 points-per-game over the last 2
+  real games — a genuine, verified return, not a fluke, and exactly the pattern the GW1/GW2 reviews
+  flagged as a recurring, costly bench mistake (see `gameweek_reviews.md`). Van Dijk and Senesi,
+  both quieter the last 2 weeks, move to the bench instead.
+- **Captain/Vice:** `engine.optimize.best_lineup` auto-selected **Cherki as captain** (10.23
+  predicted, easiest fixture of the front six) and **João Pedro as vice** (9.20 predicted, 69.7%
+  owned — the safe, high-ownership fallback if Cherki doesn't start or is subbed). Kept both as
+  selected: Cherki's fixture edge is real and he is a fully nailed City starter despite the low
+  total-minutes count (early season, not a rotation risk), and João Pedro's tougher fixture
+  (away at Arsenal, FDR 5) makes him the safer vice than captain pick this week.
+- **Favourite-club (Chelsea) loyalty report** (`config/settings.md` mode: `report`, not a
+  constraint): 1 of 3 Chelsea slots already filled for free (João Pedro). Forcing a 2nd Chelsea
+  player (Enzo, undoing this transfer) would cost 0.689 predicted points; forcing a 3rd (adding
+  Cole Palmer) would cost 5.957. Not taken — reported only, per settings.
+
+**Optimizer net score (post-hit):** 76.631 (1-transfer squad, 0 hit) — declined the higher raw
+82.493/net-78.493 2-transfer option for the reasons above; this is a deliberate override, not a
+model error. Prediction recorded to `records/predictions.jsonl` (GW3, predicted_total 85.74).

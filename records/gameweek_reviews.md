@@ -368,3 +368,30 @@ premature draft above.
     `BENCH_WEIGHT=0.15` already tries to build a useful bench, but the gap here suggests the
     starting-XI picks (not just bench depth) deserve a second look once real form data exists.
 
+
+## GW1 final + GW2 close-out — 2026-09-01
+
+- **GW1 final (official):** 49 pts (rank ~52nd percentile), 20 points left on the bench.
+  The 2026-08-20 deadline prediction (61.539 total / 54.952 XI, captain Gabriel) was measured
+  against the *recorded* lineup via `engine.evaluate.evaluate_gameweek(1, ...)`: predicted 61.539,
+  actual-per-that-lineup 54, error -7.539, MAE 3.333 across players. The *official* FPL score (49)
+  is 5 lower still because the live squad actually started Senesi/van Dijk/Enzo/Mbeumo/Thiago over
+  Mukiele/Tarkowski/Stach in a 3-4-3 rather than the exact recorded shape — a real deadline-time
+  lineup call, not a code bug. Biggest misses: Anton Stach benched (13 actual vs 4.4 predicted,
+  the single costliest miss of the week) and Igor Thiago started but blanked (0 actual vs 4.78
+  predicted, went off injured 82'). João Pedro and Dewsbury-Hall both well over-delivered (11 each
+  vs ~4.6-4.8 predicted) - GW1 was a high-variance week in both directions, not a one-sided bias.
+- **GW2 (official):** 70 pts (rank ~59th percentile), 18 points left on the bench. **No prediction
+  was recorded for GW2** - the weekly-review loop wasn't run before that deadline, a real gap in
+  the calibration record (see `.claude/skills/fpl-weekly-review/SKILL.md` step 9 - "record a
+  prediction every run, including holds"). Real transfer made: Gibbs-White (NFO) -> Tavernier
+  (BOU), free. **James Tarkowski was benched again and scored 12** - the second gameweek running
+  he was left out and delivered a top score (6 in GW1, 12 in GW2 = 18 combined points missed from
+  one recurring bench call). This is the clearest actionable pattern across the two gameweeks: not
+  a scoring-formula bias, a lineup-selection one.
+- **Calibration (1 evaluated gameweek so far):** mean predicted 61.54, mean actual 54.0, mean error
+  -7.54, mean abs error 7.54. One gameweek is not enough to call this systematic - re-run
+  `calibration(...)` once GW2 and GW3 have recorded predictions to evaluate.
+- **Lesson carried into GW3:** Tarkowski's actual form (9.0 ppg over 2 real games, goal + clean
+  sheet + bonus both weeks) is now reflected in his `score` and he starts in this week's lineup -
+  see `decisions_log.md`'s GW3 entry.

@@ -393,3 +393,21 @@ suggested).
   already carries that discount and no stronger alternative was available in that slot; he is
   explicitly not captain or vice while doubtful.
 
+
+## GW3 Squad — 2026-09-01
+
+**Transfer made:** Enzo Fernández (CHE) → Rayan Cherki (MCI), 1 free transfer used, 0 hit. See
+`decisions_log.md` for full reasoning (including the declined Senesi→Ajayi swap the optimizer
+suggested).
+
+- **Bank:** £2.0m | **Squad value:** £100.1m | **Free transfers:** 0 (will roll to 1 after GW3) |
+  **Chip active:** none
+- **Squad:** GK: Raya, Roefs · DEF: Mukiele, Gabriel, van Dijk, Tarkowski, Senesi · MID: Stach,
+  Mbeumo, Tavernier, Dewsbury-Hall, **Cherki** · FWD: João Pedro, Calvert-Lewin, Igor Thiago
+- **Starting XI (3-5-2):** Raya; Tarkowski, Gabriel, Mukiele; Cherki, Stach, Mbeumo,
+  Dewsbury-Hall, Tavernier; João Pedro, Calvert-Lewin (bench: Roefs, van Dijk, Senesi, Igor Thiago)
+- **Captain:** Cherki (home vs Coventry, difficulty 2, nailed City starter) | **Vice:** João Pedro
+  (away at Arsenal, difficulty 5, 69.7% owned — safe fallback)
+- **Note:** Tarkowski starts for the first time this season on the strength of 2 genuine returns
+  (6 + 12 pts, goal + clean sheet) after being wrongly benched both GW1 and GW2 — see
+  `gameweek_reviews.md`'s GW1/GW2 close-out for the pattern this corrects.
