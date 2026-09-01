@@ -115,3 +115,17 @@ something a backtest run should do automatically. Use `/score-calibrate`, which:
 - logs the change (and its rationale) to `records/decisions_log.md` under a "Model calibration"
   entry
 - only takes effect starting the *next* `/fpl-weekly-review` run, never mid-analysis
+
+## Ceiling-signal backtest (separate from the weight-scheme one above)
+
+Everything above tests *weight schemes* against the older, now-superseded formula shape (see
+`engine/weight_scheme_backtest.py`'s docstring). A different, live question: does `form` (backward-
+looking box-score points) miss a player's underlying *ceiling* — the difference between a
+consistent 5-pointer and someone capable of a 20-point haul? `engine/ceiling_signal_backtest.py`
+tests candidate per-gameweek signals (`threat`, `bps`, `ict_index`) against next-gameweek actual
+points, position by position. First result (`records/ceiling_signal_backtest.md`, GW1→GW2): for
+MID/FWD, a player's own recent points barely predict next week's (correlation ≈0), but `threat`/
+`ict_index` do (0.25–0.43) — a real gap `form` doesn't currently see. One transition isn't enough
+to act on; re-run it each week (`python engine/ceiling_signal_backtest.py --from N --to N+1`) and
+append to the log — a change to `engine/score.py`'s MID/FWD `form` term still goes through
+`/score-calibrate` once the pattern holds across a few gameweeks.
