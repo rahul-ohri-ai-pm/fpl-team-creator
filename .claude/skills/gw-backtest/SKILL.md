@@ -1,59 +1,90 @@
 ---
 name: gw-backtest
-description: Backtest the scoring model's weight scheme(s) against a confirmed-finished gameweek's real results. Use after a gameweek finishes, or when deciding whether to change the live scoring formula.
+description: Check the live scoring model's calibration (predicted vs actual) against confirmed-finished gameweeks. Use after a gameweek finishes, or when deciding whether engine/score.py's weights need retuning.
 ---
 
 # GW Backtest
 
-Loads only `.claude/docs/SCORING.md`, `records/gameweek_reviews.md`, and `config/settings.md` —
-not the full weekly-review context. Run from the repo root.
+Loads `.claude/docs/SCORING.md`, `records/gameweek_reviews.md`, and `config/settings.md` — not
+the full weekly-review context. Run from the repo root.
 
-`engine/weight_scheme_backtest.py` is the reusable simulator behind this skill — it already implements the
-precondition check, the reconstruction/caching, and the scoring/comparison math below. Don't
-re-derive that math by hand; call the module.
+`engine/evaluate.py` is the live model's actual calibration tool — `evaluate_gameweek()` replays a
+recorded prediction against real results, `calibration()` aggregates the error across every
+gameweek that's been evaluated so far. This skill runs that, it doesn't re-derive the math by hand.
+
+(There is a second, older module, `engine/weight_scheme_backtest.py` — it predates the current
+xGI-blended formula and only compares 4 historical weight schemes against the original GW1
+squads. Its own docstring says to treat its numbers as historical; don't reach for it here.)
 
 ## Preconditions
 
-**Do not run this until the target gameweek is confirmed finished** — `engine.weight_scheme_backtest.check_gameweek_finished(gw)`
-(and the CLI, which calls it automatically) already enforces `bootstrap['events'][n]['finished'] == True`
-and refuses with a clear error otherwise. This is the verification loop from `CLAUDE.md` applied to
-backtesting specifically — a backtest against provisional data produces a garbage recommendation
-and has burned this project before.
+**Only evaluate a gameweek once it's confirmed finished** — check
+`bootstrap['events'][n]['finished'] == True` before trusting its points as final. This is the
+verification loop from `CLAUDE.md` applied to backtesting: a check against provisional data
+produces a garbage calibration read.
 
 ## Steps
 
-1. **Confirm the gameweek is finished** — handled automatically when you run the CLI below; if it
-   refuses, stop and say so, don't work around it.
-
-2. **Identify test squads.** `engine.weight_scheme_backtest.TEST_SQUADS` already has the 3 real GW1 squads
-   (the user's real squad plus the other real, previously-recorded squads from
-   `records/team_history.md`). For a different gameweek or squad set, build a
-   `{name: [player_id, ...]}` dict and pass it as `squads=` to `engine.weight_scheme_backtest.backtest()` — don't
-   fabricate synthetic squads unless the user asks for more; real historical squads make the
-   backtest meaningful, not just illustrative.
-
-3. **Run the backtest.** For each of the 4 named schemes:
+1. **Confirm which gameweeks are finished.**
+   ```python
+   from engine.fetch import get_bootstrap
+   bootstrap = get_bootstrap()
    ```
-   python engine/weight_scheme_backtest.py --gw <n> --scheme <baseline|conservative|aggressive|new_signing_aware>
+   Check `bootstrap['events'][n-1]['finished']` for each candidate gameweek before evaluating it.
+
+2. **Evaluate every finished gameweek that has a recorded prediction.**
+   ```python
+   from engine.fetch import get_event_live
+   from engine.evaluate import evaluate_gameweek, load_predictions, calibration
+
+   evals = []
+   for gw in range(1, current_finished_gw + 1):
+       result = evaluate_gameweek(gw, get_event_live(gw))
+       if result:
+           evals.append(result)
+       else:
+           print(f"GW{gw}: no recorded prediction to evaluate against")
    ```
-   This already reconstructs pre-gameweek inputs (caching to `records/snapshots/gw{n}_preseason_reconstruction.json`
-   via `load_or_build_snapshot()` — no manual `element-summary` fetching needed for the default test
-   squads), picks one shared best-XI per squad from the Baseline scheme's scores so all 4 schemes
-   are judged on identical lineups, pulls actual per-player points from `/api/event/{n}/live/` (no
-   captain multiplier), and prints RMSE/MAE/bias per scheme. A `--custom '<json>'` flag is
-   available for a weight combination outside the 4 named schemes.
+   `evaluate_gameweek` returns `None` when nothing was recorded for that gameweek (a run that
+   skipped step 9 of `/fpl-weekly-review`, or predates this project's calibration loop). Report
+   that plainly — don't invent a review for a gameweek with no baseline. For each gameweek that
+   *does* evaluate, note `predicted_total` vs `actual_total`, the signed `error`, and the two or
+   three players in `per_player` with the largest errors. `error > 0` means the model
+   under-predicted that week.
 
-4. **Log to `records/scoring_backtest.md`** (append-only, use the template in
-   `.claude/docs/RECORDS.md`) with a clear recommendation — which scheme (if any) should replace
-   the current live formula, and why.
+3. **Aggregate.**
+   ```python
+   cal = calibration(evaluations=evals)
+   ```
+   `cal["gameweeks"]` is how many data points this rests on — **say so explicitly if it's 1 or 2**;
+   one or two gameweeks is a signal, not a verdict, and this project has been burned before by
+   acting on single-gameweek evidence (see the GW2 Sangaré/De Cuyper decision, or the GW1
+   weight-scheme backtest's own re-confirm caveat). `cal["mean_error"]` is the number that matters:
+   persistent, same-direction error across several gameweeks is what actually justifies a
+   `/score-calibrate` change — a single outlier week doesn't.
 
-5. **Report back concisely**: the winning scheme, its RMSE/bias vs. Baseline, and one sentence on
-   whether this is enough evidence to act on yet (a single gameweek's backtest is a signal, not a
-   verdict — say so if this is the first data point).
+4. **Log a narrative entry to `records/gameweek_reviews.md`** (append-only) when there's something
+   new to report — the raw numbers already persist in `records/predictions.jsonl`, so this is
+   about capturing the *reasoning* (biggest misses, whether a bias looks systematic yet), not
+   re-duplicating the machine-readable log.
+
+5. **Report back concisely**: predicted vs actual per evaluated gameweek, the aggregate
+   `mean_error`/`mean_abs_error`, and one sentence on whether there's enough evidence yet to act on
+   (name the gameweek count).
+
+## Related, separate tool
+
+`engine/ceiling_signal_backtest.py` + `records/ceiling_signal_backtest.md` test a different
+question — whether per-gameweek signals like `threat`/`ict_index` predict *next*-gameweek points
+better than a player's own recent points do (a possible gap in `score.py`'s `form` term). Don't
+conflate the two: this skill checks the live model's overall calibration; that one probes for a
+specific missing input. Run it separately (`python engine/ceiling_signal_backtest.py --from <n>
+--to <n+1>`) when there's a new gameweek transition to test.
 
 ## Constraints
 
-- This skill only recommends — applying a scheme change to `engine/score.py` is `/score-calibrate`'s
-  job, not this one's.
-- Don't dump full per-player prediction tables into the chat; the recommendation and the
-  aggregate metrics are what matters. Full detail goes in the logged record, not the summary.
+- This skill only measures and reports — applying a weight change to `engine/score.py` is
+  `/score-calibrate`'s job, not this one's.
+- Don't dump full per-player prediction tables into the chat; the aggregate numbers and the
+  biggest misses are what matters. Full detail belongs in `records/predictions.jsonl`, not the
+  chat summary.
