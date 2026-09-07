@@ -40,6 +40,21 @@ XGI_BLEND = {"GK": 0.0, "DEF": 0.0, "MID": 0.5, "FWD": 0.5}
 # baseline in preseason.py is the honest fallback instead.
 XGI_MIN_MINUTES = 900
 
+# `form` (last-30-days average) is FPL's own rolling window, so early in a season
+# it is an average of 1-3 matches - not a judgement call, a measured fact: a GW3
+# backtest over 172 players (predicting GW3 from their GW1-2 form) found raw form
+# scores WORSE than just predicting every player's own price-implied baseline
+# (RMSE 4.032 vs 3.266 vs 3.135 for a flat pool-mean) - see
+# records/gameweek_reviews.md's "GW3 review" entry. Shrink form toward that
+# baseline, weighted by how many games it's actually built on:
+#     form = (finished * raw_form + FORM_SHRINKAGE_K * baseline_ppg) / (finished + FORM_SHRINKAGE_K)
+# K=10 means form and the baseline are weighted equally at 10 games played (~GW10),
+# and form dominates by season's end (finished=38) - a round, defensible choice
+# given the backtest's RMSE kept improving past K=50 with rapidly diminishing
+# returns; re-fit K as more gameweeks accumulate rather than trusting one
+# transition's optimum literally.
+FORM_SHRINKAGE_K = 10
+
 
 def _finished_events(bootstrap) -> int:
     """Games played so far this season. 0 pre-season/early season - callers must
@@ -340,6 +355,12 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
 
     ps = preseason_mod.load() if preseason is None else preseason
     baselines = preseason_mod.price_baselines(bootstrap)
+    # A second, separate fit for the in-season shrinkage prior below: the pre-season
+    # `baselines` model requires 900 minutes (a full season) to trust a player's ppg,
+    # which no one has this early - relax the bar to roughly what `finished`
+    # gameweeks could actually supply, so the prior exists well before GW10.
+    in_season_baselines = (preseason_mod.price_baselines(bootstrap, min_minutes=finished * 60)
+                            if finished > 0 else {})
     xgi = xgi_models(bootstrap)
     club_short = {t["id"]: t.get("short_name") for t in bootstrap["teams"]}
     club_id = {t.get("short_name"): t["id"] for t in bootstrap["teams"] if t.get("short_name")}
@@ -365,7 +386,16 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
                               p["minutes"])
         # Gate on season stage, not the raw value: a mid-season `form` of exactly 0
         # is a real slump signal and must not be papered over by `ppg`.
-        form = ppg if finished == 0 else float(p["form"] or 0)
+        if finished == 0:
+            form = ppg
+        else:
+            raw_form = float(p["form"] or 0)
+            prior = preseason_mod.baseline_ppg(in_season_baselines, p["element_type"], p["now_cost"])
+            # See FORM_SHRINKAGE_K above. No shrinkage if this position's price model
+            # couldn't be fit yet (too few players with enough minutes) - raw form is
+            # still better than nothing in that gap.
+            form = ((finished * raw_form + FORM_SHRINKAGE_K * prior) / (finished + FORM_SHRINKAGE_K)
+                    if prior > 0 else raw_form)
 
         minutes = p["minutes"]
         # Pre-season/early season, `minutes` is still last season's total and there's

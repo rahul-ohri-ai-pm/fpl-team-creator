@@ -183,18 +183,23 @@ def load(path: str = DEFAULT_PATH) -> Preseason:
         return Preseason()
 
 
-def price_baselines(bootstrap) -> dict:
+def price_baselines(bootstrap, min_minutes: int = 900) -> dict:
     """Fit ppg ~ price per position, on players who actually have a record.
 
     FPL prices a new signing by what it expects them to produce, so price is the
     best free proxy available for someone with no Premier League history. Fitted
     from the live pool each run rather than hardcoded, so it recalibrates itself
     as prices and scoring rules drift between seasons.
+
+    `min_minutes` defaults to a full-season-reference 900 (the pre-season/no-record
+    use case this was built for). `score.py` also calls this with a lower,
+    games-scaled threshold early in a season - see FORM_SHRINKAGE_K there - so the
+    "real sample" bar can be relaxed without waiting for 900 minutes to accumulate.
     """
     by_pos: dict[int, list[tuple[float, float]]] = {}
     for p in bootstrap["elements"]:
         ppg = float(p["points_per_game"] or 0)
-        if ppg > 0 and p["minutes"] > 900:  # a real sample, not a handful of cameos
+        if ppg > 0 and p["minutes"] > min_minutes:  # a real sample, not a handful of cameos
             by_pos.setdefault(p["element_type"], []).append((p["now_cost"] / 10, ppg))
 
     models = {}

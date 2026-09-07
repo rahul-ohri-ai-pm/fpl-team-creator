@@ -111,6 +111,20 @@ def test_baseline_is_zero_for_an_unfittable_position():
     assert ps.baseline_ppg({}, 3, 100) == 0.0
 
 
+def test_min_minutes_is_overridable_for_in_season_use():
+    """engine.score uses a lower, games-scaled min_minutes early in a season -
+    a pool that clears a low bar but not the default 900 must fit under the
+    lower one and stay unfitted under the default."""
+    pool = []
+    for i in range(20):
+        cost = 40 + i * 5
+        pool.append(element(pid=i + 1, name=f"P{i}", ppg=str(cost / 10 * 0.5),
+                            minutes=150, cost=cost, etype=3))
+    assert ps.price_baselines(bootstrap(pool)) == {}  # under the default 900 bar
+    models = ps.price_baselines(bootstrap(pool), min_minutes=120)
+    assert ps.baseline_ppg(models, 3, 100) == pytest.approx(5.0, abs=0.01)
+
+
 def test_baseline_never_goes_negative():
     models = ps.price_baselines(bootstrap(make_priced_pool()))
     assert ps.baseline_ppg(models, 3, 1) >= 0.0

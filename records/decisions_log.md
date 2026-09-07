@@ -1075,3 +1075,40 @@ earns influence only as its sample grows, with the prior drawn from a stable qua
 position baseline or last-season ppg). Deliberately **not** applied inside this review: per
 `.claude/docs/SCORING.md`, a formula change is `/score-calibrate`'s job and takes effect from the
 *next* run, never mid-analysis.
+
+## Model calibration — form shrinkage — 2026-09-07
+
+**Decision:** Applied `FORM_SHRINKAGE_K` to `engine/score.py` — `form` is now shrunk toward a
+price-implied prior, weighted by games played, instead of used raw.
+
+**Evidence cited:** GW3 review (`records/gameweek_reviews.md`) measured a systematic -25.64/GW
+calibration error across the 2 evaluated gameweeks, traced to `form` carrying no usable signal at
+2-3 games' sample size — raw form (RMSE 4.032) scored worse than a naive price+position prior
+(3.266), which itself lost to a flat pool-mean (3.135). This is a single backtest transition
+(GW1-2 → GW3 predictions), so per `.claude/docs/SCORING.md`'s own precedent (the GW1 weight-scheme
+backtest's explicit re-confirm caveat), **treated as a first data point, not fully proven** — but
+the direction (raw form is currently harmful, not just weak) was unambiguous enough, and the cost
+of leaving a measured -25.64/GW bias unaddressed for another week was judged higher than the risk
+of a K value that needs revisiting.
+
+**Change:** `form = (finished*raw_form + K*price_prior) / (finished + K)`, `K = 10`. Re-validated
+end-to-end (not just the isolated backtest) by rebuilding the exact `price_baselines`/`baseline_ppg`
+code path against real GW1-3 data: RMSE 4.032 → 3.274. `preseason.price_baselines` gained an
+optional `min_minutes` parameter (default 900 unchanged) so `score.py` can fit an in-season prior
+at a games-scaled threshold instead of waiting for a full season's minutes.
+
+**Expected impact, projected against GW1-3:** the fix is corrective, not scheme-swapping — it
+doesn't change *what* the formula optimizes for, only how much weight noisy early-season form
+gets before it's earned that weight. GW4's recommendation was re-run under the corrected formula:
+the same transfer (Thiago → Isak) held, the 2-transfer/-4 option that looked marginally attractive
+under the old formula (+0.46 net) is now clearly rejected (net 53.54 vs 56.40 for 1 transfer), and
+**van Dijk now starts on the model's own merit** — matching the manual override applied by hand in
+GW3/GW4 review without needing one. That convergence is itself a useful sanity check on the fix.
+
+**Takes effect:** immediately for this GW4 recommendation (re-recorded to `records/predictions.jsonl`,
+superseding the pre-fix GW4 prediction of 75.45) — not retroactively re-scored against GW1-3's
+already-logged results, which stay exactly as recorded.
+
+**Tests:** `tests/test_score.py` (3 new: shrinks toward the prior, fades as `finished` grows, no
+shrinkage when a position's prior can't be fit) and `tests/test_preseason.py` (1 new: the
+`min_minutes` override). Full suite: 149 passed (was 145).

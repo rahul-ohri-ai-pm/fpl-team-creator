@@ -5,31 +5,48 @@ number `engine/optimize.py`'s MILP maximizes (as `XI + BENCH_WEIGHT * bench`, se
 `engine/optimize.py`'s docstring) — everything downstream (transfer recommendations, captain
 picks, lineup selection) depends on this number being reasonably calibrated.
 
-## Current formula (Baseline scheme)
+## Current formula (live, post-master-merge)
+
+**This section describes `engine/score.py` as it actually is today.** The "Four weight schemes"
+section below it is historical — it documents an earlier, simpler formula shape from before this
+project merged with a more advanced parallel line of development; see
+`engine/weight_scheme_backtest.py`'s own docstring. Don't confuse the two.
 
 ```
-predicted = form * ease_mult * reliability * injury_mult + (ownership/100) * ownership_weight
+predicted = form * ease_mult * reliability * injury_mult
 ```
+(`ownership` is a separate `tiebreak` field, never inside `predicted` — see "Scoring conventions"
+in `CLAUDE.md`.)
 
 | Factor | Meaning | Current value |
 |---|---|---|
-| `form` | Last-30-days avg points/match; falls back to last season's points-per-game when `form` is 0 (pre-season/early season) | `float(p["form"] or 0) or float(p["points_per_game"] or 0)` |
-| `ease_mult` | Upcoming fixture difficulty over the next 4 GWs, scaled 0.8 (hard run) – 1.2 (easy run) | `0.8 + ease * 0.4` |
-| `reliability` | Minutes-played discount, normalized against a 38-game season reference (falls back to full-season reference pre-season, since 0 games have been "finished" this season) | `min(1.0, minutes / (38 * 90 * 0.6))` |
-| `injury_mult` | `chance_of_playing_next_round` as a fraction; 1.0 if unset (assumed fit) | `chance / 100` |
-| `ownership_weight` | Risk-profile-driven nudge toward/away from high-ownership players | `{"safe": 1.5, "balanced": 0.3, "differential": -1.5}` |
+| `form` | This season's last-30-days avg points/match, **shrunk toward a price-implied prior early in the season** — see below. Pre-season (`finished == 0`) falls back to `ppg` (xGI-blended for MID/FWD, price-baseline for a player with no record at all) | `engine/score.py`'s `score_players`, ~line 366 |
+| `ease_mult` | Fixture difficulty over the next 4 GWs, decay-weighted toward the imminent one, blended with a position-aware opponent-matchup read where team strength data supports it | `fixture_ease()` / `opponent_matchup_ease()` |
+| `reliability` | Minutes-played discount, blended with pre-season minutes-share data early on | `min(1.0, minutes / (games_reference * 90 * 0.6))` |
+| `injury_mult` | `chance_of_playing_next_round`, falling back to pre-season fitness-doubt data, further scaled by club-level availability | `score_players`'s `injury_mult` |
 
-Change `config/settings.md`'s `risk_profile` to switch the `ownership_weight` used — that's the
-only intended lever for user-facing risk tuning. Everything else in the table above is a project
-default, changed only through the calibration process below.
+Change `config/settings.md`'s `risk_profile` to switch the `ownership_weight` used for the
+`tiebreak` field — that's the only intended lever for user-facing risk tuning.
 
-## Known bias (confirmed, not just suspected)
+### Form shrinkage (`FORM_SHRINKAGE_K`, added 2026-09-07)
 
-Pre-season and early-season, `form` is 0 for every player (no matches in the last 30 days), so the
-formula falls back entirely to last season's points-per-game. That fallback **over-estimates
-systematically** — confirmed by the GW1 backtest (`records/scoring_backtest.md`): **+43% bias on
-the Baseline scheme** across 3 real test squads. Last season's output doesn't discount for a new
-season's fixture difficulty shifts, new-manager effects, or squad changes at other clubs.
+**Measured, not assumed**: a GW3 backtest over 172 players (predicting GW3 from their GW1-2
+`form`) found raw form scored *worse* than a naive price-implied baseline — RMSE 4.032 (raw form)
+vs 3.266 (price+position prior) vs 3.135 (a flat pool-mean, the honest noise floor) — see
+`records/gameweek_reviews.md`'s "GW3 review" entry. Early-season `form` is an average of 1-3
+matches; at that sample size it isn't signal, it's noise the model was treating as real.
+
+Fix: `form` is now shrunk toward a price-implied prior (`preseason.price_baselines`, refit at a
+games-scaled minutes threshold so it works well before the pre-season model's 900-minute bar),
+weighted by games actually played:
+```
+form = (finished * raw_form + FORM_SHRINKAGE_K * price_prior) / (finished + FORM_SHRINKAGE_K)
+```
+`FORM_SHRINKAGE_K = 10` — form and the price prior are weighted equally at ~10 games played, form
+dominates by season's end. Re-validated end-to-end against real GW1-3 data (not just the backtest
+in isolation): RMSE 4.032 → 3.274. **K itself is a first estimate** — the backtest's RMSE kept
+improving with diminishing returns out to K=50; 10 was chosen as a defensible middle ground, not
+the literal optimum of one data point. Re-fit as more gameweeks accumulate.
 
 ## Four weight schemes
 
