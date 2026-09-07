@@ -430,3 +430,22 @@ suggested).
   GW3 finding that `form`-driven differentiation is currently noise.
 - **Flagged for next week's free transfer:** Marcos Senesi — 90 minutes all season, out of the
   Spurs XI. Should go without needing a hit.
+
+## GW4 Squad — WILDCARD PLAYED — 2026-09-07
+
+**Chip active:** Wildcard #1 (first use — Wildcard #2 still available). See `decisions_log.md`
+for the full quantified case and the concentration-risk lineup adjustment.
+
+- **Bank:** £0.1m | **Squad value:** £99.9m | **Free transfers:** n/a (wildcard resets nothing,
+  next week starts fresh at 1) | **Chips remaining:** Wildcard #2, Free Hit, Bench Boost, Triple Captain
+- **Squad:** GK: Tzolakis (HUL), Kinsky (TOT) · DEF: Calafiori (ARS), Ajayi (HUL), Mendy (HUL),
+  Thomas (COV), Davis (IPS) · MID: Palmer (CHE), Gakpo (LIV), Mbeumo (MUN), Rogers (CHE),
+  Ødegaard (ARS) · FWD: Haaland (MCI), Isak (LIV), Emersonn (IPS)
+- **Starting XI (3-4-3):** Tzolakis; Calafiori, Ajayi, Thomas; Ødegaard, Mbeumo, Rogers, Gakpo,
+  Palmer; Haaland, Isak (bench: Mendy, Emersonn, Davis, Kinsky)
+- **Captain:** Haaland (away @ Man Utd, FDR4, but the model's top score by a clear margin — a
+  standalone-quality pick, not a fixture-driven one) | **Vice:** Palmer (home vs Hull, easier
+  fixture, second-highest score)
+- **Note:** started Thomas (COV) over Mendy (HUL) specifically to reduce concentration risk —
+  Ajayi and Tzolakis (also Hull) still start; see `decisions_log.md` for the reasoning and a bug
+  caught mid-build (a `web_name` collision between two different players both called "Thomas").

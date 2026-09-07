@@ -1112,3 +1112,56 @@ already-logged results, which stay exactly as recorded.
 **Tests:** `tests/test_score.py` (3 new: shrinks toward the prior, fades as `finished` grows, no
 shrinkage when a position's prior can't be fit) and `tests/test_preseason.py` (1 new: the
 `min_minutes` override). Full suite: 149 passed (was 145).
+
+## GW4 — WILDCARD PLAYED — 2026-09-07
+
+**Decision:** Played Wildcard #1 (first use this season, both still available before this). Full
+squad rebuild — 14 of 15 players changed, kept only Bryan Mbeumo.
+
+**New squad (£99.8m of £99.9m budget):**
+GK: Tzolakis (HUL), Kinsky (TOT) · DEF: Calafiori (ARS), Ajayi (HUL), Mendy (HUL), Thomas (COV),
+Davis (IPS) · MID: Palmer (CHE), Gakpo (LIV), Mbeumo (MUN), Rogers (CHE), Ødegaard (ARS) · FWD:
+Haaland (MCI), Isak (LIV), Emersonn (IPS)
+
+**Starting XI (GW4):** Haaland (C), Palmer (VC), Gakpo, Isak, Rogers, Mbeumo, Ødegaard, Calafiori,
+Ajayi, Tzolakis, Thomas (COV) — bench: Mendy, Emersonn, Davis, Kinsky.
+
+**Reasoning:**
+- **Why wildcard, why now:** the scoring model was measurably broken for the first 3 gameweeks
+  (see GW3 review — mean calibration error -25.64/GW, form carrying negative predictive value at
+  small sample sizes) and was only fixed this session (`FORM_SHRINKAGE_K`). The squad built under
+  the broken model was never properly optimized to begin with. Both Wildcards were unused, and
+  it's only GW4 — early enough that a reset pays off over most of the season, with a full second
+  Wildcard still in reserve for a later double-gameweek or another strategic moment.
+- **Quantified case:** 6-GW horizon-scored rebuild (`engine.score.horizon_scores`, unconstrained
+  `optimal_squad` at the current squad's full value+bank) projects **379.8 pts over GW4-9 (63.3/GW)**
+  vs **332.2 (55.4/GW)** for holding and taking the incremental Thiago→Isak transfer instead — a
+  **+47.5pt / 6-week gap**. GW4 alone: 61.28 predicted XI vs 54.63 for the incremental plan.
+- **Verified before selecting, not just optimizer-trusted:** every incoming cheap enabler
+  (Ajayi, Mendy, Tzolakis — Hull; Thomas — Coventry; Davis, Emersonn — Ipswich) checked directly
+  against bootstrap for `starts`/`minutes`/`status`/`news` — all 3/3 starts, full minutes, fully
+  fit, no news. This is the standard "cheap enablers + premiums" wildcard shape (fund Haaland/
+  Palmer/Isak/Gakpo/Rogers/Ødegaard off the cheapest genuinely-nailed defenders/GK available), not
+  a repeat of the small-sample gambles this project has previously (correctly) declined.
+- **Concentration-risk adjustment (user-flagged):** Hull's GW4 fixture is away at Chelsea (FDR4) —
+  their single toughest match in the GW1-9 window (GW5-9 run: NEW/EVE/FUL/BRE/IPS, nothing above
+  FDR3). The optimizer's unconstrained pick had **3 Hull assets** (Ajayi, Mendy, Tzolakis) all
+  exposed to that one match — real correlated downside (a heavy Chelsea win drags all three down
+  together) that a per-player expected-value model doesn't price in. **Started Bobby Thomas (COV,
+  DEF, id 173 — home vs Brighton, FDR2) over Mendy (HUL)** instead: both already owned, a
+  zero-cost lineup swap, for a measured **0.21-point** expected-value cost. Kept Ajayi and Tzolakis
+  starting — exiting Hull entirely would give up more expected value than a one-off tough fixture
+  in an otherwise strong run justifies.
+- **Bug caught and fixed during this process:** "Thomas" collides between Bobby Thomas (COV, DEF,
+  id 173, score 3.92) and Sorba Thomas (HUL, MID, id 642, score 0.48) — a name-keyed lookup
+  silently selected the wrong one while building the adjusted lineup (would have started a
+  0.48-score Hull midfielder believing it was the intended Coventry defender). Caught before
+  logging by cross-checking team/position, not name. Exactly the `web_name` collision
+  `CLAUDE.md`/`fpl-weekly-review` already warn about (14 known collisions in the pool) — worth a
+  standing reminder to resolve any player by `element_id`, never by display name alone, in any
+  future ad hoc script.
+
+**Optimizer net score:** not hit-adjusted — Wildcard transfers are free regardless of count.
+Recorded prediction for GW4: **68.83** (up from the pre-wildcard incremental plan's 60.57,
+itself already down from the pre-calibration-fix 75.45 — each number in that chain reflects one
+fewer known flaw, not the same squad getting luckier).
