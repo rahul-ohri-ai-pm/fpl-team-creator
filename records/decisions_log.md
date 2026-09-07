@@ -1024,3 +1024,54 @@ still a live bug on `master` and was ported forward as-is.
 **Optimizer net score (post-hit):** 76.631 (1-transfer squad, 0 hit) — declined the higher raw
 82.493/net-78.493 2-transfer option for the reasons above; this is a deliberate override, not a
 model error. Prediction recorded to `records/predictions.jsonl` (GW3, predicted_total 85.74).
+
+## GW4 — 2026-09-07
+
+**Decision:** Transferred Igor Thiago (FWD, Brentford, £7.9m) → Alexander Isak (FWD, Liverpool,
+£9.0m). Declined the optimizer's second suggested transfer (Senesi → Ajayi).
+
+**Hit taken:** 0 (1 free transfer used, 1 available).
+
+**Reasoning:**
+- **Thiago → Isak (taken):** Thiago has 4 points from 3 gameweeks (form 1.3) while playing 262
+  minutes — he's starting and simply not producing, which makes £7.9m dead money. Isak has 243
+  minutes across the same 3 gameweeks (nailed), form 7.7, 23 points, and a home FDR2 fixture vs
+  Fulham. Deliberately justified on **minutes + role + fixture + a 3-gameweek sample**, not on the
+  model's `score` gap — see the GW3 review: `form`-driven differences are currently noise. The
+  `fpl` MCP rates it "⚖️ Consider — close," with Isak also holding the better 5-game fixture run.
+- **Senesi → Ajayi (declined):** the optimizer wanted this as a 2nd transfer for a **-4 hit worth
+  +0.46 net predicted points**. That is far inside the model's own measured error (mean error
+  -25.64/GW), let alone `config/settings.md`'s 3-gameweek hit-tolerance bar. Declined.
+  **Senesi is genuinely dead weight though** — 90 minutes all season, out of the Spurs XI — so he
+  is the obvious target for next week's free transfer, without a hit.
+
+**Overrides applied to the optimizer's lineup (both grounded in the GW3 calibration finding):**
+- **van Dijk starts over Mukiele.** The model preferred Mukiele on `form` (4.3 vs 3.0) — precisely
+  the signal just measured as worse than useless. On the inputs that do predict: van Dijk has 270
+  minutes (every minute, nailed) and is **home to Fulham (FDR2)**; Mukiele has 180 minutes (missed
+  a gameweek — rotation risk) and is **away to Arsenal (FDR4)**. Also worth recording that the user
+  overrode the same call in the other direction in GW3 and was right — van Dijk scored 6 from the
+  bench.
+- **Captain João Pedro, not the model's pick of Isak.** Both have home FDR2 fixtures, but João
+  Pedro has 270 minutes and **72.1% ownership** vs Isak's 19.7% as a player we haven't owned before.
+  Under the `safe` profile, and given per-player differentiation is currently noise, the correct
+  captain is the highest-floor, highest-ownership pick with an equally good fixture. **Isak takes
+  the vice-captaincy.**
+- **Not captaining Cherki** (last week's pick, returned 3): 173 minutes across 3 gameweeks is real
+  rotation risk at Man City, and GW4 is away to Man Utd (FDR4). He keeps his XI place, not the armband.
+
+**Favourite-club (Chelsea, mode `report`):** João Pedro already fills 1 of 3 slots for free; no
+constraint applied, per `config/settings.md`.
+
+**Optimizer net score:** 70.32 (1-transfer squad, 0 hit) vs 70.78 for the declined 2-transfer/-4
+option. Recorded prediction for GW4: **75.45** — noting explicitly that this figure is expected to
+be **substantially over-stated** given the measured -25.64/GW bias; it is recorded as-is so the
+next evaluation measures the *uncorrected* model honestly rather than a quietly fudged number.
+
+**Model calibration — proposed, not yet applied:** the GW3 review documents that raw `form` at this
+sample size is beaten by predicting the pool mean for everyone (RMSE 3.135 vs 4.032). Proposed fix
+is shrinkage scaled by games observed — `estimate = (n·form + k·prior) / (n + k)` — so `form`
+earns influence only as its sample grows, with the prior drawn from a stable quantity (price/
+position baseline or last-season ppg). Deliberately **not** applied inside this review: per
+`.claude/docs/SCORING.md`, a formula change is `/score-calibrate`'s job and takes effect from the
+*next* run, never mid-analysis.

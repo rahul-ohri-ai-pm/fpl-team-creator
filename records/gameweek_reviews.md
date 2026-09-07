@@ -395,3 +395,53 @@ premature draft above.
 - **Lesson carried into GW3:** Tarkowski's actual form (9.0 ppg over 2 real games, goal + clean
   sheet + bonus both weeks) is now reflected in his `score` and he starts in this week's lineup -
   see `decisions_log.md`'s GW3 entry.
+
+## GW3 review — 2026-09-07 — the model is badly miscalibrated
+
+- **GW3 official: 38 pts** (14 left on bench). Recorded prediction was **85.74 → actual 42** on the
+  recommended XI, error **-43.74**. The squad actually fielded differed slightly (van Dijk started
+  over Gabriel, Tavernier benched), scoring 38. Either way the model predicted roughly **double**
+  what was scored.
+- **Calibration across the 2 evaluated gameweeks:** mean predicted 73.64, mean actual 48.0,
+  **mean error -25.64**. Both evaluated gameweeks over-predict, and the size is growing as `form`
+  accumulates. This is now a systematic bias, not variance.
+- **Every top-scoring pick underperformed, and the benched players outscored them.** Cherki
+  (predicted 10.23, captained) → 3. João Pedro 9.20 → 1. Tarkowski 8.70 → 3. Stach 8.61 → 2.
+  Meanwhile Tavernier (5.39, benched by the recommendation) → 10 and van Dijk (1.61, benched) → 6.
+  The model's ranking was close to inverted.
+
+### Root cause, measured
+
+`engine/score.py` computes `predicted = form * ease_mult * reliability * injury_mult`, where `form`
+is the average points over the last ~30 days. Early season that's 2-3 games. Two independent tests
+now say that quantity carries **no usable signal at this sample size**:
+
+1. **Cross-sectional (`engine/ceiling_signal_backtest.py`, 209-210 players, both transitions):**
+   correlation of a player's own points with their *next* gameweek's points was **+0.075**
+   (GW1→GW2) and **-0.044** (GW2→GW3). Essentially zero, and unstable in sign. The GW1→GW2
+   threat/ict_index signal (0.28-0.43) **did not replicate** in GW2→GW3 (-0.01, -0.02) — that
+   hypothesis is now substantially weakened, which is exactly why the re-run trigger existed.
+2. **Direct predictive test (172 players who started GW1+GW2, predicting GW3):**
+
+   | Predictor | RMSE |
+   |---|---|
+   | Current model shape (raw 2-game form) | 4.032 |
+   | Price + position (stable quality proxy) | 3.266 |
+   | **Flat — predict the pool mean for everyone** | **3.135** |
+
+   **Predicting the same number for every player beats the current model by 22%.** Any blend that
+   reintroduces form makes it worse. At this sample size `form` has negative net value.
+
+The mechanism is missing regression to the mean. A player with 22 points in 2 games gets
+`form = 11.0`, and the model projects 11 points *every* week. The pool actually averages 3.44
+points per started player per gameweek, with sd 3.13 — nobody sustains 11.
+
+### What this implies
+
+Single-gameweek FPL points are dominated by low-frequency events (goals, assists, clean sheets);
+RMSE ~3.1 looks close to the irreducible noise floor. The edge is therefore **not** in predicting
+next week better — it's in minutes security (avoiding 0-point starters), multi-week fixture runs,
+not burning points on hits and benched hauls, and captaincy floor. The model should be far more
+humble in its spread and lean on stable inputs (price, role/minutes, xGI, fixtures) rather than
+recent points. Proposed fix is shrinkage scaled by games observed — see the GW4 decisions_log entry;
+applying it is `/score-calibrate`'s job, deliberately not done mid-review.

@@ -411,3 +411,22 @@ suggested).
 - **Note:** Tarkowski starts for the first time this season on the strength of 2 genuine returns
   (6 + 12 pts, goal + clean sheet) after being wrongly benched both GW1 and GW2 — see
   `gameweek_reviews.md`'s GW1/GW2 close-out for the pattern this corrects.
+
+## GW4 Squad — 2026-09-07
+
+**Transfer made:** Igor Thiago (BRE) → Alexander Isak (LIV), 1 free transfer, 0 hit. See
+`decisions_log.md` for reasoning and for the two lineup overrides applied to the optimizer's picks.
+
+- **Bank:** £0.2m | **Squad value:** £100.0m | **Free transfers:** 0 (rolls to 1 after GW4) |
+  **Chip active:** none
+- **Squad:** GK: Raya, Roefs · DEF: Gabriel, Tarkowski, van Dijk, Mukiele, Senesi · MID: Cherki,
+  Mbeumo, Stach, Tavernier, Dewsbury-Hall · FWD: **Isak**, João Pedro, Calvert-Lewin
+- **Starting XI (3-5-2):** Raya; van Dijk, Tarkowski, Gabriel; Cherki, Mbeumo, Stach, Tavernier,
+  Dewsbury-Hall; João Pedro, Isak (bench: Mukiele, Calvert-Lewin, Roefs, Senesi)
+- **Captain:** João Pedro (home vs Hull, FDR2, 270 min, 72.1% owned) | **Vice:** Isak (home vs
+  Fulham, FDR2, nailed)
+- **Note:** van Dijk starts over Mukiele and João Pedro captains over the model's Isak pick — both
+  deliberate overrides on minutes-security and fixture rather than model `score`, following the
+  GW3 finding that `form`-driven differentiation is currently noise.
+- **Flagged for next week's free transfer:** Marcos Senesi — 90 minutes all season, out of the
+  Spurs XI. Should go without needing a hit.
