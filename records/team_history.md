@@ -449,3 +449,20 @@ for the full quantified case and the concentration-risk lineup adjustment.
 - **Note:** started Thomas (COV) over Mendy (HUL) specifically to reduce concentration risk —
   Ajayi and Tzolakis (also Hull) still start; see `decisions_log.md` for the reasoning and a bug
   caught mid-build (a `web_name` collision between two different players both called "Thomas").
+
+## GW4 Squad — Wildcard finalized — 2026-09-10
+
+**Chip active:** Wildcard #1. Final change from the app's as-submitted squad: Saka → Palmer.
+See `decisions_log.md` for the full reasoning, including the fresh Gakpo injury check.
+
+- **Squad value:** £99.9m | **Bank:** £0.1m | **Chips remaining:** Wildcard #2, Free Hit,
+  Bench Boost, Triple Captain
+- **Squad:** GK: Raya (ARS), Kinsky (TOT) · DEF: Calafiori (ARS), Hall (NEW), Ajayi (HUL),
+  Thomas (COV), Davis (IPS) · MID: Palmer (CHE), Rogers (CHE), Elanga (NEW), Gakpo (LIV),
+  Ndiaye (MCI) · FWD: Haaland (MCI), Isak (LIV), Emersonn (IPS)
+- **Starting XI (4-4-2):** Raya; Calafiori, Hall, Ajayi, Thomas; Palmer, Rogers, Elanga, Gakpo;
+  Haaland, Isak (bench: Kinsky, Davis, Ndiaye, Emersonn)
+- **Captain:** Haaland (away @ Man Utd — standalone quality pick, not fixture-driven) | **Vice:**
+  Palmer (home vs Hull, easier fixture)
+- **Flag:** Gakpo (LIV) is doubtful — thigh injury, 75% chance of playing as of 2026-09-10. Score
+  already discounted for this; not captain or vice. Re-check before the Sat 12 Sep 18:00 deadline.

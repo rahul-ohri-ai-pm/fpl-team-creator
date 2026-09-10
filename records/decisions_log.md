@@ -1165,3 +1165,30 @@ Ajayi, Tzolakis, Thomas (COV) — bench: Mendy, Emersonn, Davis, Kinsky.
 Recorded prediction for GW4: **68.83** (up from the pre-wildcard incremental plan's 60.57,
 itself already down from the pre-calibration-fix 75.45 — each number in that chain reflects one
 fewer known flaw, not the same squad getting luckier).
+
+## GW4 — Wildcard finalized — 2026-09-10
+
+**Decision:** Confirmed the wildcard lineup discussed over the past several turns, with one
+change from the user's app squad: **Saka → Palmer** (£9.5m → £9.6m, same-price swap, no
+defensive changes required). Elanga, Hall, and the rest of the defense kept as the user set them.
+
+**Reasoning for Saka → Palmer:** consistently the better pick across every measure this session —
++2.44 pts this week's XI (58.19 vs 55.75), +12.7 pts over the 6-GW horizon (365.4 vs 352.7),
+£0.1m within the existing bank. Saka's case (elite underlying threat=147, penalty duty) was real
+but didn't close the gap even generously computed; see the prior turn's dig-in for the full
+comparison against Ødegaard/Mbeumo too.
+
+**Champions League check (this week's UEFA fixtures, per user's request):** re-verified all 15
+squad players fresh against bootstrap `status`/`chance_of_playing_next_round`/`news` rather than
+assuming rotation risk from the European-competition list alone. Result: **Gakpo (LIV) has a
+fresh thigh injury — status `d`, 75% chance of playing** — the only flag found across the squad.
+Arsenal (Raya, Calafiori) and Man City (Haaland, Ndiaye) — both in this week's Champions League —
+came back clean (status `a`, no news). Gakpo's `score` already
+reflects the 75% discount (4.73, down from ~6.3 undiscounted) and still clears the bench
+alternatives (Ndiaye, Davis, Emersonn), so he stays in the XI — no forced change, but worth a
+final check closer to Saturday's deadline in case his chance drops further.
+
+**Favourite-club (Chelsea, mode `report`):** 2 of 3 slots now filled for free (Rogers, Palmer) —
+no constraint applied, per `config/settings.md`.
+
+**Recorded prediction:** GW4 total 65.75 (XI 58.19), captain Haaland, vice Palmer.
