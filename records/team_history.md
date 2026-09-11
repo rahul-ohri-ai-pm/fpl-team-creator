@@ -466,3 +466,18 @@ See `decisions_log.md` for the full reasoning, including the fresh Gakpo injury 
   Palmer (home vs Hull, easier fixture)
 - **Flag:** Gakpo (LIV) is doubtful — thigh injury, 75% chance of playing as of 2026-09-10. Score
   already discounted for this; not captain or vice. Re-check before the Sat 12 Sep 18:00 deadline.
+
+## GW4 Squad — FINAL, matches live app — 2026-09-11
+
+**Chip active:** Wildcard #1. This is the squad actually set in the FPL app, confirmed against
+the user's screenshot — not a recommendation, the real thing.
+
+- **Squad value:** £99.1m | **Chips remaining:** Wildcard #2, Free Hit, Bench Boost, Triple Captain
+- **Squad:** GK: Raya (ARS), Kinsky (TOT) · DEF: Thomas (COV), Calafiori (ARS), Hall (NEW),
+  Mykolenko (EVE), Ajayi (HUL) · MID: Ndiaye (MCI), Saka (ARS), Rogers (CHE), Elanga (NEW),
+  Scott (BOU) · FWD: Isak (LIV), Haaland (MCI), Emersonn (IPS)
+- **Starting XI (3-5-2):** Raya; Thomas, Calafiori, Hall; Ndiaye, Saka, Rogers, Elanga, Scott;
+  Isak, Haaland (bench: Kinsky, Mykolenko, Ajayi, Emersonn)
+- **Captain:** Isak (home vs Fulham, FDR2 — user's deliberate floor-over-ceiling pick; see
+  `decisions_log.md` for the full Isak-vs-Haaland reasoning) | **Vice:** Saka
+- **Deadline:** Sat 12 Sep, 18:00 — locked in.

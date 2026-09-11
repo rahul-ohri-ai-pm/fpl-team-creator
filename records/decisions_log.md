@@ -1192,3 +1192,34 @@ final check closer to Saturday's deadline in case his chance drops further.
 no constraint applied, per `config/settings.md`.
 
 **Recorded prediction:** GW4 total 65.75 (XI 58.19), captain Haaland, vice Palmer.
+
+## GW4 — Final confirmation, matches live app — 2026-09-11
+
+**Decision:** Squad now matches the live app exactly, confirmed against the screenshot the user
+shared. **Captain: Isak** (user's explicit final call, overriding the model's own pick of Haaland).
+
+**Captaincy reasoning (both sides considered):** Isak has FDR2 (home vs Fulham); Haaland has FDR4
+(away at Man Utd — the joint-hardest fixture in the squad, alongside Ajayi's Hull-at-Chelsea trip).
+The model's `score` already prices in that gap (Haaland 7.55 vs Isak 5.98 — `ease_mult` is built
+directly from FDR) and still ranks Haaland's captaincy 1.57 points ahead net of the fixture
+discount, because his standalone scoring level clears the gap. **This is not the model missing a
+signal — it's a real, informed tradeoff between expected value (Haaland) and a safer floor (Isak),
+and the user chose the floor.** Logged as the user's deliberate call, not a correction.
+
+**Final squad (matches app, £99.1m spent):**
+GK: Raya (ARS), Kinsky (TOT) · DEF: Thomas (COV), Calafiori (ARS), Hall (NEW), Mykolenko (EVE),
+Ajayi (HUL) · MID: Ndiaye (MCI), Saka (ARS), Rogers (CHE), Elanga (NEW), Scott (BOU) ·
+FWD: Isak (LIV, C), Haaland (MCI), Emersonn (IPS)
+
+**Starting XI (3-5-2):** Raya; Thomas, Calafiori, Hall; Ndiaye, Saka, Rogers, Elanga,
+Scott; Isak (C), Haaland — bench: Kinsky, Mykolenko, Ajayi, Emersonn (V: Saka).
+
+**Note on bench:** Ajayi (HUL) is benched in favour of Ndiaye starting — the model's own
+`best_lineup` from this same 15 would swap them (+0.48 pts) but that re-introduces the Hull/Chelsea
+concentration risk already flagged this week. Left as the user set it — a deliberate, not
+overlooked, choice.
+
+**Recorded prediction:** GW4 total 61.45 (XI 55.47). This supersedes the earlier GW4 entries in
+`predictions.jsonl` (75.45 pre-calibration-fix → 60.57 → 65.39/68.83 wildcard iterations → 65.75
+Palmer version → **61.45 final, matching the actual live squad**) — the one that will be measured
+against the real result once GW4 finishes.
