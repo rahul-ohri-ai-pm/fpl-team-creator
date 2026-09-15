@@ -1265,3 +1265,47 @@ that is as likely to widen the gap as close it. The case for differentials is a 
 size *relative to gameweeks left*, and at GW5 there is far too much season remaining for that trade
 to be worth it. Reassess around GW12: if the gap to mid-table is still >30 points then, variance
 becomes the rational play and `config/settings.md` should move to `balanced` or `differential`.
+
+### GW5 revision — 2026-09-15 — user's call: Isak → João Pedro instead
+
+**Supersedes the Elanga → Barnes entry above.** User is removing Isak and bringing in João Pedro
+(element_id **165**, CHE, FWD, £7.8m — not to be confused with Costinha/João Pedro Loureiro da
+Costa, id 119, a BHA defender; a name-keyed lookup would have picked the wrong one).
+
+**The swap is score- and fixture-neutral.** João Pedro 5.185 vs Isak 5.147 — +0.04, inside noise.
+Both away, both FDR3 (CHE at Brentford, LIV at Bournemouth). Nothing is gained or lost on the
+players themselves.
+
+**The justification is the £1.3m it frees, and the ordering.** Selling the expensive player first
+means GW6's *forced* Elanga replacement can be a premium midfielder rather than a £6.0m one:
+
+| Ordering | GW5 | GW6 | End state |
+|---|---|---|---|
+| Barnes first (model's) | Elanga → Barnes (63.86) | Isak → João Pedro | 63.90, £1.3m idle |
+| **User's** | **Isak → João Pedro (63.34)** | **Elanga → Gakpo £7.2m** | **64.70** |
+
+Same two transfers, no hits either way. The user's ordering costs 0.52 this week (Elanga's dead
+slot is carried one more gameweek) and returns **+0.80/week** thereafter. Accepted.
+
+**This is conditional on GW6 actually spending the freed cash.** Elanga → Gakpo (5.09) or Ødegaard
+(4.96). If the £1.3m sits idle the decision is -0.52 instead of +0.80. Gakpo is `status a` with no
+news as of today — his GW4 thigh knock has cleared — but re-check at the GW6 deadline.
+
+**Rejected: doing both this week.** -4 hit → net 59.90, worse than either single move, and it fails
+the hit-tolerance rule in `config/settings.md` (needs >4 pts over 3 GWs).
+
+**Recorded reasoning note.** Isak returned 2 pts in GW4 and burned the armband. That is *not* the
+basis for this move and is deliberately not logged as such — GW3's analysis measured recent points
+as carrying negative predictive value at this sample size, and the model rates the two forwards
+level. The move is justified by the cash it unlocks. Keeping this distinction straight matters for
+the calibration record.
+
+**Side effect:** ends at **3 ARS** (Raya, Calafiori, Tzolis) and **3 CHE** (Palmer, Rogers, João
+Pedro) — both at the FPL club cap, constraining future moves. It does take the favourite-club
+preference to its full 3 slots at effectively zero cost, against the 0.50 the loyalty report priced.
+
+**Starting XI (4-3-3):** Raya; Calafiori, Hall, Mykolenko, Ajayi; Palmer (VC), Rogers, Scott;
+João Pedro, Haaland (C), Emersonn — bench: Kinsky, Thomas, Tzolis, Elanga.
+Emersonn starts ahead of Tzolis because Elanga's 0.0 leaves only four usable midfielders.
+
+**Recorded prediction:** GW5 total **63.34** (XI 55.61). Captain Haaland, vice Palmer — unchanged.

@@ -501,3 +501,22 @@ the user's screenshot — not a recommendation, the real thing.
 - **Deadline:** Fri 18 Sep, 17:30 UTC — not yet submitted, advisory only.
 - **Season to date:** GW1 49 · GW2 70 · GW3 38 · GW4 64 = **221**, overall rank 7,196,297.
   FPL@Parkway mini-league: 20th of 20, 19 pts behind 19th.
+
+## GW5 Squad — revised, user's transfer — 2026-09-15
+
+**Chip active:** none. Transfer: **Isak → João Pedro** (free, 0 hit) — supersedes the
+Elanga → Barnes recommendation earlier today. See `decisions_log.md` for the ordering argument.
+
+- **Squad value:** £99.1m | **Bank:** ~£1.3m | **Free transfers:** 1 (used) | **Chips remaining:**
+  Wildcard #2, Free Hit, Bench Boost, Triple Captain
+- **Squad:** GK: Raya (ARS), Kinsky (TOT) · DEF: Calafiori (ARS), Hall (NEW), Mykolenko (EVE),
+  Ajayi (HUL), Thomas (COV) · MID: Palmer (CHE), Rogers (CHE), Scott (BOU), Tzolis (ARS),
+  Elanga (NEW, injured) · FWD: Haaland (MCI), João Pedro (CHE), Emersonn (IPS)
+- **Starting XI (4-3-3):** Raya; Calafiori, Hall, Mykolenko, Ajayi; Palmer, Rogers, Scott;
+  João Pedro, Haaland, Emersonn (bench: Kinsky, Thomas, Tzolis, Elanga)
+- **Captain:** Haaland (home vs Sunderland, FDR2, score 7.73) | **Vice:** Palmer (6.42)
+- **Predicted total:** 63.34 (XI 55.61)
+- **Flag:** Elanga (NEW) is `status i`, unspecified injury, no return date, score 0.0 — benched and
+  **must be replaced in GW6** with the freed cash (target: Gakpo £7.2m, or Ødegaard £6.7m).
+- **Club caps:** 3 ARS and 3 CHE — both at the FPL limit.
+- **Deadline:** Fri 18 Sep, 17:30 UTC — advisory only, user makes the move in-game.
