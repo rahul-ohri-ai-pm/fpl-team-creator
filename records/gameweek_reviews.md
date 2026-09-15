@@ -445,3 +445,50 @@ not burning points on hits and benched hauls, and captaincy floor. The model sho
 humble in its spread and lean on stable inputs (price, role/minutes, xGI, fixtures) rather than
 recent points. Proposed fix is shrinkage scaled by games observed — see the GW4 decisions_log entry;
 applying it is `/score-calibrate`'s job, deliberately not done mid-review.
+
+## GW4 review — 2026-09-15 — the calibration fix worked
+
+- **GW4 official: 64 pts**, overall rank 7,196,297 (up from ~7.38M after GW3). Season total 221.
+- **Recorded prediction 61.45 → 65** on the recorded XI, error **+3.55**; measured against the
+  team actually fielded (64) the error is **+2.55**. Either way this is the first gameweek the
+  model lands inside ±4, and the first where it *under*-predicts (bias +0.79) rather than
+  over-predicting.
+
+### The `FORM_SHRINKAGE_K = 10` fix is validated
+
+| GW | Predicted | Actual | Error | Bias (per starter) | MAE |
+|---|---|---|---|---|---|
+| 1 | 61.54 | 54 | -7.54 | -0.50 | 3.33 |
+| 3 | 85.74 | 42 | **-43.74** | -3.32 | 4.46 |
+| 4 (post-fix) | 61.45 | 65 | **+3.55** | +0.79 | 3.68 |
+
+GW3 predicted roughly double what was scored; GW4 predicted 61 and the squad banked 64-65. The
+shrinkage toward a price-implied prior did what the GW3 root-cause analysis said it should: it
+collapsed the model's spread back toward the pool mean, and the headline error fell from -43.74 to
++3.55. Season-to-date `calibration(...)` across the 3 evaluated gameweeks still reads mean error
+-15.91, but that number is now entirely carried by GW3 — it is a record of the old model, not a
+live signal. **K=10 stays as-is; re-fit only if GW5-GW6 drift back out.** One gameweek is not proof,
+but it is the first evidence the fix points the right way.
+
+### The captaincy override cost 7 points
+
+The GW4 armband went to Isak (FDR2 home) over the model's own pick Haaland (FDR4 away) — a
+deliberate floor-over-ceiling call, logged at the time as a real tradeoff rather than a missed
+signal. It resolved against us: **Isak 2 pts, Haaland 9**. Captaining Haaland would have scored
+**71 instead of 64**. The model had Haaland ahead by 1.57 predicted points *net of* the fixture gap,
+and that edge was real. Worth remembering that the fixture-difficulty heuristic is already priced
+into `score` — overriding on FDR after the fact double-counts it.
+
+### 19 points left on the bench
+
+Emersonn (12) and Kinsky (7) both hauled from the bench; Hall played 90 minutes for 0 and Thomas
+blanked. This is the third gameweek running that bench points have been the largest single leak
+(14 in GW3). The model's bench/start split, not its player pool, is the recurring weak point.
+
+### Record-keeping miss to correct going forward
+
+`predictions.jsonl`'s final GW4 entry was logged as "matches the exact live app squad" but recorded
+**Saka and Ndiaye** where the team actually fielded **Palmer and Tzolis**. The scoring impact was
+trivial (65 vs 64), but the claim was wrong. Verify a "final" prediction against
+`get_entry_picks(team_id, event)` after the deadline rather than against a screenshot read earlier
+in the week.

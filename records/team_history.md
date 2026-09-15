@@ -481,3 +481,23 @@ the user's screenshot — not a recommendation, the real thing.
 - **Captain:** Isak (home vs Fulham, FDR2 — user's deliberate floor-over-ceiling pick; see
   `decisions_log.md` for the full Isak-vs-Haaland reasoning) | **Vice:** Saka
 - **Deadline:** Sat 12 Sep, 18:00 — locked in.
+
+## GW5 Squad — recommendation — 2026-09-15
+
+**Chip active:** none (Wildcard #1 spent in GW4). Transfer: Elanga → Barnes, free, 0 hit.
+
+- **Squad value:** £100.3m | **Bank:** £0.0m | **Free transfers:** 1 (used) | **Chips remaining:**
+  Wildcard #2, Free Hit, Bench Boost, Triple Captain
+- **Squad:** GK: Raya (ARS), Kinsky (TOT) · DEF: Calafiori (ARS), Hall (NEW), Mykolenko (EVE),
+  Ajayi (HUL), Thomas (COV) · MID: Palmer (CHE), Rogers (CHE), Barnes (NEW), Scott (BOU),
+  Tzolis (ARS) · FWD: Haaland (MCI), Isak (LIV), Emersonn (IPS)
+- **Starting XI (4-4-2):** Raya; Calafiori, Mykolenko, Ajayi, Hall; Scott, Rogers, Palmer, Barnes;
+  Isak, Haaland (bench: Kinsky, Thomas, Tzolis, Emersonn)
+- **Captain:** Haaland (home vs Sunderland, FDR2 — model's own top score, 7.73) | **Vice:** Palmer
+  (6.42)
+- **Predicted total:** 63.86 (XI 56.13)
+- **Squad health:** all 15 `status = a` with no news as of 2026-09-15. Elanga was the only flag and
+  is being transferred out.
+- **Deadline:** Fri 18 Sep, 17:30 UTC — not yet submitted, advisory only.
+- **Season to date:** GW1 49 · GW2 70 · GW3 38 · GW4 64 = **221**, overall rank 7,196,297.
+  FPL@Parkway mini-league: 20th of 20, 19 pts behind 19th.

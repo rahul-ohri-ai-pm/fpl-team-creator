@@ -1223,3 +1223,45 @@ overlooked, choice.
 `predictions.jsonl` (75.45 pre-calibration-fix → 60.57 → 65.39/68.83 wildcard iterations → 65.75
 Palmer version → **61.45 final, matching the actual live squad**) — the one that will be measured
 against the real result once GW4 finishes.
+
+## GW5 — 2026-09-15 — Elanga out (injured), Barnes in. Free transfer, no hit.
+
+**Deadline:** Fri 18 Sep, 17:30 UTC. Bank £0.0m, squad value £100.3m, 1 free transfer.
+Chips remaining: Wildcard #2, Free Hit, Bench Boost, Triple Captain.
+
+**Transfer: Anthony Elanga (NEW, £6.2m) → Harvey Barnes (NEW, £6.0m), free, 0 hit.**
+Elanga is flagged `status = i`, "Unspecified injury — Unknown return date",
+`chance_of_playing_next_round = 0` — his score is a hard 0.0 and the optimizer had already
+auto-benched him. Barnes is the same club, £0.2m cheaper, fit, and scores 4.30. The direct XI gain
+is small (+0.56, 63.30 → 63.86) because Elanga wasn't starting anyway; the real point is that an
+injured player with no return date is dead weight in a 15-man squad and the replacement is free.
+No hit-tolerance question arises at 0 cost.
+
+**Captain Haaland (7.73), vice Palmer (6.42) — the model's own top two, no override this week.**
+Unlike GW4, there is no fixture-vs-score conflict to resolve: Haaland is home to Sunderland (FDR2),
+while Isak is away at Bournemouth (FDR3) and scores 5.15. The model's pick and the easier fixture
+point the same way, so the reasoning that produced the GW4 Isak armband does not apply. That
+override cost 7 points (see `gameweek_reviews.md`'s GW4 entry) — taking the model's pick here.
+
+**Chelsea (favourite club, `config/settings.md` mode `report`, floor off):** 2 of 3 slots already
+filled for free by Palmer and Rogers. Forcing a 3rd would cost **0.50 predicted points** (Mykolenko
+→ a third Chelsea asset) — cheap, but it is a real cost with no predictive upside, so the floor
+stays off.
+
+**Starting XI (4-4-2):** Raya; Calafiori, Mykolenko, Ajayi, Hall; Scott, Rogers, Palmer (VC),
+Barnes; Isak, Haaland (C) — bench: Kinsky, Thomas, Tzolis, Emersonn.
+
+**Recorded prediction:** GW5 total **63.86** (XI 56.13). Verify against
+`get_entry_picks(1669770, 5)` after the deadline before treating it as final — the GW4 entry was
+logged as matching the live app when it did not.
+
+**League context:** the user is 20th of 20 in FPL@Parkway on 221, 19 points behind 19th and 37
+behind 14th. The deficit was banked in GW1-GW3 under the miscalibrated model; GW4's 64 was roughly
+par for the league. No strategy change recommended yet — see the note below.
+
+**Risk profile stays `safe` for now.** 19 points over the 34 remaining gameweeks is 0.56 pts/GW,
+which is recoverable by ordinary consistency; switching to `differential` this early adds variance
+that is as likely to widen the gap as close it. The case for differentials is a function of gap
+size *relative to gameweeks left*, and at GW5 there is far too much season remaining for that trade
+to be worth it. Reassess around GW12: if the gap to mid-table is still >30 points then, variance
+becomes the rational play and `config/settings.md` should move to `balanced` or `differential`.
