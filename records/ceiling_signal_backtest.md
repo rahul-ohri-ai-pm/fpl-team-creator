@@ -68,3 +68,44 @@ entry here. If the MID/FWD pattern (threat/ict beating raw points, DEF signal-fr
 2–3 more transitions, that's real grounds for a `/score-calibrate`-logged change — most plausibly
 blending `threat`/`ict_index` into the MID/FWD `form` term the same way `XGI_BLEND` already blends
 season-level xGI into `ppg`, not replacing `form` outright.
+
+## GW3 → GW4 — 2026-09-16 — the position pattern flipped again; treat the hypothesis as dead
+
+212 players with ≥60 min in GW3. Run: `PYTHONPATH=. python engine/ceiling_signal_backtest.py
+--from 3 --to 4` (note: the bare `python engine/...` invocation in earlier entries fails with
+`ModuleNotFoundError: No module named 'engine'` — it needs `PYTHONPATH=.` or `-m`).
+
+| Position | n | points | threat | bps | ict_index |
+|---|---|---|---|---|---|
+| GK | 20 | 0.176 | — | 0.131 | 0.005 |
+| DEF | 83 | 0.197 | **0.302** | 0.162 | 0.215 |
+| MID | 91 | -0.006 | 0.112 | -0.039 | 0.015 |
+| FWD | 18 | -0.098 | -0.070 | -0.102 | -0.097 |
+| **ALL** | **212** | 0.081 | 0.146 | 0.046 | 0.058 |
+
+Top-decile big-haul (≥10) rate: `points` 4.8%, `threat` 4.8%, `bps` 4.8%, `ict_index` 0.0% — all
+**below** the 6.6% pool baseline (n=21). In GW1→GW2 the same measure sat *above* baseline (14.3%).
+
+### Three transitions, three different answers
+
+| Transition | Where the signal appeared |
+|---|---|
+| GW1 → GW2 | MID/FWD threat + ict (0.25–0.43); DEF nothing |
+| GW2 → GW3 | nothing anywhere (≈0, signs unstable) |
+| GW3 → GW4 | **DEF** threat 0.302 / ict 0.215; MID weak (0.112); FWD negative |
+
+The original hypothesis was specifically that `threat`/`ict_index` predict **MID/FWD** output that
+`form` can't see. That has now failed to replicate twice, and this week the apparent signal moved
+to the one position group the first run declared signal-free. A pattern that relocates every week
+is the signature of sampling noise, not a missing model input.
+
+**Do not chase the DEF number.** Taking threat 0.302 at n=83 as a finding would be making the exact
+mistake this log was built to prevent, one position over. The only quantity that has been stable
+across all three transitions is the ALL-position correlation, which sits in the 0.05–0.15 band —
+weak, and at n=212 (SE ≈ 0.07) only marginally distinguishable from zero.
+
+**Recommendation: close this line of inquiry.** No `/score-calibrate` change, and no further weekly
+re-runs on the current hypothesis — three transitions is enough to say that a simple per-gameweek
+`threat`/`ict` term is not the missing input. If ceiling is revisited later it should be on a
+multi-gameweek rolling average (which would average away exactly the week-to-week noise that has
+dominated all three runs), not a single prior gameweek's value.

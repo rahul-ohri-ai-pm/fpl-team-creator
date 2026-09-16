@@ -492,3 +492,71 @@ blanked. This is the third gameweek running that bench points have been the larg
 trivial (65 vs 64), but the claim was wrong. Verify a "final" prediction against
 `get_entry_picks(team_id, event)` after the deadline rather than against a screenshot read earlier
 in the week.
+
+## Calibration check — 2026-09-16 — `/gw-backtest` on confirmed-final GW1-GW4
+
+GW4 is now `finished=True, data_checked=True`. Its numbers are **identical** to the provisional
+read taken on 15 Sep (61.45 → 65, error +3.55), so bonus-point finalization moved nothing and
+yesterday's GW4 review stands as written.
+
+| GW | Predicted | Actual | Error | Bias/starter | MAE | Model version |
+|---|---|---|---|---|---|---|
+| 1 | 61.54 | 54 | -7.54 | -0.50 | 3.33 | pre-fix (raw form) |
+| 2 | — | — | — | — | — | **no prediction recorded** |
+| 3 | 85.74 | 42 | -43.74 | -3.32 | 4.46 | pre-fix (raw form) |
+| 4 | 61.45 | 65 | +3.55 | +0.79 | 3.68 | **post-fix (K=10)** |
+
+`calibration()` reports mean_error **-15.91**, mean_abs_error **18.28** over 3 gameweeks.
+
+### That aggregate number should not be used
+
+It pools two different models. GW1 and GW3 were produced by the pre-shrinkage formula; GW4 is the
+only gameweek the current model has ever been measured on. Averaging them describes a model that
+no longer exists, and it will keep dragging the headline number down for weeks as K=10 gameweeks
+accumulate. **The live model's evaluated sample is n=1.** That is a signal, not a verdict — the
+standard this project set for itself after the GW2 Sangaré/De Cuyper decision.
+
+`calibration()` has no notion of a formula version, so it cannot make this distinction itself. Any
+future read of `mean_error` needs to segment at the 2026-09-07 shrinkage change by hand until that
+changes.
+
+### The fix corrected the level, not the ranking — and ranking is what decisions use
+
+Spearman rank correlation between predicted score and actual points, across all 15 squad players:
+
+| GW1 | GW3 | GW4 (post-fix) |
+|---|---|---|
+| **-0.110** | **+0.095** | **-0.023** |
+
+The model's ordering of its own squad carries no detectable information about who will actually
+outscore whom — and GW4, the "fixed" gameweek, is no better than the two before it. At n=15 the
+standard error is ≈0.27, so no single week here could detect a modest true skill; but three weeks
+with no positive trend, read alongside the far better-powered cross-sectional tests (n=172-212,
+correlations 0.05-0.15), all point the same way.
+
+This is mechanically what shrinkage *should* do. Pulling every player toward a price-implied prior
+compresses the spread, which makes the **total** land near the actual total almost by construction.
+It adds no ordering information. So GW4's headline improvement (-43.74 → +3.55) is real but narrow:
+the model stopped being wildly overconfident about magnitude. It did not get better at telling
+Raya-with-14 from Hall-with-0, and every decision it makes — transfers, lineup, captain — is a
+ranking decision.
+
+GW4's under-prediction is also broad rather than outlier-driven: median error **+1.17** against a
+mean of +0.79, i.e. the typical starter beat his projection, not just the three hauls. A uniform
+level offset is the harmless kind of error — it cancels out of every relative comparison.
+
+### Verdict: no `/score-calibrate` change
+
+Not merely because n=1 is thin, but because **weight tuning cannot fix what's actually weak.**
+Retuning K, or the ease/reliability multipliers, adjusts the level and spread of a ranking that
+already carries ~zero information. The GW3 review reached this conclusion from the RMSE side
+("RMSE ~3.1 looks close to the irreducible noise floor... the edge is not in predicting next week
+better"); the rank correlations now say the same thing from the ordering side.
+
+**Keep `FORM_SHRINKAGE_K = 10` as-is** and re-read after GW5-GW6, when the post-fix sample reaches
+n=3 and the segmented mean becomes worth quoting.
+
+Where the edge actually is, unchanged from the GW3 review and reinforced by GW4's own 19 bench
+points: minutes security, multi-week fixture runs, not burning points on hits, captaincy floor,
+and above all **start/bench discipline** — the one lever that has cost measurable points in three
+consecutive gameweeks.
