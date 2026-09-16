@@ -3,7 +3,11 @@
 Plain-text config read by `engine/fetch.py` and the `fpl-weekly-review` skill. Team IDs are public (not secret), safe to commit.
 
 - **FPL team/entry ID:** `1669770` (ScorpionFC, managed by Rahul Ohri).
-- **Risk profile:** `safe` — favor high-ownership, high-minutes, in-form players; avoid rotation/injury-risk picks even when upside looks good. Change to `balanced` or `differential` to shift `engine/score.py`'s weighting.
+- **Risk profile:** `differential` — favor upside/low-ownership picks over template safety; the user
+  is chasing a top-5 mini-league finish from 20th of 22 (90 pts back, ~24.6 pts/GW off top-5 pace
+  as of GW4), a gap `safe`'s high-ownership floor cannot close. Changed from `safe` on 2026-09-16 —
+  see `records/decisions_log.md`'s GW5 entry for the full reasoning. Change back to `safe` or
+  `balanced` to shift `engine/score.py`'s weighting.
 - **Budget:** standard FPL rules — £100.0m squad value, max 3 players per real club, 2 GK / 5 DEF / 5 MID / 3 FWD.
 - **Transfer hit tolerance:** only take a -4 hit if the optimizer's predicted point gain over the next 3 gameweeks exceeds 4 points combined for the swap.
 - **Favourite club:** `Chelsea` (FPL team id `6`). Supporting your own team is a preference, not a

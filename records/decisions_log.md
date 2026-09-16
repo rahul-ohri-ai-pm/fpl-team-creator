@@ -1309,3 +1309,50 @@ João Pedro, Haaland (C), Emersonn — bench: Kinsky, Thomas, Tzolis, Elanga.
 Emersonn starts ahead of Tzolis because Elanga's 0.0 leaves only four usable midfielders.
 
 **Recorded prediction:** GW5 total **63.34** (XI 55.61). Captain Haaland, vice Palmer — unchanged.
+
+## Strategy change — 2026-09-16 — `risk_profile: safe` → `differential`
+
+**User's actual target is top 5 of FPL@Parkway, not merely climbing off 20th.** Pulled the full
+league table (`fpl_get_league_standings`, league 218260, 22 managers) rather than relying on the
+partial screenshot from GW4:
+
+| Rank | Total | GW avg |
+|---|---|---|
+| 1 (Ina rolla coaster) | 334 | 83.5 |
+| 5th cutoff (~rank 4-6, tied at 311) | 311 | ~78 |
+| **20th (ScorpionFC)** | **221** | **55.25** |
+
+Top-5 cutoff is ~311, not the 240 (19th) used in yesterday's "recoverable by ordinary consistency"
+read. **The real gap is 90 points, at a pace deficit of ~24.6 pts/GW** against the current top-5
+average (79.8 vs 55.25). Holding pace does not close this gap - it grows it, since the teams ahead
+are themselves scoring at a much higher clip than 19th-place-adjacent teams. The earlier GW5 note
+("19 points over 34 gameweeks... reassess at GW12") answered the wrong question - it was sized
+against 19th, not the user's actual target.
+
+**A `safe` risk profile cannot close a 24.6 pts/GW deficit against the field's own strong pace.**
+High-ownership, low-variance picks track the field; they don't overtake it. Closing this gap
+requires picks with a higher ceiling than template ownership implies, even at the cost of a higher
+floor of bad weeks.
+
+**Changed `config/settings.md`'s `risk_profile` from `safe` to `differential`** —
+`ownership_weight` flips from +1.0 to -1.0 in `engine/score.py`'s `tiebreak` term (`score.py`
+line 354). This is the only intended lever for this change per `CLAUDE.md`; no other file touched.
+`tiebreak` stays outside `score` itself (predicted points), so `predictions.jsonl` calibration
+tracking is unaffected by this change - only which near-tied player the optimizer prefers.
+
+**Immediate effect: none this gameweek.** Re-ran `best_lineup` on the already-set GW5 squad under
+both profiles - captain (Haaland), vice (Palmer), and bench are identical, because the profile only
+resolves near-ties within a fixed squad and this squad has none close enough to flip. The change
+will show up in future transfer/optimal-squad recommendations, not retroactively in GW5.
+
+**What this implies going forward, stated plainly so it isn't re-litigated ad hoc each week:**
+- Take a -4 hit more readily when net (hit-adjusted) EV is clearly positive - the hit-tolerance
+  bar in `config/settings.md` (">4 pts over 3 GWs") stays as the literal rule, but under a top-5
+  target the "tolerance" side of that judgment should lean toward taking the hit, not declining it,
+  when the swap is close.
+- Chips (Wildcard #2, Free Hit, Bench Boost, Triple Captain - all four still available) should be
+  timed for maximum swing (double gameweeks, fixture swings), not held as insurance.
+- This raises variance in both directions - some weeks will score worse than `safe` would have.
+  That is the accepted cost of a top-5 push, not a sign the change was wrong.
+- Re-check the actual gap-to-top-5 trend every few gameweeks (not just gap-to-19th) - if
+  `differential` isn't closing it by, say, GW10-12, that itself is information worth logging.
