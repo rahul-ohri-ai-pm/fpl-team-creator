@@ -520,3 +520,24 @@ Elanga → Barnes recommendation earlier today. See `decisions_log.md` for the o
   **must be replaced in GW6** with the freed cash (target: Gakpo £7.2m, or Ødegaard £6.7m).
 - **Club caps:** 3 ARS and 3 CHE — both at the FPL limit.
 - **Deadline:** Fri 18 Sep, 17:30 UTC — advisory only, user makes the move in-game.
+
+## GW5 Squad — reversal, differential strategy — 2026-09-17
+
+**Chip active:** none. Transfer: **Elanga → Pascal Groß** (free, 0 hit) — reverses the
+Isak → João Pedro plan from 2026-09-15. Isak is kept; see `decisions_log.md` for why the
+`differential` switch flips that specific trade.
+
+- **Squad value:** £100.3m | **Bank:** £0.0m | **Free transfers:** 1 (used) | **Chips remaining:**
+  Wildcard #2, Free Hit, Bench Boost, Triple Captain
+- **Squad:** GK: Raya (ARS), Kinsky (TOT) · DEF: Calafiori (ARS), Hall (NEW), Mykolenko (EVE),
+  Ajayi (HUL), Thomas (COV) · MID: Palmer (CHE), Rogers (CHE), Scott (BOU), Groß (BHA),
+  Tzolis (ARS) · FWD: Haaland (MCI), Isak (LIV), Emersonn (IPS)
+- **Starting XI (3-4-3):** Raya; Calafiori, Hall, Mykolenko; Palmer, Rogers, Scott, Groß;
+  Isak, Haaland, Emersonn (bench: Kinsky, Thomas, Ajayi, Tzolis)
+- **Captain:** Haaland (home vs Sunderland, FDR2, score 7.72) | **Vice:** Palmer (6.55)
+- **Predicted total:** 65.945 (XI 58.226)
+- **Risk profile:** `differential` (changed 2026-09-16) — squad target is top 5 of FPL@Parkway
+  (currently 20th of 22, 90 pts back).
+- **Flag:** Groß's GW5 fixture is tough (BHA home v ARS, FDR4) — bought on nailed minutes + strong
+  underlying returns despite it.
+- **Deadline:** Fri 18 Sep, 17:30 UTC — advisory only, user makes the move in-game.

@@ -1356,3 +1356,51 @@ will show up in future transfer/optimal-squad recommendations, not retroactively
   That is the accepted cost of a top-5 push, not a sign the change was wrong.
 - Re-check the actual gap-to-top-5 trend every few gameweeks (not just gap-to-19th) - if
   `differential` isn't closing it by, say, GW10-12, that itself is information worth logging.
+
+## GW5 — 2026-09-17 — reversal: keep Isak, Elanga → Groß instead
+
+**This reverses the 2026-09-15 Isak → João Pedro decision.** Not new information about either
+player — the risk_profile switch to `differential` made yesterday afternoon changes which trade is
+correct.
+
+**Why the switch flips this specific trade.** Under `safe`, Isak (5.147) and João Pedro (5.185)
+scored within noise of each other, so the free-cash sequencing argument (sell the expensive player
+now, spend it on a premium Elanga replacement in GW6) carried the day. Under `differential`
+(`ownership_weight` -1.0), ownership moves from a mild plus for the high-owned pick to a penalty:
+
+| | Ownership | Score (safe) | Score (differential) |
+|---|---|---|---|
+| Isak | 21.9% | 5.147 | **5.318** |
+| João Pedro | 74.8% | 5.185 | **4.148** |
+
+The two were a coin flip under `safe`. Under `differential` the gap is 1.17 points and Isak is
+unambiguously the better hold — he was never a sell candidate, the strategy underneath him changed.
+
+**The actual free transfer: Elanga (454) → Pascal Groß (124, BHA, £5.7m), free, 0 hit.** This is
+what the original plan should have targeted all along - a genuine differential (19.5% owned) with
+elite underlying data: 90 minutes in all 4 gameweeks, returns of 2/13/1/17. Net effect: **+0.645
+over holding** (65.945 vs 65.300), and it clears the injured dead-weight bench slot the same way
+last week's plan intended.
+
+**Flag on Groß: this week's fixture is poor** (Brighton at home to Arsenal, FDR4) - buying into a
+tough fixture is usually the wrong signal, but his nailed minutes and returns outweigh it in the
+differential-weighted score. Worth re-checking after this fixture specifically, since one bad week
+against a genuinely tough opponent isn't informative either way.
+
+**The GBP1.3m cash-freeing plan from the GW5 entry above is abandoned.** It was built on Isak being
+a marginal hold; under the corrected valuation he isn't, so there's no reason to sell him to fund a
+different position.
+
+**Chelsea loyalty (mode `report`):** still 2/3 slots free (Palmer, Rogers). Forcing a 3rd now costs
+**1.198** predicted points (up from 0.496 pre-differential - the unconstrained optimum itself moved
+under the new weighting). Floor stays off.
+
+**Bench call - Hall over Tzolis, unresolved user input carried forward as the model's own pick.**
+Flagged last session (Hall: 4/4 starts, 359 min, home v Hull FDR2, score 4.32; Tzolis: 3/4 starts,
+290 min, away FDR3, score 3.59) and no override was given. Both are 14.4% owned, so `differential`
+doesn't distinguish them - Hall wins on scoring merit alone and starts.
+
+**Starting XI (3-4-3):** Raya; Calafiori, Hall, Mykolenko; Palmer (VC), Rogers, Scott, Groß;
+Isak, Haaland (C), Emersonn - bench: Kinsky, Thomas, Ajayi, Tzolis.
+
+**Recorded prediction:** GW5 total **65.945** (XI 58.226) - supersedes the 63.342 entry.
