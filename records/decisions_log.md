@@ -1404,3 +1404,43 @@ doesn't distinguish them - Hall wins on scoring merit alone and starts.
 Isak, Haaland (C), Emersonn - bench: Kinsky, Thomas, Ajayi, Tzolis.
 
 **Recorded prediction:** GW5 total **65.945** (XI 58.226) - supersedes the 63.342 entry.
+
+## GW5 — 2026-09-17 — correction: the Isak→JP transfer was already live, can't be undone for free
+
+**The reversal recommended above (keep Isak, transfer Elanga→Groß) assumed the Isak→João Pedro
+move could still be swapped back for free. It can't** — the user had already executed it in the
+live app. Free transfers don't bank; reversing it now costs a second transfer this gameweek, i.e.
+a -4 hit.
+
+**Ran the actual hit-adjusted comparison on the live squad** (João Pedro in, Elanga still rostered,
+1 free transfer already spent):
+
+| Option | Raw | Hit | Net |
+|---|---|---|---|
+| **Hold as-is** | 64.13 | 0 | **64.13** |
+| -4: reverse to Isak only | 65.30 | 4 | 61.30 |
+| -4: fix Elanga → Groß only | 64.78 | 4 | 60.78 |
+| -8: both | 65.95 | 8 | 57.95 |
+
+**Holding wins outright.** Neither the Isak/João Pedro ownership gap (~1.17 pts, the reason the
+reversal was recommended in the first place) nor Elanga's dead bench slot (~0.65 pts) clears
+`config/settings.md`'s hit-tolerance bar (>4 pts over 3 GWs) alone, and they don't clear it combined
+either. This is exactly the situation that rule exists for: a real, measured edge that is smaller
+than the cost of acting on it immediately.
+
+**Decision: hold the live squad.** João Pedro stays (the earlier "reverse to Isak" recommendation
+is retracted — it was correct in isolation but never accounted for the hit cost of undoing an
+already-made move). Elanga → Groß becomes **GW6's free transfer** instead, at zero cost.
+
+**Starting XI (4-3-3), forced by squad composition (Groß not owned, Ajayi now needed to make up a
+4th defender since only 3 usable midfielders remain with Elanga dead):** Raya; Calafiori, Hall,
+Mykolenko, Ajayi; Palmer (VC), Rogers, Scott; João Pedro, Haaland (C), Emersonn — bench: Kinsky,
+Thomas, Tzolis, Elanga.
+
+**Recorded prediction:** GW5 total **64.13** (down from the 65.945 hypothetical) — this is the
+number that reflects what's actually been submitted, not what would have been optimal from a clean
+slate.
+
+**Lesson for next time:** confirm whether a recommended reversal is still free *before* proposing
+it — "keep Isak" was right as scoring advice and wrong as an actionable instruction once the
+transfer window on the live app had already closed on that swap.
