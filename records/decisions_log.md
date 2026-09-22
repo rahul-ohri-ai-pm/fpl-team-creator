@@ -1489,3 +1489,25 @@ gap (378 vs 264, using current totals) is banked from earlier gameweeks (GW1-3, 
 model over-prediction) and season-long consistency, not from this week's picks — GW5 itself was a
 wash against the leader. Nothing actionable from this week's differentials specifically; re-check
 next run whether the gap trend (90 → 98) keeps widening.
+
+## /fixture-run — GW6-9 rotation risk — 2026-09-22
+
+Run for the current squad's clubs (post Elanga→Groß). Ease read (`engine.score.fixture_ease`,
+GW6-9, decay-weighted):
+- **Easy:** Arsenal (Raya, Calafiori, Tzolis) — LEE(H), NFO(A), EVE(H), then a tough LIV(A) closing
+  it out. Coventry (Thomas) and Newcastle (Hall) soft throughout.
+- **Medium:** Chelsea (Rogers, Palmer, João Pedro), Everton (Mykolenko), Hull (Ajayi), Ipswich
+  (Emersonn).
+- **Hard:** **Man City (Haaland, current captain)** — LIV(A) this week, AVL(A) in GW8, two of the
+  toughest single fixtures in the whole set. Also Brighton (Groß) and Spurs (Kinský, bench).
+
+**Rotation risk (Champions League, via WebSearch since FPL's own fixture data is PL-only):**
+Arsenal and Man City are both in the 2026/27 Champions League. Matchday 2 (13/14 Oct) lands 3-4
+days before GW7's deadline (17 Oct), and Matchday 3 (20/21 Oct) lands 2-3 days before GW8's
+deadline (23 Oct) — both raise rotation risk specifically for Raya/Calafiori/Tzolis and Haaland in
+**GW7 and GW8**, on top of the fixture difficulty above. Bournemouth (Scott, Europa League) and
+Brighton (Groß, Conference League) carry the same general midweek-fixture cadence through this
+window; exact dates not pinned down (not pursued further — ad-hoc per `fixture-run`'s own scope).
+
+**Not acted on this run** — no transfer or captain change made off this alone; flagging for the
+GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to either deadline.
