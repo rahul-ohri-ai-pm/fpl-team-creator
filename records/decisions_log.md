@@ -1444,3 +1444,36 @@ slate.
 **Lesson for next time:** confirm whether a recommended reversal is still free *before* proposing
 it — "keep Isak" was right as scoring advice and wrong as an actionable instruction once the
 transfer window on the live app had already closed on that swap.
+
+## GW6 — Elanga → Groß executed, differential strategy — 2026-09-22
+
+**GW5 result reviewed first (full detail in `gameweek_reviews.md`): predicted 64.13, model-recomputed
+actual 50, real entry score 43 (a lineup-recording discrepancy, not a live-team change — see the
+review entry). Error -14.13, the worst since GW3.**
+
+**Transfer:** Elanga (injured, `status i`, unknown return, score 0.0) → Pascal Groß (BHA, £5.8m,
+score 5.516) — the conditional plan flagged in the GW5 entry, executed now that it's this week's
+free transfer. 0 hit, 1 of 1 free transfers used. Frees ≈£0.3m (Elanga sold £6.1m, Groß £5.8m) —
+bank moves from £1.2m to ≈£1.5m.
+
+**Starting XI (4-4-2):** Raya; Calafiori, Thomas, Mykolenko, Hall; Scott, Groß, Rogers, Palmer;
+Emersonn, Haaland (C) — bench: Tzolis, João Pedro, Ajayi, Kinsky.
+
+**Captain:** Haaland (411) — model's own top scorer (6.807) even net of the fixture discount for
+MCI away at Liverpool (FDR4). The `fpl` MCP's general captain-rec tool ranks Haaland 4th behind
+Hall/Calafiori/Thomas (all home vs weak sides, FDR2), but the gap is modest (19.9 vs 18.1 on its own
+scale) and doesn't clear the bar for overriding the model's own pick. **Vice:** Raya — the model's
+2nd-highest scorer in the XI (5.836, ARS home v Leeds, FDR2); not the usual outfield vice pick, but
+no concrete reason to override.
+
+**Availability check:** Palmer and João Pedro are both `status d` (75% chance of playing — muscular
+/ knee, respectively). Already priced into their scores via the chance-of-playing discount; no
+further action.
+
+**Favourite club (Chelsea, mode=report):** squad already carries 3 Chelsea players (Rogers, Palmer,
+João Pedro) — the FPL cap. Forcing more isn't possible; the preference is already maxed for free.
+
+**Predicted total:** 61.187 (XI 54.38).
+
+**Deadline:** GW6, 2026-10-10 10:00 UTC — over two weeks out (no rush this run). Advisory only, user
+makes the move in-game.

@@ -560,3 +560,34 @@ Where the edge actually is, unchanged from the GW3 review and reinforced by GW4'
 points: minutes security, multi-week fixture runs, not burning points on hits, captaincy floor,
 and above all **start/bench discipline** — the one lever that has cost measurable points in three
 consecutive gameweeks.
+
+## GW5 review — 2026-09-22
+
+- **Points scored:** 43 real entry points (bench 11, no transfer cost) | model-recomputed actual
+  against the *recorded* XI: 50 | model predicted: 64.13 | **error: -14.13** against the recorded
+  XI (-21.13 against the real 43) — the worst miss since the pre-fix GW3 (-43.74), and a full
+  reversal of GW4's under-prediction (+3.55).
+- **Lineup-recording discrepancy (process bug, not a scoring bug):** the recorded GW5 prediction
+  had João Pedro starting and Ajayi/Tzolis on the bench (`best_lineup()` run on the post-transfer
+  squad). The entry's *real* live starting XI for GW5 was different — Ajayi and Tzolis started,
+  João Pedro was benched, and the real auto-sub was João Pedro → Hall. The transfer itself
+  (Isak → João Pedro) was recorded correctly; the start/bench call recorded alongside it was never
+  checked against what was actually submitted in the app. Net effect: our own evaluation number
+  (50) doesn't match the entry's real banked score (43) for GW5. **Fix for future runs:** when a
+  squad change happens close to deadline, pull the live lineup back (`fpl_get_manager_squad`) before
+  recording `predicted_total`, rather than trusting `best_lineup()` blind.
+- **What didn't:** broad and severe, not one or two outliers — Raya (predicted 6.12, actual 1),
+  Palmer (6.56 → 2), Calafiori (5.15 → 1), João Pedro (4.15 → 0, didn't play), Rogers (5.62 → 2),
+  Ajayi (4.06 → 1) all blanked or near-blanked. Only the defensive trio Hall (13), Thomas (9, via
+  auto-sub) and Mykolenko (5) beat their number — the same "defenders outscore attackers" pattern
+  flagged in earlier reviews, now three-for-three.
+- **Calibration to date (GW1, 3, 4, 5 — GW2 has no recorded prediction):** mean error **-15.46**,
+  mean absolute error **17.24**. The FORM_SHRINKAGE_K=10 fix only ever produced one good week
+  (GW4); GW5 is back to the large over-prediction that predates it. Per the GW4 review's rank-
+  correlation analysis, this isn't a level problem retunable weights would fix — the model's
+  ordering of its own squad has carried ~zero information all season. GW5 doesn't change that
+  verdict; it's more of the same signal, not new information. No `/score-calibrate` action taken.
+- **Lesson for next run:** the edge, if there is one, is still start/bench discipline and not
+  taking hits — not the scoring model's point estimates, which have now missed by double digits in
+  2 of 4 evaluated gameweeks. Also: verify the live lineup before recording a prediction whenever a
+  transfer or start/bench call was made close to deadline (see discrepancy note above).

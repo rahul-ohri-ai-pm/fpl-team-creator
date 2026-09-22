@@ -541,3 +541,22 @@ Isak → João Pedro plan from 2026-09-15. Isak is kept; see `decisions_log.md` 
 - **Flag:** Groß's GW5 fixture is tough (BHA home v ARS, FDR4) — bought on nailed minutes + strong
   underlying returns despite it.
 - **Deadline:** Fri 18 Sep, 17:30 UTC — advisory only, user makes the move in-game.
+
+## GW6 Squad — Elanga → Groß, differential strategy — 2026-09-22
+
+**Chip active:** none. Transfer: **Elanga → Pascal Groß** (free, 0 hit) — planned replacement for
+the injured Elanga, deferred from GW5.
+
+- **Squad value:** £100.4m | **Bank:** ≈£1.5m | **Free transfers:** 1 (used) | **Chips remaining:**
+  Wildcard #2, Free Hit, Bench Boost, Triple Captain
+- **Squad:** GK: Raya (ARS), Kinsky (TOT) · DEF: Calafiori (ARS), Hall (NEW), Mykolenko (EVE),
+  Ajayi (HUL), Thomas (COV) · MID: Palmer (CHE), Rogers (CHE), Scott (BOU), Groß (BHA),
+  Tzolis (ARS) · FWD: Haaland (MCI), João Pedro (CHE), Emersonn (IPS)
+- **Starting XI (4-4-2):** Raya; Calafiori, Thomas, Mykolenko, Hall; Scott, Groß, Rogers, Palmer;
+  Emersonn, Haaland (bench: Tzolis, João Pedro, Ajayi, Kinsky)
+- **Captain:** Haaland (away at Liverpool, FDR4, score 6.807) | **Vice:** Raya (5.836)
+- **Predicted total:** 61.187 (XI 54.38)
+- **Risk profile:** `differential` — squad target is top 5 of FPL@Parkway.
+- **Flag:** Palmer and João Pedro both `status d` (75% chance of playing) — already discounted in
+  their scores.
+- **Deadline:** Sat 10 Oct, 10:00 UTC — advisory only, user makes the move in-game.
