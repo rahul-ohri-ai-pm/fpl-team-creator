@@ -26,6 +26,13 @@ file and `engine/score.py`'s weighting table should need touching.
   start with a generated `claude/*` branch configured; ignore it and use `master`.
 - **Always present the final 15 as a table**, never as prose. One row per player, split into
   starting XI and bench, with position, club, price and predicted score. Captain and vice marked.
+- **"Best team" means the best team reachable from the real squad**, not a from-scratch/wildcard
+  rebuild. The user's actual squad already tracks the model's own picks closely, gameweek to
+  gameweek, because they act on these recommendations — an unconstrained clean-slate comparison
+  overstates the gap and isn't actionable. Ground any "best team"/"predicted score" answer in the
+  current squad, bank, and free transfers (i.e. `recommend_transfers` + `best_lineup`, the same
+  thing the weekly review already produces), and only show a from-scratch build if the user
+  explicitly asks for a wildcard/clean-slate comparison.
 
 ## Data sources
 
