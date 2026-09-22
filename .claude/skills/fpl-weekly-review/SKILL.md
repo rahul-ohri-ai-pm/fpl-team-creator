@@ -73,10 +73,23 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    Never fold club loyalty into `score` — it isn't predicted points, and `predictions.jsonl` has to
    stay comparable to what the squad actually banks.
 
-7. **Cross-check with the `fpl` MCP.** Before finalizing, check its injury/news tools and any
-   rival/mini-league comparison for context the raw stats wouldn't catch (e.g. a press-conference
-   knock, a fixture postponement). Adjust the recommendation only if there's a concrete reason to
-   override the optimizer - state that reason explicitly if you do.
+7. **Cross-check with the `fpl` MCP.** Before finalizing, check its injury/news tools for context
+   the raw stats wouldn't catch (e.g. a press-conference knock, a fixture postponement). Adjust the
+   recommendation only if there's a concrete reason to override the optimizer - state that reason
+   explicitly if you do.
+
+7a. **Compare against the mini-league leader, every run.** Read the league id and manager name from
+   `config/settings.md`.
+   ```
+   fpl_get_league_standings(league_id=<id>)          # current rank, gap to top-5, gap to 1st
+   fpl_compare_managers(manager_names=[<our name>, <1st place manager>], league_id=<id>, gameweek=<last finished GW>)
+   ```
+   Report captain choice (same pick or not), common players, and each side's differentials - this
+   is the direct answer to "what does the team actually beating us do differently," not just the
+   points gap. A close gameweek score with a large season-total gap (as opposed to a blown-out single
+   week) points at consistency/differential-hit-avoidance rather than any one bad pick - say which it
+   looks like. Note anything actionable (a differential they own that the optimizer also rates highly
+   and we don't, a captain pattern) in `records/decisions_log.md`.
 
 8. **Read the narrative history.** Read the most recent entry in `records/gameweek_reviews.md`
    before finalizing this week's call - step 2 gives the numbers, this gives the reasoning behind

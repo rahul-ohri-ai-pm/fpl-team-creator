@@ -1477,3 +1477,15 @@ João Pedro) — the FPL cap. Forcing more isn't possible; the preference is alr
 
 **Deadline:** GW6, 2026-10-10 10:00 UTC — over two weeks out (no rush this run). Advisory only, user
 makes the move in-game.
+
+**League-leader comparison, added this run (new standing step, see `SKILL.md` 7a):** GW5 standings
+— Rahul Ohri (ScorpionFC) 21st/22, 264 pts, 43 GW5 pts; league leader Joe Thomas ("Ina rolla
+coaster") 1st, 378 pts, 44 GW5 pts. Top-5 cutoff is now 362 (Pushkar Dwivedi, rank 5) — gap 98,
+up from 90 at GW4. `fpl_compare_managers` for GW5: **same captain both sides (Haaland x2), and a
+near-identical GW5 score (43 vs 44)** — this was not a bad-gameweek problem. Common players:
+Calafiori, Rogers, Haaland. Joe Thomas's differentials: Gibbs-White, Slater, Gvardiol, B.Fernandes,
+Kinsky, none of which score above our current picks in the model. **Reading:** the 114-point overall
+gap (378 vs 264, using current totals) is banked from earlier gameweeks (GW1-3, pre- and mid-fix
+model over-prediction) and season-long consistency, not from this week's picks — GW5 itself was a
+wash against the leader. Nothing actionable from this week's differentials specifically; re-check
+next run whether the gap trend (90 → 98) keeps widening.

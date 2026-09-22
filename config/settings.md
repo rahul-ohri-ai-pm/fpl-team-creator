@@ -17,3 +17,6 @@ Plain-text config read by `engine/fetch.py` and the `fpl-weekly-review` skill. T
   forcing 1, 2 and 3 Chelsea players *would* cost in predicted points (`optimize.loyalty_cost`), so
   the call is made against a number. Change to `1`, `2` or `3` to make it a standing constraint,
   or `off` to stop reporting it. `3` is the FPL maximum per club.
+- **Mini-league:** `FPL@Parkway`, league id `218260` (`fpl` MCP's `fpl_get_league_standings` /
+  `fpl_compare_managers`). Manager name in this league: `Rahul Ohri`. Used for the top-5 pace gap
+  and the weekly squad-vs-league-leader comparison (captain, common players, differentials).
