@@ -1,7 +1,7 @@
 {
   "name": "fpl-team-creator",
   "version": "1.0.0",
-  "description": "A Fantasy Premier League squad/transfer advisor: a small deterministic optimizer picks the statistically best squad under real FPL constraints (budget, position quotas, club limits), a Claude Code skill layers judgment on top (injury news, fixture nuance) and writes a durable, GitHub-tracked record of every decision, and a weekly schedule keeps it running before each gameweek deadline.",
+  "description": "A Fantasy Premier League squad/transfer advisor: a small deterministic optimizer picks the statistically best squad under real FPL constraints (budget, position quotas, club limits), an agent skill layers judgment on top (injury news, fixture nuance) and writes a durable, GitHub-tracked record of every decision, and a weekly schedule keeps it running before each gameweek deadline.",
   "main": "index.js",
   "directories": {
     "test": "tests"

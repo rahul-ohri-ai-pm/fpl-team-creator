@@ -28,7 +28,7 @@ The LLM never invents numbers or squads. It explains and retrieves; the engine d
 
 | # | Feature | What it does | Success metric | Guardrail |
 |---|---|---|---|---|
-| 1 | Grounded advisor chat | Claude with tool use over `recommend_transfers`, `best_lineup`, fixtures and injuries; answers "why X over Y?" | Groundedness ≥ 95% (every figure traceable to a tool result); task success on a fixed question set | Answers refused or flagged if a number has no tool source |
+| 1 | Grounded advisor chat | An LLM with tool use over `recommend_transfers`, `best_lineup`, fixtures and injuries; answers "why X over Y?" | Groundedness ≥ 95% (every figure traceable to a tool result); task success on a fixed question set | Answers refused or flagged if a number has no tool source |
 | 2 | Explainable recommendations | One-line reason per transfer and captain pick | Reason-vs-engine-driver agreement ≥ 90% (LLM-as-judge plus spot checks) | Reasons generated from engine fields only |
 | 3 | News and injury extraction | Turns press-conference and news text into `{player, status, return_date, confidence}` | Precision/recall vs the official FPL API status; null rate reported | Null when unsure; never overrides API status without a source link |
 | 4 | Public eval dashboard | Predicted vs actual points per gameweek, bias by position, weight-change A/B | MAE trend down over the season; calibration bias near 0 | Built on `records/predictions.jsonl` and `engine/evaluate.py` |
@@ -38,7 +38,7 @@ The LLM never invents numbers or squads. It explains and retrieves; the engine d
 
 - **Core:** existing `engine/` (fetch, score, optimize, evaluate), unchanged.
 - **API:** wrap in `web_api.py` (FastAPI). Endpoints: `/recommendation`, `/explain`, `/chat`, `/evals`.
-- **LLM layer:** Claude API with tool use. Tools are thin read-only wrappers over engine functions.
+- **LLM layer:** a hosted LLM API with tool use. Tools are thin read-only wrappers over engine functions.
 - **Validators:** deterministic checks (15-man squad shape, £100.0m budget, max 3 per club, free-transfer and hit math) run on every output before display.
 - **Frontend:** existing React app (`src/`): decision card, squad table (XI/bench, captain/vice), chat panel, evals page.
 - **Storage:** append-only `records/` stays the source of truth; add a small run log (tokens, latency, cost, validator pass/fail).

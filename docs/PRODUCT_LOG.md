@@ -48,7 +48,7 @@ Four layers, each replaceable without disturbing the others.
 | Decision | `engine/optimize.py` | MILP: best legal squad / best 0-2 transfers |
 | Measurement | `engine/evaluate.py` | Record predictions, score them against reality |
 
-Around them sit a Claude Code skill (`/fpl-weekly-review`) that runs the weekly process and applies
+Around them sit an agent skill (`/fpl-weekly-review`) that runs the weekly process and applies
 qualitative judgement the numbers can't, and an append-only `records/` directory that is the
 project's durable memory.
 
@@ -113,7 +113,7 @@ been recorded.
 
 ### Where the human/agent boundary sits
 
-The optimizer is deterministic and auditable. Claude's role is the part a solver can't do: reading a
+The optimizer is deterministic and auditable. The agent's role is the part a solver can't do: reading a
 press conference, noticing a manager changed, deciding a flagged risk is worth overriding — and
 crucially, *stating the reason explicitly in the log when it overrides the optimizer*. An
 unexplained override is indistinguishable from a bug.
