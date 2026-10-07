@@ -1511,3 +1511,17 @@ window; exact dates not pinned down (not pursued further — ad-hoc per `fixture
 
 **Not acted on this run** — no transfer or captain change made off this alone; flagging for the
 GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to either deadline.
+
+## GW6 re-run — 2026-10-07
+
+- **Decision:** unchanged — Elanga (injured, 0%) → Groß, 1 free transfer, no hit (net 56.66). Still
+  advisory; the entry's picks still show Elanga until the user acts.
+- **Captain/vice:** re-scored on fresh data: Groß (7.74) captain, Haaland (6.77) vice — a flip from
+  the 09-22 record (Haaland C / Raya V). Optimizer top pick followed, no override. Haaland is away
+  at LIV (FDR4), so the call is low-regret either way.
+- **Flags:** Palmer and João Pedro 75%, Mykolenko 75%, Tzolis 75%, Scott 50% (latter two bench).
+- **Chelsea loyalty:** already at the 3-player cap; forcing 1/2/3 costs 0.
+- **League (FPL@Parkway):** 21st of 22, 264 pts; 98 behind 5th (362), 114 behind leader (378). GW5
+  vs leader: both captained Haaland, 43 vs 44 — a consistency gap, not one bad week. Leader's
+  differentials: Gibbs-White, Slater, Gvardiol, B.Fernandes.
+- **GW6 predicted total:** 62.92 (re-recorded in predictions.jsonl; latest wins).

@@ -591,3 +591,9 @@ consecutive gameweeks.
   taking hits — not the scoring model's point estimates, which have now missed by double digits in
   2 of 4 evaluated gameweeks. Also: verify the live lineup before recording a prediction whenever a
   transfer or start/bench call was made close to deadline (see discrepancy note above).
+
+## GW5 re-check — 2026-10-07
+
+Re-ran `evaluate_gameweek(5)`: predicted 64.13 vs 50 on the recorded XI (error -14.13), unchanged.
+`calibration()` currently returns no evaluated gameweeks in this container, so no new calibration
+evidence; the 09-22 verdict (no `score.py` retune) stands.
