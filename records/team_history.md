@@ -560,3 +560,13 @@ the injured Elanga, deferred from GW5.
 - **Flag:** Palmer and João Pedro both `status d` (75% chance of playing) — already discounted in
   their scores.
 - **Deadline:** Sat 10 Oct, 10:00 UTC — advisory only, user makes the move in-game.
+
+## GW6 live squad — 2026-10-07 (from user screenshot)
+
+- **Transfer made:** Elanga → Groß (matches recommendation). Chips: Wildcard played GW4; Bench Boost,
+  Triple Captain, Free Hit available. Deadline Sat 10 Oct 15:30 local.
+- **XI (4-4-2):** Raya; Mykolenko, Calafiori, Hall, Ajayi; Tzolis, Rogers, Groß (C), Palmer;
+  Emersonn, Haaland (V). **Bench:** Kinsky, João Pedro, Scott, Thomas.
+- **Vs optimizer:** user starts Ajayi + Tzolis over Thomas + João Pedro — XI predicted 52.57 vs
+  55.18 (-2.6), predicted total 60.31 (recorded as latest GW6 prediction). Palmer/João Pedro/
+  Mykolenko/Tzolis 75%, Scott 50% — the Ajayi/Tzolis call may be a fitness/rotation hedge.
