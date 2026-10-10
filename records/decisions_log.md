@@ -1525,3 +1525,13 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
   vs leader: both captained Haaland, 43 vs 44 — a consistency gap, not one bad week. Leader's
   differentials: Gibbs-White, Slater, Gvardiol, B.Fernandes.
 - **GW6 predicted total:** 62.92 (re-recorded in predictions.jsonl; latest wins).
+
+## GW6 deadline check — 2026-10-10 (T-50 min)
+
+- **Decision:** hold. 0 FT remaining after Elanga→Gross; optimizer finds no hit worth taking (net 58.74, 0 transfers).
+- **Lineup change (urgent):** Tzolis is in the submitted XI but ruled out (hamstring, 0%, back ~24 Oct). Mykolenko 75% (leg).
+  Recommend 4-3-3: start Thomas + João Pedro over Tzolis + Ajayi; bench order Kinsky, Ajayi, Tzolis, Scott (Ajayi first as Mykolenko cover).
+- **Captain/vice:** Gross (7.74) / Haaland (6.77), unchanged.
+- **Loyalty:** CHE already 3/3 (Palmer, Rogers, João Pedro) — floors cost 0.
+- **League:** no new finished GW since the 2026-10-07 GW5 comparison; not re-run.
+- Env note: pulp 3.x breaks `best_lineup` (`LpVariable(cat=...)`); pinned `pulp>=2.8,<3` in pyproject.
