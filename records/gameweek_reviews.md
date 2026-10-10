@@ -597,3 +597,8 @@ consecutive gameweeks.
 Re-ran `evaluate_gameweek(5)`: predicted 64.13 vs 50 on the recorded XI (error -14.13), unchanged.
 `calibration()` currently returns no evaluated gameweeks in this container, so no new calibration
 evidence; the 09-22 verdict (no `score.py` retune) stands.
+
+## GW6 pre-deadline note — 2026-10-10
+
+No new finished gameweek since the GW5 review (GW6 deadline today), so no new evaluation. The GW5 lesson applied:
+the live lineup was checked against fresh injury flags before deadline and caught an injured starter (Tzolis).

@@ -9,7 +9,7 @@ description = "FPL squad/transfer advisor: stats-driven optimizer + weekly agent
 requires-python = ">=3.11"
 dependencies = [
     "requests>=2.31",
-    "pulp>=2.8",
+    "pulp>=2.8,<3",
 ]
 
 [project.optional-dependencies]

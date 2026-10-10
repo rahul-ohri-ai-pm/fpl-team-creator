@@ -570,3 +570,9 @@ the injured Elanga, deferred from GW5.
 - **Vs optimizer:** user starts Ajayi + Tzolis over Thomas + João Pedro — XI predicted 52.57 vs
   55.18 (-2.6), predicted total 60.31 (recorded as latest GW6 prediction). Palmer/João Pedro/
   Mykolenko/Tzolis 75%, Scott 50% — the Ajayi/Tzolis call may be a fitness/rotation hedge.
+
+## GW6 snapshot — 2026-10-10 (deadline check)
+
+Bank £1.2m | value £100.4m | FT 0 (1 used on Elanga→Gross) | WC used GW4; BB/TC/FH available.
+Recommended XI (4-3-3): Raya; Calafiori, Mykolenko, Hall, Thomas; Palmer, Rogers, Gross (C); Emersonn, Haaland (VC), João Pedro.
+Bench: Kinsky, Ajayi, Tzolis (inj), Scott (inj).
