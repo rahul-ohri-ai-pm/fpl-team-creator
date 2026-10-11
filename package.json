@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gamedev1991/fpl-team-creator.git"
+    "url": "git+https://github.com/rahul-ohri-ai-pm/fpl-team-creator.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gamedev1991/fpl-team-creator/issues"
+    "url": "https://github.com/rahul-ohri-ai-pm/fpl-team-creator/issues"
   },
-  "homepage": "https://github.com/gamedev1991/fpl-team-creator#readme",
+  "homepage": "https://github.com/rahul-ohri-ai-pm/fpl-team-creator#readme",
   "devDependencies": {
     "@vitejs/plugin-react": "^6.1.0",
     "autoprefixer": "^10.5.4",
