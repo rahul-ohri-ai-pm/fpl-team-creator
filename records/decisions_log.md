@@ -1541,3 +1541,9 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 - **Recommendation (advisory):** 2 FT, no hit (net 61.22 vs 53.21 hold): Mykolenko → Dasilva (COV), Tzolis (out, back 1 Nov) → Cunha (MUN). Scott (0%) stays on bench; Cunha captain, Haaland vice.
 - If only 1 FT is actually available, do just one: Mykolenko → De Cuyper (net 57.2).
 - Chelsea loyalty: already 3/3, floors cost 0.
+
+## GW7 correction — 2026-10-15 (user confirms 1 FT, not 2)
+
+- **Recommendation (advisory):** Mykolenko → De Cuyper (BHA), 1 FT, no hit. Predicted 63.2. Haaland C, De Cuyper V. Plan Tzolis → Cunha with GW8's free transfer.
+- Taking a -4 now to also do Tzolis → Cunha predicts 62.9 for GW7 (no gain). Over GW7–9 it predicts +7.3 vs the 1-transfer squad *held*, but most of that gain comes back free by doing Cunha in GW8, so the hit isn't worth it.
+- Chips: Free Hit would predict 73.6, Triple Captain 70.0 and Bench Boost 68.6, each a +5–10 gain. Holding them for double gameweeks.
