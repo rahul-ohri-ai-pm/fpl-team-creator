@@ -602,3 +602,7 @@ evidence; the 09-22 verdict (no `score.py` retune) stands.
 
 No new finished gameweek since the GW5 review (GW6 deadline today), so no new evaluation. The GW5 lesson applied:
 the live lineup was checked against fresh injury flags before deadline and caught an injured starter (Tzolis).
+
+## GW6 review — 2026-10-15
+
+Predicted 65.59 vs actual 66 (error +0.41, MAE 3.07). Biggest misses: João Pedro (5.1 → 12), Hall (5.2 → 0), Calafiori (4.2 → 9). Auto-sub 233→279. Best calibrated week to date; one week isn't evidence to retune `score.py`.

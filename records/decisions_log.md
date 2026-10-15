@@ -1535,3 +1535,9 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 - **Loyalty:** CHE already 3/3 (Palmer, Rogers, João Pedro) — floors cost 0.
 - **League:** no new finished GW since the 2026-10-07 GW5 comparison; not re-run.
 - Env note: pulp 3.x breaks `best_lineup` (`LpVariable(cat=...)`); pinned `pulp>=2.8,<3` in pyproject.
+
+## GW7 scan — 2026-10-15 (deadline 2026-10-17 10:00Z)
+
+- **Recommendation (advisory):** 2 FT, no hit (net 61.22 vs 53.21 hold): Mykolenko → Dasilva (COV), Tzolis (out, back 1 Nov) → Cunha (MUN). Scott (0%) stays on bench; Cunha captain, Haaland vice.
+- If only 1 FT is actually available, do just one: Mykolenko → De Cuyper (net 57.2).
+- Chelsea loyalty: already 3/3, floors cost 0.
