@@ -1547,3 +1547,7 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 - **Recommendation (advisory):** Mykolenko → De Cuyper (BHA), 1 FT, no hit. Predicted 63.2. Haaland C, De Cuyper V. Plan Tzolis → Cunha with GW8's free transfer.
 - Taking a -4 now to also do Tzolis → Cunha predicts 62.9 for GW7 (no gain). Over GW7–9 it predicts +7.3 vs the 1-transfer squad *held*, but most of that gain comes back free by doing Cunha in GW8, so the hit isn't worth it.
 - Chips: Free Hit would predict 73.6, Triple Captain 70.0 and Bench Boost 68.6, each a +5–10 gain. Holding them for double gameweeks.
+
+## GW7 deadline check — 2026-10-17 (T-68 min)
+
+- No GW7 transfer made yet. Mykolenko down to 50% (leg). Re-score unchanged: Mykolenko → De Cuyper, 1 FT, no hit (predicted 63.3). Haaland C / De Cuyper V. Bench Ajayi first, Tzolis and Scott (both 0%) last.
