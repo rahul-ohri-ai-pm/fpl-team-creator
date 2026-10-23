@@ -49,6 +49,7 @@ engine/fetch.py              pulls FPL API data
 engine/preseason.py           pre-season layer + price-implied baseline for unknown players
 engine/score.py               predicted-points heuristic
 engine/optimize.py            MILP squad/transfer optimizer
+engine/planner.py             multi-gameweek transfer plan (FT rollover, hits) + chip calendar
 engine/evaluate.py            records predictions, measures them against real FPL points
 records/team_history.md       squad snapshots over time
 records/decisions_log.md      every transfer decision + reasoning

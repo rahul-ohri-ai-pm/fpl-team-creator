@@ -463,6 +463,10 @@ def score_players(bootstrap, fixtures, next_event: int, risk_profile: str = "saf
             # re-applies its own per-gameweek ease on top of this, so the two can't
             # drift apart the way a re-derived copy would.
             "base": round(form * reliability * injury_mult, 4),
+            # `base` with the player-level injury flag taken out (club-level doubt
+            # kept). `engine/planner.py` uses it for gameweeks after a flagged
+            # player's published return date, where this week's 0% no longer applies.
+            "base_fit": round(form * reliability * (club_avail if club_avail is not None else 1.0), 4),
             # Signed -1..1 ownership preference, applied only as a tiebreak.
             "tiebreak": round((ownership / 100) * ownership_weight, 4),
             "pos": pos,

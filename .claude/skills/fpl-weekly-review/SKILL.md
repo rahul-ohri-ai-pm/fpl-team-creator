@@ -57,6 +57,17 @@ tolerance, and favourite club / loyalty mode - don't hardcode any of these.
    `engine.optimize.best_lineup(...)` on the resulting squad for the starting XI, formation,
    captain, and vice-captain.
 
+5a. **Check the multi-week plan and chip calendar.**
+   ```
+   python -m engine.planner --team <team_id> --risk <risk profile> --horizon 5
+   ```
+   Plans transfers for the next 5 gameweeks together (free-transfer rollover and hits
+   modelled), prints each remaining chip's gain per week against a typical double-gameweek
+   payoff, and lists blank/double gameweeks on the schedule. If its first-week move differs
+   from `recommend_transfers`, prefer the planner's when it is the no-hit move, and say why in
+   the summary. A planned hit has to clear the "Hits buy" line by more than config's hit rule.
+   Its later-week scores are planning estimates - never record them.
+
 6. **Price the favourite-club preference.** Read the favourite club and club loyalty mode from
    `config/settings.md`.
    ```python
