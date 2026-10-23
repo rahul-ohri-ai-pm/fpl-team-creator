@@ -576,3 +576,7 @@ the injured Elanga, deferred from GW5.
 Bank £1.2m | value £100.4m | FT 0 (1 used on Elanga→Gross) | WC used GW4; BB/TC/FH available.
 Recommended XI (4-3-3): Raya; Calafiori, Mykolenko, Hall, Thomas; Palmer, Rogers, Gross (C); Emersonn, Haaland (VC), João Pedro.
 Bench: Kinsky, Ajayi, Tzolis (inj), Scott (inj).
+
+## GW8 snapshot — 2026-10-23
+
+Bank £0.8m, 1 FT, chips left: FH/BB/TC (WC1 used GW4). Squad (post-recommended Emersonn → Evanilson): Raya, Kinský; Calafiori, De Cuyper, Thomas, Hall, Ajayi; Groß, Rogers, Palmer, Tzolis (out), Scott (out); Haaland (C), João Pedro, Evanilson. XI 4-3-3, De Cuyper V.

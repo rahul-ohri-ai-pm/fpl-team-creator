@@ -606,3 +606,7 @@ the live lineup was checked against fresh injury flags before deadline and caugh
 ## GW6 review — 2026-10-15
 
 Predicted 65.59 vs actual 66 (error +0.41, MAE 3.07). Biggest misses: João Pedro (5.1 → 12), Hall (5.2 → 0), Calafiori (4.2 → 9). Auto-sub 233→279. Best calibrated week to date; one week isn't evidence to retune `score.py`.
+
+## GW7 review — 2026-10-23
+
+Real 67 (no hit). Model on the recorded XI: predicted 63.18 vs 67 (error +3.82, MAE 2.54). The user started Ajayi over Emersonn; real score unaffected materially. Biggest misses: Haaland C (6.8 → 13), Raya (3.9 → 9), Palmer (5.8 → 2). Second straight well-calibrated week (GW6 +0.4, GW7 +3.8) — slight under-prediction now, after GW1–5's large over-prediction. Not yet enough to retune.

@@ -1551,3 +1551,10 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 ## GW7 deadline check — 2026-10-17 (T-68 min)
 
 - No GW7 transfer made yet. Mykolenko down to 50% (leg). Re-score unchanged: Mykolenko → De Cuyper, 1 FT, no hit (predicted 63.3). Haaland C / De Cuyper V. Bench Ajayi first, Tzolis and Scott (both 0%) last.
+
+## GW8 scan — 2026-10-23 (deadline 17:30Z)
+
+- **Recommendation (advisory):** Emersonn → Evanilson (BOU, £6.1m), 1 FT, no hit. GW8 predicted 66.5 (hold 63.6). Haaland C, De Cuyper V. Tzolis → Cunha plan dropped: optimizer no longer rates it; Tzolis back 1 Nov.
+- 2 transfers (-4: Scott, Tzolis → Rice, Iwobi) only +1.4 over GW8–10, below the 4-pt hit rule.
+- Loyalty: CHE 3/3, floors cost 0.
+- League: 19th, 397 pts; 102 behind 5th, 118 behind leader. GW7 vs leader: 67–67, both Haaland C; 7 common players. Leader's differentials: Dewsbury-Hall, Konsa, Schade, Gvardiol. Gap is accumulated, not one week.
