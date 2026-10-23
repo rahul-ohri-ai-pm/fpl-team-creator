@@ -610,3 +610,7 @@ Predicted 65.59 vs actual 66 (error +0.41, MAE 3.07). Biggest misses: João Pedr
 ## GW7 review — 2026-10-23
 
 Real 67 (no hit). Model on the recorded XI: predicted 63.18 vs 67 (error +3.82, MAE 2.54). The user started Ajayi over Emersonn; real score unaffected materially. Biggest misses: Haaland C (6.8 → 13), Raya (3.9 → 9), Palmer (5.8 → 2). Second straight well-calibrated week (GW6 +0.4, GW7 +3.8) — slight under-prediction now, after GW1–5's large over-prediction. Not yet enough to retune.
+
+## Backtest GW1–7 — 2026-10-23
+
+6 evaluated gameweeks (GW2 has no prediction). Mean error -9.61, MAE 12.2. That figure is dominated by GW3's pre-fix -43.74; excluding it, GW1/4/5/6/7 average -2.78. Recent errors: -14.1, +0.4, +3.8. They point in different directions, so there's no systematic bias to retune against. No `/score-calibrate` action.
