@@ -1558,3 +1558,11 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 - 2 transfers (-4: Scott, Tzolis → Rice, Iwobi) only +1.4 over GW8–10, below the 4-pt hit rule.
 - Loyalty: CHE 3/3, floors cost 0.
 - League: 19th, 397 pts; 102 behind 5th, 118 behind leader. GW7 vs leader: 67–67, both Haaland C; 7 common players. Leader's differentials: Dewsbury-Hall, Konsa, Schade, Gvardiol. Gap is accumulated, not one week.
+
+## GW9 scan — 2026-10-28 (deadline 31 Oct 11:00Z)
+
+- **Recommendation (advisory):** João Pedro (0%, thigh, no return date) → N.Jackson (AVL, £6.8m), 1 FT, no hit. GW9 predicted 60.1 (hold 56.2). Haaland C, Jackson V.
+- Planner (5 GW): hits buy +11.2 over GW9–13, but over 3 GWs only +3.6, under the 4-pt hit rule, so no hit. Its no-hit GW9 move matches.
+- Loyalty: CHE drops to 2 (Palmer, Rogers); keeping João Pedro as the 3rd would cost 0.6 predicted points.
+- League: 20th, 438. 5th (547) is 109 ahead, leader (560) 122. GW8 vs leader: 41–45, both Haaland C. Leader's differentials: Gvardiol, Cherki, Calvert-Lewin, Schade, Konsa.
+- Dead weight now three players (João Pedro, Tzolis to 1 Nov, Scott to 8 Nov); Calafiori and Thomas 75%.
