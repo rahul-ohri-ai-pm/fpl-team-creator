@@ -1574,3 +1574,7 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 - Flags: Thomas 50%, Calafiori and Tzolis 75%, Scott out (back 21 Nov). Bench cover thin.
 - Loyalty: CHE 2/3 (Palmer, Rogers); floors of 1 and 2 cost 0, a 3rd costs 0.6.
 - League: 20th, 438; 109 behind 5th (547), 122 behind leader (560). GW8 vs leader 41–45, both Haaland C; leader's differentials Gvardiol, Cherki, Calvert-Lewin, Schade, Konsa.
+
+## Model calibration — 2026-10-30
+
+Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mean error -11.88). No change to `engine/score.py`. The proposed availability discount is already in the model (`injury_mult`) and the miss is spread across fit starters (-0.71 per player at 60+ minutes), so it would not have helped. See the calibration check in `records/gameweek_reviews.md`.
