@@ -1566,3 +1566,11 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 - Loyalty: CHE drops to 2 (Palmer, Rogers); keeping João Pedro as the 3rd would cost 0.6 predicted points.
 - League: 20th, 438. 5th (547) is 109 ahead, leader (560) 122. GW8 vs leader: 41–45, both Haaland C. Leader's differentials: Gvardiol, Cherki, Calvert-Lewin, Schade, Konsa.
 - Dead weight now three players (João Pedro, Tzolis to 1 Nov, Scott to 8 Nov); Calafiori and Thomas 75%.
+
+## GW9 re-run — 2026-10-30 (deadline 31 Oct 11:00Z)
+
+- **Recommendation unchanged (advisory):** João Pedro → N.Jackson (AVL, £6.8m), 1 FT, no hit; bank £0.2m. XI sum 52.1 + captain 8.0 = 60.1 predicted (hold 55.5). Haaland C, Jackson V. Prediction already recorded 10-28 with identical XI/bench, so not duplicated.
+- Planner: hits buy +12.4 over GW9–13 but its GW9 hit (Tzolis → Jackson plus a second move) is not needed; its no-hit move matches the optimizer. Chips: all hold, no blank/double GWs scheduled.
+- Flags: Thomas 50%, Calafiori and Tzolis 75%, Scott out (back 21 Nov). Bench cover thin.
+- Loyalty: CHE 2/3 (Palmer, Rogers); floors of 1 and 2 cost 0, a 3rd costs 0.6.
+- League: 20th, 438; 109 behind 5th (547), 122 behind leader (560). GW8 vs leader 41–45, both Haaland C; leader's differentials Gvardiol, Cherki, Calvert-Lewin, Schade, Konsa.
