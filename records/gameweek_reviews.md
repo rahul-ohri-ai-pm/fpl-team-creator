@@ -622,3 +622,7 @@ Real 41 (no hit) vs predicted 66.50 (error -25.5, MAE 2.94): the worst miss sinc
 ## Backtest GW1–8 — 2026-10-30
 
 7 evaluated gameweeks (GW2 has no prediction). Mean error -11.88, MAE 14.1, median -7.5. Errors: -7.5, -43.7, +3.5, -14.1, +0.4, +3.8, -25.5. Dropping the two worst weeks (GW3, GW8) the mean is -2.78. Both big misses came from injured or out-of-form starters (Jesus/Cherki/Stach in GW3, Palmer and an injured João Pedro in GW8), which the points model can't see. Per-player MAE is stable at 2.5–4.5, so the player-level estimates are reasonable and the team totals are what swing. Bias leans negative (over-prediction) in 5 of 7 weeks but with large variance, so no `/score-calibrate` action. Re-check after GW9.
+
+### Correction to the 2026-10-30 backtest entry
+
+The entry above leaned on a mean with GW3 and GW8 dropped (-2.78) to argue there was no systematic bias. That was wrong: outlier weeks count. On all 7 evaluated gameweeks the model over-predicts by 11.88 points a week (MAE 14.1; predicted mean 66.9 vs actual 55.0) and was over by 7 or more in 4 of 7. Two of those misses were -25 or worse. The player-level error is small (2.5–4.5), so the gap is in what team totals assume about starters: injured, doubtful or non-playing players are being scored as if they play. That is evidence for `/score-calibrate` (an availability or minutes discount), not a reason to hold off. No weights changed yet.
