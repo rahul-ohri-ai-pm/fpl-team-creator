@@ -618,3 +618,7 @@ Real 67 (no hit). Model on the recorded XI: predicted 63.18 vs 67 (error +3.82, 
 ## GW8 review — 2026-10-28
 
 Real 41 (no hit) vs predicted 66.50 (error -25.5, MAE 2.94): the worst miss since GW3. Palmer -1 (pred 5.5), João Pedro 0 (5.8, picked up a thigh injury and was auto-subbed), Kinský 9 left on the bench. Haaland C 8. Calibration swings again (+0.4, +3.8, -25.5). Still no consistent direction, so no retune. Most of the miss came from injuries and a negative score, which the model can't see coming.
+
+## Backtest GW1–8 — 2026-10-30
+
+7 evaluated gameweeks (GW2 has no prediction). Mean error -11.88, MAE 14.1, median -7.5. Errors: -7.5, -43.7, +3.5, -14.1, +0.4, +3.8, -25.5. Dropping the two worst weeks (GW3, GW8) the mean is -2.78. Both big misses came from injured or out-of-form starters (Jesus/Cherki/Stach in GW3, Palmer and an injured João Pedro in GW8), which the points model can't see. Per-player MAE is stable at 2.5–4.5, so the player-level estimates are reasonable and the team totals are what swing. Bias leans negative (over-prediction) in 5 of 7 weeks but with large variance, so no `/score-calibrate` action. Re-check after GW9.
