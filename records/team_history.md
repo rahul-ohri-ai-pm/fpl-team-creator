@@ -580,3 +580,8 @@ Bench: Kinsky, Ajayi, Tzolis (inj), Scott (inj).
 ## GW8 snapshot — 2026-10-23
 
 Bank £0.8m, 1 FT, chips left: FH/BB/TC (WC1 used GW4). Squad (post-recommended Emersonn → Evanilson): Raya, Kinský; Calafiori, De Cuyper, Thomas, Hall, Ajayi; Groß, Rogers, Palmer, Tzolis (out), Scott (out); Haaland (C), João Pedro, Evanilson. XI 4-3-3, De Cuyper V.
+
+## GW10 snapshot — 2026-11-06
+
+Bank £0.2m after Thomas → Van Hecke (advisory) | value £101.6m | FT 1 | chips left: WC (GW20+), FH, BB, TC.
+XI: Raya; Calafiori, De Cuyper, Hall, Van Hecke; Groß, Rogers, Palmer; Haaland (C), Evanilson (V), Jackson. Bench: Kinsky, Ajayi, Tzolis, Scott (out to 21 Nov).

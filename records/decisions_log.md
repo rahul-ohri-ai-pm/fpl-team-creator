@@ -1578,3 +1578,10 @@ GW7/GW8 weekly reviews, particularly if Haaland's minutes look shaky closer to e
 ## Model calibration — 2026-10-30
 
 Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mean error -11.88). No change to `engine/score.py`. The proposed availability discount is already in the model (`injury_mult`) and the miss is spread across fit starters (-0.71 per player at 60+ minutes), so it would not have helped. See the calibration check in `records/gameweek_reviews.md`.
+
+## GW10 weekly review — 2026-11-06 (deadline 6 Nov 18:30Z)
+
+- **Recommendation (advisory):** Thomas (COV, 50%, calf) → Van Hecke (TOT, £5.0m), 1 FT, no hit; bank £1.2m → £0.2m. GW10 predicted 66.1 (hold 62.9). Haaland C, Evanilson V. Optimizer and 5-GW planner agree on the move.
+- Planner: later weeks Scott → Ayari (GW11), Tzolis → Neto (GW12), a double move at GW14; all no-hit. Chips on hold, no blank/double GWs scheduled.
+- Loyalty: CHE 2/3 (Palmer, Rogers); floors of 1 and 2 cost 0, a 3rd costs 0.1.
+- League: 19th, 504; 95 behind 5th (599), 123 behind leader (627). GW9 vs leader: 66–67, both Haaland C; 4 common players. Leader also owns Van Hecke, plus Tavernier, Mbeumo, Kelleher, Porro. Gap is accumulated (GW8 41 and earlier), not this week.
