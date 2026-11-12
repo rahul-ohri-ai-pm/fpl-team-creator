@@ -1585,3 +1585,11 @@ Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mea
 - Planner: later weeks Scott → Ayari (GW11), Tzolis → Neto (GW12), a double move at GW14; all no-hit. Chips on hold, no blank/double GWs scheduled.
 - Loyalty: CHE 2/3 (Palmer, Rogers); floors of 1 and 2 cost 0, a 3rd costs 0.1.
 - League: 19th, 504; 95 behind 5th (599), 123 behind leader (627). GW9 vs leader: 66–67, both Haaland C; 4 common players. Leader also owns Van Hecke, plus Tavernier, Mbeumo, Kelleher, Porro. Gap is accumulated (GW8 41 and earlier), not this week.
+
+## GW11 weekly review — 2026-11-12 (deadline 21 Nov 11:00Z; provisional, re-run nearer the deadline)
+
+- **Recommendation (advisory):** Palmer (CHE, £9.8m) → Wirtz (LIV, £7.2m), 1 FT, no hit; bank £0.2m → £2.8m. GW11 predicted 65.6 (hold 64.4). Jackson C (model now has him ahead of Haaland, 7.1 vs 6.0), Evanilson V.
+- Optimizer alone prefers Hall → Vušković (BHA, £5.3m): 66.9 this week, +1.3 over Wirtz. The planner's no-hit first move is Palmer → Wirtz (better over 5 GW and frees £2.6m for later moves), and the skill prefers the planner's no-hit move. Vušković is the close alternative.
+- Planner's hit option (Calafiori → Magalhães plus Palmer → Ayari) buys +5.6 over 5 GW, under the hit rule, so no hit.
+- Loyalty: CHE would drop to 1 (Rogers) after Palmer leaves; floors of 1 and 2 cost 0, a 3rd costs about 2 predicted points.
+- League: 19th, 568; 90 behind 5th (658), 119 behind leader (687). GW10 vs leader 64–64, both Haaland C, 6 common players. Leader's differentials: Tavernier, Dewsbury-Hall, Calvert-Lewin, Isak, Konsa. Gap is accumulated.

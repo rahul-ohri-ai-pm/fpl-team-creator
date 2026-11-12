@@ -634,3 +634,7 @@ The correction above blamed injured or doubtful starters being scored as if fit.
 ## GW9 review — 2026-11-06
 
 Real 66 (no hit) vs predicted 60.1 (error +4.9, MAE 2.83). Biggest misses: Haaland C 8.0 → 2 (cost ~12 points with the armband), Rogers 4.1 → 9, De Cuyper 5.0 → 9. No auto-subs. Errors since GW6: +0.4, +3.8, -25.5, +4.9, so the post-GW5 model is within a few points in 3 of 4 weeks and GW8 was the outlier. No retune; the flat scale-down test planned after GW10 still stands.
+
+## GW10 review — 2026-11-12
+
+Real 64 (no hit) vs predicted 66.1 (error -2.1, MAE 2.58). Biggest misses: Groß 3.6 → 10, Jackson 6.3 → 11, Haaland C 7.2 → 2 (captain blank for the second week running, ~10 points lost with the armband while Jackson, the vice, scored 11). No auto-subs. Errors since GW6: +0.4, +3.8, -25.5, +4.9, -2.1; 4 of 5 within 5 points. No retune. Armband note: Haaland has now scored 8, 2, 2 as captain over GW8–10; the model still rates Jackson close behind, and this week it rates Jackson ahead (7.1 vs 6.0).

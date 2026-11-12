@@ -585,3 +585,8 @@ Bank £0.8m, 1 FT, chips left: FH/BB/TC (WC1 used GW4). Squad (post-recommended 
 
 Bank £0.2m after Thomas → Van Hecke (advisory) | value £101.6m | FT 1 | chips left: WC (GW20+), FH, BB, TC.
 XI: Raya; Calafiori, De Cuyper, Hall, Van Hecke; Groß, Rogers, Palmer; Haaland (C), Evanilson (V), Jackson. Bench: Kinsky, Ajayi, Tzolis, Scott (out to 21 Nov).
+
+## GW11 snapshot — 2026-11-12 (provisional)
+
+Bank £2.8m after Palmer → Wirtz (advisory) | value £102.0m | FT 1 | chips left: WC (GW20+), FH, BB, TC.
+XI: Raya; De Cuyper, Calafiori, Hall, Van Hecke; Rogers, Groß, Wirtz; Evanilson (V), Jackson (C), Haaland. Bench: Kinský, Tzolis, Ajayi, Scott.
