@@ -1593,3 +1593,10 @@ Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mea
 - Planner's hit option (Calafiori → Magalhães plus Palmer → Ayari) buys +5.6 over 5 GW, under the hit rule, so no hit.
 - Loyalty: CHE would drop to 1 (Rogers) after Palmer leaves; floors of 1 and 2 cost 0, a 3rd costs about 2 predicted points.
 - League: 19th, 568; 90 behind 5th (658), 119 behind leader (687). GW10 vs leader 64–64, both Haaland C, 6 common players. Leader's differentials: Tavernier, Dewsbury-Hall, Calvert-Lewin, Isak, Konsa. Gap is accumulated.
+
+## GW11 deadline-day review — 2026-11-21 (deadline 11:00Z)
+
+- **Recommendation (advisory):** Calafiori (ARS) → Ngoyo (ARS, £4.9m), 1 FT, no hit. Optimizer net 61.69 vs hold 59.03. Planner's no-hit first move agrees. Supersedes the provisional Palmer → Wirtz call from 2026-11-12: with fresh scores Wirtz is not the best use of the FT this week (planner now schedules Tzolis → Wirtz in GW12). Jackson C, Ngoyo V. No injury flags in the squad.
+- Planner's hit option (Calafiori → Magalhães plus Haaland → Barry) buys +7.1 over 5 GW, under the hit rule, so no hit. Chips on hold, no blank/double GWs; Bench Boost flagged for GW14/15 only.
+- Loyalty: CHE 2/3 (Palmer, Rogers); floors of 1 and 2 cost 0, a 3rd costs 2.5.
+- League: 19th, 568; 90 behind 5th (658), 119 behind leader (687). GW10 vs leader 64–64, both Haaland C (2 pts each), 6 common players. Leader's differentials: Tavernier, Dewsbury-Hall, Calvert-Lewin, Isak, Konsa. Gap is accumulated, not this week.

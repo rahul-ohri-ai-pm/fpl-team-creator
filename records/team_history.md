@@ -590,3 +590,7 @@ XI: Raya; Calafiori, De Cuyper, Hall, Van Hecke; Groß, Rogers, Palmer; Haaland 
 
 Bank £2.8m after Palmer → Wirtz (advisory) | value £102.0m | FT 1 | chips left: WC (GW20+), FH, BB, TC.
 XI: Raya; De Cuyper, Calafiori, Hall, Van Hecke; Rogers, Groß, Wirtz; Evanilson (V), Jackson (C), Haaland. Bench: Kinský, Tzolis, Ajayi, Scott.
+
+## GW11 squad (advisory, 2026-11-21)
+
+Bank £0.2m, value £102.0m, 1 FT, no chip. After Calafiori → Ngoyo. XI (4-4-2... by lineup): Raya; Ngoyo, De Cuyper, Van Hecke, Hall; Rogers, Palmer, Groß; Jackson (C), Evanilson, Haaland. Bench: Tzolis, Scott, Ajayi, Kinský. Vice: Ngoyo.
