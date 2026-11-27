@@ -638,3 +638,7 @@ Real 66 (no hit) vs predicted 60.1 (error +4.9, MAE 2.83). Biggest misses: Haala
 ## GW10 review — 2026-11-12
 
 Real 64 (no hit) vs predicted 66.1 (error -2.1, MAE 2.58). Biggest misses: Groß 3.6 → 10, Jackson 6.3 → 11, Haaland C 7.2 → 2 (captain blank for the second week running, ~10 points lost with the armband while Jackson, the vice, scored 11). No auto-subs. Errors since GW6: +0.4, +3.8, -25.5, +4.9, -2.1; 4 of 5 within 5 points. No retune. Armband note: Haaland has now scored 8, 2, 2 as captain over GW8–10; the model still rates Jackson close behind, and this week it rates Jackson ahead (7.1 vs 6.0).
+
+## GW11 review — 2026-11-27
+
+Real 33 (no hit) vs predicted 68.2 (error -35.2, MAE 2.71): the worst miss since GW3. League-wide low week (average 35, top 106; our mini-league leader scored 39), so about half of it is the week, not the model. Biggest misses: Jackson C 8.3 → 2 (72 mins), Ngoyo 6.9 → 1 (90 mins), Raya 5.3 → 1. Haaland also 2. Captain blank for a fourth straight week. Over GW1–11 (10 evaluated): mean predicted 66.3 vs actual 54.7, mean error -11.6, MAE 14.1. Over-prediction persists, but is driven by a few collapse weeks (GW3, GW8, GW11) rather than per-player bias (per-player MAE stable at ~2.7). Still no weight change; the flat scale-down test noted after GW10 is the open item.

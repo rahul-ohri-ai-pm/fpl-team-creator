@@ -1600,3 +1600,12 @@ Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mea
 - Planner's hit option (Calafiori → Magalhães plus Haaland → Barry) buys +7.1 over 5 GW, under the hit rule, so no hit. Chips on hold, no blank/double GWs; Bench Boost flagged for GW14/15 only.
 - Loyalty: CHE 2/3 (Palmer, Rogers); floors of 1 and 2 cost 0, a 3rd costs 2.5.
 - League: 19th, 568; 90 behind 5th (658), 119 behind leader (687). GW10 vs leader 64–64, both Haaland C (2 pts each), 6 common players. Leader's differentials: Tavernier, Dewsbury-Hall, Calvert-Lewin, Isak, Konsa. Gap is accumulated, not this week.
+
+## GW12 weekly review — 2026-11-27 (deadline 18:30Z)
+
+- **Recommendation (advisory):** Haaland (MCI, £15.7m) → Barry (EVE, £5.7m), 1 FT, no hit; frees ~£10m of bank. Haaland: form 2.0, away at Arsenal (difficulty 5), ep 2.0. Optimizer alone prefers Haaland → McBurnie (HUL, £5.5m, net 59.25 vs hold 55.9, McBurnie captain-level 6.75); the planner's no-hit first move is Haaland → Barry (58.7 this week) and the skill prefers the planner's no-hit move. McBurnie is the close alternative.
+- Planner's hit option (Scott → Barry plus Haaland → Wirtz) buys +4.4 over 5 GW, marginal against the hit rule, so no hit.
+- Flags: Raya 75% (shoulder), Hall 75%; both on the bench in the proposed lineup. Chips on hold.
+- Captain: model picks Van Hecke (6.35), Jackson 6.29 is effectively tied; recorded as the model's pick (C Van Hecke, V Jackson). Jackson is the sensible armband if you'd rather not captain a defender.
+- Loyalty: CHE 2/3 (Palmer, Rogers); floors 1 and 2 cost 0, a 3rd costs 2.2.
+- League: 19th, 601; 94 behind 5th (695), 121 behind leader (722). GW11 vs leader 33–39: we captained Jackson (2), they captained Haaland (2); 7 common players. Leader's differentials: Calafiori, Isak, Tavernier, Dewsbury-Hall. Gap is accumulated; GW11 was a low-scoring week for everyone.
