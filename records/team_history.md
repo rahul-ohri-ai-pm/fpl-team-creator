@@ -602,3 +602,7 @@ Bank £11.1m after Haaland → Barry, 1 FT, no chip. XI (4-3-3): Kinský; Ngoyo,
 ## GW12 squad, as chosen (advisory, 2026-11-27)
 
 Supersedes the entry above. Bank £3.4m, 1 FT, no chip. After Palmer → Wirtz. XI (4-3-3): Kinský; Ngoyo, Van Hecke (V), De Cuyper, Ajayi; Rogers, Wirtz (C), Groß; Jackson, Evanilson, Haaland. Bench: Raya, Hall, Tzolis, Scott.
+
+## GW12 squad, as played (2026-11-27, from app screenshot)
+
+Supersedes the entries above. Bank £4.1m, 1 FT used, no chip (Wildcard used GW4; Bench Boost, Triple Captain, Free Hit available). XI (4-3-3): Kinský; Konsa, Ajayi, Van Hecke, De Cuyper; Rogers, Groß, Tavernier; Evanilson, Jackson (C), Haaland (V). Bench: Raya, Tzolis, Hall, Scott.

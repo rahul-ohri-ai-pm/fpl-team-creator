@@ -1614,3 +1614,7 @@ Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mea
 
 - Palmer (CHE, £9.8m) → Wirtz (LIV, £7.5m), 1 FT, no hit; bank £1.1m → £3.4m. Predicted 64.2 vs 63.7 for Haaland → Barry; the 5-GW planner totals are 344.0 vs 344.6, so effectively equal. Haaland stays; planner's GW13 move is Haaland → Barry. Wirtz C (7.26), Van Hecke V. Chelsea down to 1 (Rogers); floors of 1 cost 0. Supersedes the Haaland → Barry prediction line.
 - Captain override (user): Jackson C, Wirtz V, against the model's Wirtz C (7.26 vs Jackson 6.29, about 1 predicted point). Prediction re-recorded with Jackson captain.
+
+### GW12 final, as played — 2026-11-27 (from app screenshot)
+
+User played **Palmer → Tavernier** (BOU, £6.8m), 1 FT, no hit; bank £4.1m; not the recommended Wirtz. XI: Kinský; Konsa, Ajayi, Van Hecke, De Cuyper; Rogers, Groß, Tavernier; Evanilson, Jackson (C), Haaland (V). Bench: Raya, Tzolis, Hall, Scott. Model had this as the weakest of the three options (about -0.6 vs Palmer this week; 5-GW 336.5 after a planned GW13 hit vs 344 for Wirtz); recorded as played. Chelsea down to 1 (Rogers). Prediction re-recorded to match.
