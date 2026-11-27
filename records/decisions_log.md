@@ -1603,7 +1603,7 @@ Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mea
 
 ## GW12 weekly review — 2026-11-27 (deadline 18:30Z)
 
-- **Recommendation (advisory):** Haaland (MCI, £15.7m) → Barry (EVE, £5.7m), 1 FT, no hit; frees ~£10m of bank. Haaland: form 2.0, away at Arsenal (difficulty 5), ep 2.0. Optimizer alone prefers Haaland → McBurnie (HUL, £5.5m, net 59.25 vs hold 55.9, McBurnie captain-level 6.75); the planner's no-hit first move is Haaland → Barry (58.7 this week) and the skill prefers the planner's no-hit move. McBurnie is the close alternative.
+- **Recommendation (advisory):** Haaland (MCI, £15.7m) → Barry (EVE, £5.7m), 1 FT, no hit; bank £1.1m → £11.1m. Haaland: form 2.0, away at Arsenal (difficulty 5), ep 2.0. Optimizer alone prefers Haaland → McBurnie (HUL, £5.5m, net 59.25 vs hold 55.9, McBurnie captain-level 6.75); the planner's no-hit first move is Haaland → Barry (58.7 this week) and the skill prefers the planner's no-hit move. McBurnie is the close alternative.
 - Planner's hit option (Scott → Barry plus Haaland → Wirtz) buys +4.4 over 5 GW, marginal against the hit rule, so no hit.
 - Flags: Raya 75% (shoulder), Hall 75%; both on the bench in the proposed lineup. Chips on hold.
 - Captain: model picks Van Hecke (6.35), Jackson 6.29 is effectively tied; recorded as the model's pick (C Van Hecke, V Jackson). Jackson is the sensible armband if you'd rather not captain a defender.
