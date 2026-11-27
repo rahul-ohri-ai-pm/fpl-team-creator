@@ -1609,3 +1609,7 @@ Reviewed `/score-calibrate` against the GW1–8 backtest (7 evaluated weeks, mea
 - Captain: model picks Van Hecke (6.35), Jackson 6.29 is effectively tied; recorded as the model's pick (C Van Hecke, V Jackson). Jackson is the sensible armband if you'd rather not captain a defender.
 - Loyalty: CHE 2/3 (Palmer, Rogers); floors 1 and 2 cost 0, a 3rd costs 2.2.
 - League: 19th, 601; 94 behind 5th (695), 121 behind leader (722). GW11 vs leader 33–39: we captained Jackson (2), they captained Haaland (2); 7 common players. Leader's differentials: Calafiori, Isak, Tavernier, Dewsbury-Hall. Gap is accumulated; GW11 was a low-scoring week for everyone.
+
+### GW12 update — 2026-11-27: user chose Palmer → Wirtz (not Haaland → Barry)
+
+- Palmer (CHE, £9.8m) → Wirtz (LIV, £7.5m), 1 FT, no hit; bank £1.1m → £3.4m. Predicted 64.2 vs 63.7 for Haaland → Barry; the 5-GW planner totals are 344.0 vs 344.6, so effectively equal. Haaland stays; planner's GW13 move is Haaland → Barry. Wirtz C (7.26), Van Hecke V. Chelsea down to 1 (Rogers); floors of 1 cost 0. Supersedes the Haaland → Barry prediction line.
